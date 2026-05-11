@@ -1,7 +1,7 @@
 import React from "react";
 import jsPDF from "jspdf";
 
-const STORAGE_KEY = "medical-cgpa-pro-v8";
+const STORAGE_KEY = "medical-cgpa-pro-v9";
 
 const STAGES = [
   {
@@ -84,9 +84,7 @@ const STAGES = [
 function clamp(v) {
   if (v === "") return "";
   const n = Number(v);
-
   if (Number.isNaN(n)) return "";
-
   return String(Math.max(0, Math.min(100, n)));
 }
 
@@ -106,10 +104,8 @@ export default function App() {
 
   React.useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-
     if (saved) {
       const parsed = JSON.parse(saved);
-
       setGrades(parsed.grades || {});
       setIsDark(parsed.isDark ?? true);
     }
@@ -126,51 +122,60 @@ export default function App() {
     const stageResults = STAGES.map((stage) => {
       let weightedSum = 0;
       let totalUnits = 0;
+      let enteredSubjects = 0;
 
       stage.subjects.forEach((sub) => {
-        const value =
-          grades[`${stage.name}-${sub.name}`];
+        const value = grades[`${stage.name}-${sub.name}`];
 
         if (value !== "" && value !== undefined) {
           const grade = Number(value);
-
           if (!Number.isNaN(grade)) {
             weightedSum += grade * sub.units;
             totalUnits += sub.units;
+            enteredSubjects += 1;
           }
         }
       });
 
-      const avg =
-        totalUnits > 0
-          ? weightedSum / totalUnits
-          : 0;
-
+      const avg = totalUnits > 0 ? weightedSum / totalUnits : 0;
       const stageGPA = toStageGPA(avg);
 
       return {
         ...stage,
         avg,
         stageGPA,
+        hasGrades: enteredSubjects > 0,
       };
     });
 
-    const totalStagePoints = stageResults.reduce(
-      (a, s) => a + s.stageGPA,
+    const enteredStages = stageResults.filter((s) => s.hasGrades);
+    const earnedWeight = enteredStages.reduce(
+      (sum, s) => sum + s.stageGPA,
+      0
+    );
+    const maxWeight = enteredStages.length * 5;
+
+    const allSubjects = STAGES.reduce(
+      (sum, s) => sum + s.subjects.length,
       0
     );
 
-    const enteredStages = stageResults.filter(
-  (s) => s.avg > 0
-);
+    const enteredSubjectsCount = Object.values(grades).filter(
+      (v) => v !== ""
+    ).length;
 
-const maxPoints = enteredStages.length * 5
-
-   	return {
-  	stageResults,
-  	totalStagePoints,
-  	maxPoints,
-	};
+    return {
+      stageResults,
+      enteredStages,
+      earnedWeight,
+      maxWeight,
+      progress:
+        allSubjects > 0
+          ? (enteredSubjectsCount / allSubjects) * 100
+          : 0,
+      enteredSubjectsCount,
+      allSubjects,
+    };
   }, [grades]);
 
   const update = (stage, subject, value) => {
@@ -184,60 +189,57 @@ const maxPoints = enteredStages.length * 5
     const doc = new jsPDF();
 
     doc.text("Medical CGPA Transcript", 20, 20);
+    doc.text("Name: Haider Emad", 20, 30);
+    doc.text("University: Warith Al-Anbiyaa", 20, 40);
+    doc.text(
+      `Earned Weight: ${metrics.earnedWeight.toFixed(2)} / ${metrics.maxWeight}`,
+      20,
+      50
+    );
 
-    let y = 40;
+    let y = 70;
 
     metrics.stageResults.forEach((stage) => {
+      if (y > 270) {
+        doc.addPage();
+        y = 20;
+      }
+
       doc.text(
-        `${stage.name} : ${stage.stageGPA}/5`,
+        `${stage.name} : ${stage.stageGPA.toFixed(2)} / 5`,
         20,
         y
       );
-
       y += 10;
     });
-
-    y += 10;
-
-    doc.text(
-      `Total CGPA : ${metrics.totalStagePoints.toFixed(
-        2
-      )} / ${metrics.maxPoints}`,
-      20,
-      y
-    );
 
     doc.save("cgpa.pdf");
   };
 
   const bg = isDark
-    ? "bg-black text-white"
-    : "bg-white text-black";
+    ? "bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-white"
+    : "bg-gradient-to-b from-slate-50 to-slate-200 text-black";
 
   return (
-    <div className={`min-h-screen p-6 ${bg}`}>
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold">
-            Medical CGPA Calculator
-          </h1>
-
-          <p className="opacity-70 mt-2">
-            Haider Emad
-          </p>
+    <div className={`min-h-screen transition-all duration-300 ${bg}`}>
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="text-center space-y-2 mb-6">
+          <h1 className="text-4xl font-black">Medical CGPA</h1>
+          <p className="opacity-70">Haider Emad</p>
+          <p className="text-sm opacity-50">University of Warith Al-Anbiyaa</p>
         </div>
 
         <div className="flex justify-center gap-3 mb-6">
           <button
             onClick={() => setIsDark(!isDark)}
-            className="border px-4 py-2 rounded-lg"
+            className="px-4 py-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur"
           >
-            Toggle Theme
+            {isDark ? "Light Mode" : "Dark Mode"}
           </button>
 
           <button
             onClick={downloadPDF}
-            className="border px-4 py-2 rounded-lg"
+            className="px-4 py-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 backdrop-blur"
           >
             Download PDF
           </button>
@@ -248,68 +250,46 @@ const maxPoints = enteredStages.length * 5
             {metrics.stageResults.map((stage, i) => (
               <div
                 key={stage.name}
-                className="border rounded-xl p-4"
+                className="rounded-3xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-xl"
               >
                 <button
-                  className="w-full text-left"
-                  onClick={() =>
-                    setOpen(open === i ? null : i)
-                  }
+                  onClick={() => setOpen(open === i ? null : i)}
+                  className="w-full flex justify-between items-center p-5 text-left"
                 >
-                  <div className="flex justify-between">
-                    <div>
-                      <h2 className="text-xl font-bold">
-                        {stage.name}
-                      </h2>
-
-                      <p className="opacity-70">
-                        GPA: {stage.stageGPA} / 5
-                      </p>
-
-                      <p className="opacity-50 text-sm">
-                        Average:{" "}
-                        {stage.avg.toFixed(2)}%
-                      </p>
-                    </div>
-
-                    <span className="text-2xl">
-                      {open === i ? "−" : "+"}
-                    </span>
+                  <div>
+                    <h2 className="text-xl font-bold">{stage.name}</h2>
+                    <p className="text-sm opacity-70">
+                      GPA: {stage.stageGPA.toFixed(2)} / 5
+                    </p>
+                    <p className="text-sm opacity-50">
+                      Average: {stage.avg.toFixed(2)}%
+                    </p>
                   </div>
+                  <span className="text-2xl">{open === i ? "−" : "+"}</span>
                 </button>
 
                 {open === i && (
-                  <div className="mt-4 space-y-3">
+                  <div className="p-5 pt-0 space-y-3">
                     {stage.subjects.map((sub) => (
                       <div
                         key={sub.name}
-                        className="flex justify-between items-center"
+                        className="flex justify-between items-center gap-3"
                       >
                         <div>
-                          <p>{sub.name}</p>
-
-                          <p className="text-xs opacity-50">
-                            Units: {sub.units}
-                          </p>
+                          <p className="font-medium">{sub.name}</p>
+                          <p className="text-xs opacity-50">Units: {sub.units}</p>
                         </div>
 
                         <input
                           type="number"
                           min="0"
                           max="100"
-                          value={
-                            grades[
-                              `${stage.name}-${sub.name}`
-                            ] || ""
-                          }
+                          value={grades[`${stage.name}-${sub.name}`] || ""}
                           onChange={(e) =>
-                            update(
-                              stage.name,
-                              sub.name,
-                              e.target.value
-                            )
+                            update(stage.name, sub.name, e.target.value)
                           }
-                          className="border rounded-lg px-3 py-1 w-24 text-center text-black"
+                          className="w-24 rounded-xl px-3 py-2 text-center text-black"
+                          placeholder="0-100"
                         />
                       </div>
                     ))}
@@ -319,27 +299,46 @@ const maxPoints = enteredStages.length * 5
             ))}
           </div>
 
-          <div className="border rounded-xl p-6 h-fit">
-            <h2 className="text-3xl font-bold">
-              {metrics.totalStagePoints.toFixed(2)} /{" "}
-              {metrics.maxPoints}
-            </h2>
+          <div className="space-y-4">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+              <h2 className="text-3xl font-black">
+                {metrics.earnedWeight.toFixed(2)} / {metrics.maxWeight}
+              </h2>
+              <p className="opacity-70 mt-2">EARNED WEIGHT</p>
 
-            <p className="opacity-70 mt-2">
-              Total Stage GPA
-            </p>
+              <div className="mt-6 space-y-2">
+                {metrics.enteredStages.length === 0 ? (
+                  <p className="text-sm opacity-60">No stage entered yet.</p>
+                ) : (
+                  metrics.stageResults
+                    .filter((s) => s.hasGrades)
+                    .map((s) => (
+                      <div
+                        key={s.name}
+                        className="flex justify-between text-sm"
+                      >
+                        <span>{s.name}</span>
+                        <span>{s.stageGPA.toFixed(2)} / 5</span>
+                      </div>
+                    ))
+                )}
+              </div>
+            </div>
 
-            <div className="mt-6 space-y-2">
-              {metrics.stageResults.map((s) => (
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
+              <div className="flex justify-between text-sm opacity-70">
+                <span>Filled subjects</span>
+                <span>
+                  {metrics.enteredSubjectsCount} / {metrics.allSubjects}
+                </span>
+              </div>
+
+              <div className="mt-4 h-3 rounded-full bg-white/10 overflow-hidden">
                 <div
-                  key={s.name}
-                  className="flex justify-between text-sm"
-                >
-                  <span>{s.name}</span>
-
-                  <span>{s.stageGPA} / 5</span>
-                </div>
-              ))}
+                  className="h-full bg-emerald-500"
+                  style={{ width: `${metrics.progress}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
