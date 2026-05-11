@@ -113,9 +113,10 @@ const gradeColor = (g) => {
   return "#EF4444";
 };
 
-const computeDegree = (grade, subjectUnits, stageTotalUnits) => {
+// حساب Degree للمادة بحيث يكون الحد الأقصى = وزن المرحلة (وليس 5)
+const computeWeightedDegree = (grade, subjectUnits, stageTotalUnits, stageWeight) => {
   if (grade == null || stageTotalUnits === 0) return null;
-  return (grade / 100) * (subjectUnits / stageTotalUnits) * 5;
+  return (grade / 100) * (subjectUnits / stageTotalUnits) * stageWeight;
 };
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
@@ -129,7 +130,7 @@ export default function MedIQPro() {
   // Persistence
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("medical-cgpa-v16");
+      const saved = localStorage.getItem("medical-cgpa-v17");
       if (saved) {
         const d = JSON.parse(saved);
         if (d.grades) setGrades(d.grades);
@@ -141,7 +142,7 @@ export default function MedIQPro() {
 
   useEffect(() => {
     try {
-      localStorage.setItem("medical-cgpa-v16", JSON.stringify({ grades, targetAvg, dark }));
+      localStorage.setItem("medical-cgpa-v17", JSON.stringify({ grades, targetAvg, dark }));
     } catch (_) {}
   }, [grades, targetAvg, dark]);
 
@@ -158,24 +159,25 @@ export default function MedIQPro() {
     });
   }, []);
 
-  // Metrics (including completedDegreeSum)
+  // Metrics (including completedWeightedDegreeSum out of 100)
   const metrics = useMemo(() => {
     let scoreSum = 0;
     let completedWeight = 0;
     let gradedU = 0;
-    let completedDegreeSum = 0;
+    let completedWeightedDegreeSum = 0;
 
     const perStage = STAGES.map(stage => {
       let sW = 0, sU = 0;
       const stageTotal = stage.subjects.reduce((a, s) => a + s.u, 0);
-      let totalDegree = 0;
+      let totalWeightedDegree = 0;  // تتراوح من 0 إلى وزن المرحلة
 
       stage.subjects.forEach((sub, i) => {
         const g = grades[`${stage.id}-${i}`];
         if (g != null) {
           sW += g * sub.u;
           sU += sub.u;
-          totalDegree += computeDegree(g, sub.u, stageTotal);
+          const subDegree = computeWeightedDegree(g, sub.u, stageTotal, stage.weight);
+          if (subDegree != null) totalWeightedDegree += subDegree;
         }
       });
 
@@ -185,7 +187,7 @@ export default function MedIQPro() {
       if (complete && avg != null) {
         scoreSum += avg * stage.weight;
         completedWeight += stage.weight;
-        completedDegreeSum += totalDegree;
+        completedWeightedDegreeSum += totalWeightedDegree;
       }
 
       gradedU += sU;
@@ -198,13 +200,13 @@ export default function MedIQPro() {
         complete,
         earnedWeight: complete ? stage.weight : 0,
         weight: stage.weight,
-        totalDegree,
+        totalWeightedDegree,   // مجموع درجات المرحلة (أقصاها weight)
       };
     });
 
     const remainW = 100 - completedWeight;
     const needed = remainW > 0 ? (targetAvg * 100 - scoreSum) / remainW : null;
-    return { perStage, gradedU, completedWeight, remainW, needed, completedDegreeSum };
+    return { perStage, gradedU, completedWeight, remainW, needed, completedWeightedDegreeSum };
   }, [grades, targetAvg]);
 
   // Theme
@@ -477,9 +479,8 @@ export default function MedIQPro() {
         </div>
       </header>
 
-      {/* METRICS STRIP - First card replaced with STAGE DEGREE SUM */}
+      {/* METRICS STRIP - First card shows completed weighted degree sum out of 100 */}
       <div className="mediq-metrics">
-        {/* STAGE DEGREE SUM (replaces EARNED WEIGHT) */}
         <div style={{
           background:`linear-gradient(135deg,rgba(0,212,170,0.12),rgba(59,130,246,0.08))`,
           border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px",
@@ -488,14 +489,13 @@ export default function MedIQPro() {
             STAGE DEGREE SUM
           </div>
           <div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA",letterSpacing:2}}>
-            {metrics.completedDegreeSum.toFixed(2)}
+            {metrics.completedWeightedDegreeSum.toFixed(2)}
           </div>
           <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>
             / 100
           </div>
         </div>
 
-        {/* Remaining Weight (unchanged) */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:6}}>REMAINING WEIGHT</div>
           <div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA",letterSpacing:2}}>
@@ -504,7 +504,6 @@ export default function MedIQPro() {
           <div style={{fontSize:10,color:T.muted,marginTop:6}}>To reach full 100%</div>
         </div>
 
-        {/* Current Stage Class (unchanged) */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>CURRENT STAGE CLASS</div>
           <div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color ?? T.muted,lineHeight:1.1}}>
@@ -515,7 +514,6 @@ export default function MedIQPro() {
           </div>
         </div>
 
-        {/* Units Graded (unchanged) */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>UNITS GRADED</div>
           <div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>
@@ -527,7 +525,6 @@ export default function MedIQPro() {
           </div>
         </div>
 
-        {/* Target Goal (unchanged) */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>TARGET GOAL</div>
           <input type="number" min={50} max={100} step={0.5} value={targetAvg}
@@ -541,7 +538,7 @@ export default function MedIQPro() {
         </div>
       </div>
 
-      {/* TAB: GRADES (with Degree column and Total Stage Degree) */}
+      {/* TAB: GRADES - with weighted degree per subject and total weighted stage degree */}
       {tab === "grades" && (
         <div className="mediq-layout-grades">
           <div className="mediq-stage-sidebar">
@@ -599,14 +596,14 @@ export default function MedIQPro() {
                 </div>
               </div>
 
-              {/* Subject rows with Degree column */}
+              {/* Subject rows with weighted degree */}
               <div style={{display:"flex",flexDirection:"column",gap:4}}>
                 {stage.subjects.map((sub, i) => {
                   const key = `${stage.id}-${i}`;
                   const g = grades[key];
                   const cls = classify(g);
                   const gc = gradeColor(g);
-                  const degree = computeDegree(g, sub.u, stageTotalUnits);
+                  const weightedDegree = computeWeightedDegree(g, sub.u, stageTotalUnits, stage.weight);
                   return (
                     <div key={i} className="mediq-row" style={{
                       display:"flex",alignItems:"center",gap:12,
@@ -618,9 +615,9 @@ export default function MedIQPro() {
                         <div style={{fontSize:13,fontWeight:600}}>{sub.en}</div>
                         <div style={{fontSize:10,color:T.muted,direction:"rtl",textAlign:"left",marginTop:1}}>{sub.ar}</div>
                       </div>
-                      {degree != null && (
+                      {weightedDegree != null && (
                         <div style={{ fontSize:12, fontWeight:600, fontFamily:"'JetBrains Mono'", color: "#FBBF24", background: "rgba(251,191,36,0.12)", padding:"2px 10px", borderRadius:20, minWidth:100, textAlign:"center" }}>
-                          {degree.toFixed(10)}
+                          {weightedDegree.toFixed(10)}
                         </div>
                       )}
                       {cls && (
@@ -634,16 +631,17 @@ export default function MedIQPro() {
                 })}
               </div>
 
-              {/* Total Stage Degree */}
-              {sm.totalDegree > 0 && (
+              {/* Total Weighted Stage Degree (max = stage.weight) */}
+              {sm.totalWeightedDegree > 0 && (
                 <div style={{ marginTop: 20, textAlign: "right", borderTop: `1px solid ${T.border}`, paddingTop: 16 }}>
-                  <div style={{ fontSize: 12, color: T.muted, letterSpacing: 1 }}>Total Stage Degree (5‑point scale)</div>
-                  <div style={{ fontFamily: "'Bebas Neue'", fontSize: 34, letterSpacing: 2, color: "#FBBF24" }}>{sm.totalDegree.toFixed(10)}</div>
+                  <div style={{ fontSize: 12, color: T.muted, letterSpacing: 1 }}>Total Stage Degree (weighted)</div>
+                  <div style={{ fontFamily: "'Bebas Neue'", fontSize: 34, letterSpacing: 2, color: "#FBBF24" }}>{sm.totalWeightedDegree.toFixed(10)}</div>
+                  <div style={{ fontSize: 10, color: T.muted }}>Max = {stage.weight}</div>
                 </div>
               )}
             </div>
 
-            {/* Right panel (radar, breakdown, bar) unchanged */}
+            {/* Right panel unchanged */}
             <div className="mediq-stage-right">
               <div>
                 <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:16}}>STAGE RADAR</div>
@@ -834,7 +832,7 @@ export default function MedIQPro() {
   );
 }
 
-// Helper components
+// Helper components (unchanged)
 function Row({ label, val, color, muted }) {
   return (
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
