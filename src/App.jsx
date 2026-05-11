@@ -113,7 +113,7 @@ const gradeColor = (g) => {
   return "#EF4444";
 };
 
-// حساب Degree للمادة بحيث يكون الحد الأقصى = وزن المرحلة (وليس 5)
+// حساب Degree للمادة بحيث يكون الحد الأقصى = وزن المرحلة
 const computeWeightedDegree = (grade, subjectUnits, stageTotalUnits, stageWeight) => {
   if (grade == null || stageTotalUnits === 0) return null;
   return (grade / 100) * (subjectUnits / stageTotalUnits) * stageWeight;
@@ -159,7 +159,7 @@ export default function MedIQPro() {
     });
   }, []);
 
-  // Metrics (including completedWeightedDegreeSum out of 100)
+  // Metrics
   const metrics = useMemo(() => {
     let scoreSum = 0;
     let completedWeight = 0;
@@ -169,7 +169,7 @@ export default function MedIQPro() {
     const perStage = STAGES.map(stage => {
       let sW = 0, sU = 0;
       const stageTotal = stage.subjects.reduce((a, s) => a + s.u, 0);
-      let totalWeightedDegree = 0;  // تتراوح من 0 إلى وزن المرحلة
+      let totalWeightedDegree = 0;
 
       stage.subjects.forEach((sub, i) => {
         const g = grades[`${stage.id}-${i}`];
@@ -200,7 +200,7 @@ export default function MedIQPro() {
         complete,
         earnedWeight: complete ? stage.weight : 0,
         weight: stage.weight,
-        totalWeightedDegree,   // مجموع درجات المرحلة (أقصاها weight)
+        totalWeightedDegree,
       };
     });
 
@@ -423,8 +423,21 @@ export default function MedIQPro() {
           .mediq-header-left{flex:1 1 100%}
           .mediq-header-center{order:3;flex:1 1 100%;justify-content:flex-start}
           .mediq-header-right{flex:1 1 100%;justify-content:space-between}
+          /* تحسين عرض عمود Degree على الهواتف */
+          .mediq-row {
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+          }
+          .mediq-row > div:first-child { order: 1; }
+          .mediq-row > div:nth-child(2) { order: 2; flex: 1 1 100%; }
+          .mediq-row > div:nth-child(3) { order: 3; flex: 1 1 auto; min-width: 80px; }
+          .mediq-row > div:nth-child(4) { order: 4; }
+          .mediq-row > input { order: 5; width: 60px !important; }
         }
       `}</style>
+
+      {/* VIEWPORT META (ensures proper scaling on mobile) */}
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
 
       {/* HEADER */}
       <header
@@ -479,7 +492,7 @@ export default function MedIQPro() {
         </div>
       </header>
 
-      {/* METRICS STRIP - First card shows completed weighted degree sum out of 100 */}
+      {/* METRICS STRIP */}
       <div className="mediq-metrics">
         <div style={{
           background:`linear-gradient(135deg,rgba(0,212,170,0.12),rgba(59,130,246,0.08))`,
@@ -491,11 +504,8 @@ export default function MedIQPro() {
           <div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA",letterSpacing:2}}>
             {metrics.completedWeightedDegreeSum.toFixed(2)}
           </div>
-          <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>
-            / 100
-          </div>
+          <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>/ 100</div>
         </div>
-
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:6}}>REMAINING WEIGHT</div>
           <div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA",letterSpacing:2}}>
@@ -503,7 +513,6 @@ export default function MedIQPro() {
           </div>
           <div style={{fontSize:10,color:T.muted,marginTop:6}}>To reach full 100%</div>
         </div>
-
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>CURRENT STAGE CLASS</div>
           <div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color ?? T.muted,lineHeight:1.1}}>
@@ -513,7 +522,6 @@ export default function MedIQPro() {
             {classify(sm.avg)?.ar ?? "أدخل الدرجات"}
           </div>
         </div>
-
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>UNITS GRADED</div>
           <div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>
@@ -524,7 +532,6 @@ export default function MedIQPro() {
             <div style={{height:"100%",borderRadius:3,transition:"width 0.6s ease", background:"linear-gradient(90deg,#00D4AA,#3B82F6)", width:`${(metrics.gradedU/TOTAL_UNITS)*100}%`}} />
           </div>
         </div>
-
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>TARGET GOAL</div>
           <input type="number" min={50} max={100} step={0.5} value={targetAvg}
@@ -538,7 +545,7 @@ export default function MedIQPro() {
         </div>
       </div>
 
-      {/* TAB: GRADES - with weighted degree per subject and total weighted stage degree */}
+      {/* TAB: GRADES */}
       {tab === "grades" && (
         <div className="mediq-layout-grades">
           <div className="mediq-stage-sidebar">
@@ -579,7 +586,7 @@ export default function MedIQPro() {
 
           <div className="mediq-stage-content-wrap">
             <div key={activeStage} className="fade-up mediq-stage-main">
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24, flexWrap:"wrap", gap:12}}>
                 <div>
                   <div style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</div>
                   <div style={{fontSize:14,color:T.muted,direction:"rtl",textAlign:"left",marginTop:3}}>{stage.arabic} — {stage.weight}% من المعدل التراكمي</div>
@@ -596,7 +603,7 @@ export default function MedIQPro() {
                 </div>
               </div>
 
-              {/* Subject rows with weighted degree */}
+              {/* Subject rows */}
               <div style={{display:"flex",flexDirection:"column",gap:4}}>
                 {stage.subjects.map((sub, i) => {
                   const key = `${stage.id}-${i}`;
@@ -609,15 +616,16 @@ export default function MedIQPro() {
                       display:"flex",alignItems:"center",gap:12,
                       padding:"10px 14px",borderRadius:12,transition:"all 0.15s",
                       background: g != null ? `${gc}0A` : "transparent",
+                      flexWrap:"wrap",
                     }}>
                       <div style={{ width:36,height:22,borderRadius:6,flexShrink:0, background:`${stage.color}20`, display:"flex",alignItems:"center",justifyContent:"center", fontSize:10,fontWeight:700,color:stage.color, fontFamily:"'JetBrains Mono'" }}>{sub.u}</div>
-                      <div style={{flex:1,minWidth:0}}>
+                      <div style={{flex:1,minWidth:120}}>
                         <div style={{fontSize:13,fontWeight:600}}>{sub.en}</div>
                         <div style={{fontSize:10,color:T.muted,direction:"rtl",textAlign:"left",marginTop:1}}>{sub.ar}</div>
                       </div>
                       {weightedDegree != null && (
-                        <div style={{ fontSize:12, fontWeight:600, fontFamily:"'JetBrains Mono'", color: "#FBBF24", background: "rgba(251,191,36,0.12)", padding:"2px 10px", borderRadius:20, minWidth:100, textAlign:"center" }}>
-                          {weightedDegree.toFixed(10)}
+                        <div style={{ fontSize:12, fontWeight:600, fontFamily:"'JetBrains Mono'", color: "#FBBF24", background: "rgba(251,191,36,0.12)", padding:"2px 10px", borderRadius:20, minWidth:90, textAlign:"center" }}>
+                          {weightedDegree.toFixed(6)}
                         </div>
                       )}
                       {cls && (
@@ -625,23 +633,23 @@ export default function MedIQPro() {
                       )}
                       <input type="number" min={0} max={100} step={0.5} placeholder="—" value={g ?? ""}
                         onChange={e => setGrade(stage.id, i, e.target.value)}
-                        style={{ width:64,height:38,textAlign:"center",borderRadius:10, background: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)", border:`1.5px solid ${g!=null ? gc+"60" : T.border}`, color: g!=null ? gc : T.text, fontSize:15,fontWeight:800,fontFamily:"'JetBrains Mono'",outline:"none", transition:"all 0.2s" }} />
+                        style={{ width:70,height:38,textAlign:"center",borderRadius:10, background: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)", border:`1.5px solid ${g!=null ? gc+"60" : T.border}`, color: g!=null ? gc : T.text, fontSize:15,fontWeight:800,fontFamily:"'JetBrains Mono'",outline:"none", transition:"all 0.2s" }} />
                     </div>
                   );
                 })}
               </div>
 
-              {/* Total Weighted Stage Degree (max = stage.weight) */}
+              {/* Total Weighted Stage Degree */}
               {sm.totalWeightedDegree > 0 && (
                 <div style={{ marginTop: 20, textAlign: "right", borderTop: `1px solid ${T.border}`, paddingTop: 16 }}>
                   <div style={{ fontSize: 12, color: T.muted, letterSpacing: 1 }}>Total Stage Degree (weighted)</div>
-                  <div style={{ fontFamily: "'Bebas Neue'", fontSize: 34, letterSpacing: 2, color: "#FBBF24" }}>{sm.totalWeightedDegree.toFixed(10)}</div>
+                  <div style={{ fontFamily: "'Bebas Neue'", fontSize: 34, letterSpacing: 2, color: "#FBBF24" }}>{sm.totalWeightedDegree.toFixed(6)}</div>
                   <div style={{ fontSize: 10, color: T.muted }}>Max = {stage.weight}</div>
                 </div>
               )}
             </div>
 
-            {/* Right panel unchanged */}
+            {/* Right panel */}
             <div className="mediq-stage-right">
               <div>
                 <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:16}}>STAGE RADAR</div>
@@ -832,7 +840,7 @@ export default function MedIQPro() {
   );
 }
 
-// Helper components (unchanged)
+// Helper components
 function Row({ label, val, color, muted }) {
   return (
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
