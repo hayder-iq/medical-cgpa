@@ -1,7 +1,7 @@
 import React from "react";
 import jsPDF from "jspdf";
 
-const STORAGE_KEY = "medical-cgpa-pro-v9";
+const STORAGE_KEY = "medical-cgpa-pro-v10";
 
 const STAGES = [
   {
@@ -84,7 +84,9 @@ const STAGES = [
 function clamp(v) {
   if (v === "") return "";
   const n = Number(v);
+
   if (Number.isNaN(n)) return "";
+
   return String(Math.max(0, Math.min(100, n)));
 }
 
@@ -99,15 +101,17 @@ function toStageGPA(avg) {
 
 export default function App() {
   const [grades, setGrades] = React.useState({});
-  const [open, setOpen] = React.useState(null);
+  const [open, setOpen] = React.useState(0);
   const [isDark, setIsDark] = React.useState(true);
 
   React.useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
+
     if (saved) {
-      const parsed = JSON.parse(saved);
-      setGrades(parsed.grades || {});
-      setIsDark(parsed.isDark ?? true);
+      const data = JSON.parse(saved);
+
+      setGrades(data.grades || {});
+      setIsDark(data.isDark ?? true);
     }
   }, []);
 
@@ -118,102 +122,99 @@ export default function App() {
     );
   }, [grades, isDark]);
 
+  React.useEffect(() => {
+    document.documentElement.classList.toggle(
+      "dark",
+      isDark
+    );
+  }, [isDark]);
+
   const metrics = React.useMemo(() => {
     const stageResults = STAGES.map((stage) => {
       let weightedSum = 0;
       let totalUnits = 0;
-      let enteredSubjects = 0;
+      let hasGrades = false;
 
       stage.subjects.forEach((sub) => {
-        const value = grades[`${stage.name}-${sub.name}`];
+        const value =
+          grades[`${stage.name}-${sub.name}`];
 
         if (value !== "" && value !== undefined) {
           const grade = Number(value);
+
           if (!Number.isNaN(grade)) {
             weightedSum += grade * sub.units;
             totalUnits += sub.units;
-            enteredSubjects += 1;
+            hasGrades = true;
           }
         }
       });
 
-      const avg = totalUnits > 0 ? weightedSum / totalUnits : 0;
-      const stageGPA = toStageGPA(avg);
+      const avg =
+        totalUnits > 0
+          ? weightedSum / totalUnits
+          : 0;
 
       return {
         ...stage,
         avg,
-        stageGPA,
-        hasGrades: enteredSubjects > 0,
+        stageGPA: toStageGPA(avg),
+        hasGrades,
       };
     });
 
-    const enteredStages = stageResults.filter((s) => s.hasGrades);
+    const enteredStages = stageResults.filter(
+      (s) => s.hasGrades
+    );
+
     const earnedWeight = enteredStages.reduce(
       (sum, s) => sum + s.stageGPA,
       0
     );
-    const maxWeight = enteredStages.length * 5;
 
-    const allSubjects = STAGES.reduce(
-      (sum, s) => sum + s.subjects.length,
-      0
-    );
-
-    const enteredSubjectsCount = Object.values(grades).filter(
-      (v) => v !== ""
-    ).length;
+    const maxWeight =
+      enteredStages.length * 5;
 
     return {
       stageResults,
-      enteredStages,
       earnedWeight,
       maxWeight,
-      progress:
-        allSubjects > 0
-          ? (enteredSubjectsCount / allSubjects) * 100
-          : 0,
-      enteredSubjectsCount,
-      allSubjects,
     };
   }, [grades]);
 
-  const update = (stage, subject, value) => {
+  const update = (stage, sub, value) => {
     setGrades((prev) => ({
       ...prev,
-      [`${stage}-${subject}`]: clamp(value),
+      [`${stage}-${sub}`]: clamp(value),
     }));
   };
 
   const downloadPDF = () => {
     const doc = new jsPDF();
 
-    doc.text("Medical CGPA Transcript", 20, 20);
-    doc.text("Name: Haider Emad", 20, 30);
-    doc.text("University: Warith Al-Anbiyaa", 20, 40);
+    doc.text("Medical Transcript", 20, 20);
+
     doc.text(
-      `Earned Weight: ${metrics.earnedWeight.toFixed(2)} / ${metrics.maxWeight}`,
+      `Earned Weight: ${metrics.earnedWeight.toFixed(
+        2
+      )} / ${metrics.maxWeight}`,
       20,
-      50
+      35
     );
 
-    let y = 70;
+    let y = 50;
 
     metrics.stageResults.forEach((stage) => {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
-
       doc.text(
-        `${stage.name} : ${stage.stageGPA.toFixed(2)} / 5`,
+        `${stage.name} : ${stage.stageGPA}/5`,
         20,
         y
       );
+
       y += 10;
     });
 
-    doc.save("cgpa.pdf");
+    doc.save("transcript.pdf");
   };
 
   const bg = isDark
@@ -221,124 +222,178 @@ export default function App() {
     : "bg-gradient-to-b from-slate-50 to-slate-200 text-black";
 
   return (
-    <div className={`min-h-screen transition-all duration-300 ${bg}`}>
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="text-center space-y-2 mb-6">
-          <h1 className="text-4xl font-black">Medical CGPA</h1>
-          <p className="opacity-70">Haider Emad</p>
-          <p className="text-sm opacity-50">University of Warith Al-Anbiyaa</p>
+    <div
+      className={`min-h-screen transition-all duration-500 ${bg}`}
+    >
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl font-black">
+            Medical CGPA
+          </h1>
+
+          <p className="opacity-70">
+            Haider Emad
+          </p>
+
+          <p className="text-sm opacity-50">
+            University of Warith Al-Anbiyaa
+          </p>
         </div>
 
-        <div className="flex justify-center gap-3 mb-6">
+        <div className="flex justify-center gap-3 my-6">
           <button
-            onClick={() => setIsDark(!isDark)}
-            className="px-4 py-2 rounded-xl border border-white/20 bg-white/10 backdrop-blur"
+            onClick={() =>
+              setIsDark(!isDark)
+            }
+            className="px-4 py-2 rounded-xl bg-zinc-800 text-white"
           >
-            {isDark ? "Light Mode" : "Dark Mode"}
+            {isDark
+              ? "Light Mode"
+              : "Dark Mode"}
           </button>
 
           <button
             onClick={downloadPDF}
-            className="px-4 py-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 backdrop-blur"
+            className="px-4 py-2 rounded-xl bg-emerald-600 text-white"
           >
-            Download PDF
+            Download Transcript
           </button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
-            {metrics.stageResults.map((stage, i) => (
-              <div
-                key={stage.name}
-                className="rounded-3xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-xl"
-              >
-                <button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex justify-between items-center p-5 text-left"
+            {metrics.stageResults.map(
+              (stage, i) => (
+                <div
+                  key={stage.name}
+                  className="rounded-3xl border border-white/10 overflow-hidden bg-white/5 backdrop-blur-xl"
                 >
-                  <div>
-                    <h2 className="text-xl font-bold">{stage.name}</h2>
-                    <p className="text-sm opacity-70">
-                      GPA: {stage.stageGPA.toFixed(2)} / 5
-                    </p>
-                    <p className="text-sm opacity-50">
-                      Average: {stage.avg.toFixed(2)}%
-                    </p>
-                  </div>
-                  <span className="text-2xl">{open === i ? "−" : "+"}</span>
-                </button>
+                  <button
+                    onClick={() =>
+                      setOpen(
+                        open === i
+                          ? null
+                          : i
+                      )
+                    }
+                    className="w-full flex justify-between p-5"
+                  >
+                    <div className="text-left">
+                      <h2 className="text-xl font-bold">
+                        {stage.name}
+                      </h2>
 
-                {open === i && (
-                  <div className="p-5 pt-0 space-y-3">
-                    {stage.subjects.map((sub) => (
-                      <div
-                        key={sub.name}
-                        className="flex justify-between items-center gap-3"
-                      >
-                        <div>
-                          <p className="font-medium">{sub.name}</p>
-                          <p className="text-xs opacity-50">Units: {sub.units}</p>
-                        </div>
+                      <p className="text-sm opacity-70">
+                        GPA:{" "}
+                        {stage.stageGPA.toFixed(
+                          2
+                        )}{" "}
+                        / 5
+                      </p>
 
-                        <input
-                          type="number"
-                          min="0"
-                          max="100"
-                          value={grades[`${stage.name}-${sub.name}`] || ""}
-                          onChange={(e) =>
-                            update(stage.name, sub.name, e.target.value)
-                          }
-                          className="w-24 rounded-xl px-3 py-2 text-center text-black"
-                          placeholder="0-100"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                      <p className="text-sm opacity-50">
+                        Average:{" "}
+                        {stage.avg.toFixed(
+                          2
+                        )}
+                        %
+                      </p>
+                    </div>
+
+                    <span className="text-2xl">
+                      {open === i
+                        ? "−"
+                        : "+"}
+                    </span>
+                  </button>
+
+                  {open === i && (
+                    <div className="p-5 space-y-3">
+                      {stage.subjects.map(
+                        (sub) => (
+                          <div
+                            key={sub.name}
+                            className="flex justify-between items-center"
+                          >
+                            <div>
+                              <span>
+                                {sub.name}
+                              </span>
+
+                              <p className="text-xs opacity-50">
+                                Units:{" "}
+                                {sub.units}
+                              </p>
+                            </div>
+
+                            <input
+                              type="number"
+                              min="0"
+                              max="100"
+                              className="bg-black/30 px-3 py-1 rounded-xl w-24 text-center"
+                              value={
+                                grades[
+                                  `${stage.name}-${sub.name}`
+                                ] || ""
+                              }
+                              onChange={(
+                                e
+                              ) =>
+                                update(
+                                  stage.name,
+                                  sub.name,
+                                  e.target
+                                    .value
+                                )
+                              }
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            )}
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
-              <h2 className="text-3xl font-black">
-                {metrics.earnedWeight.toFixed(2)} / {metrics.maxWeight}
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 text-center">
+              <h2 className="text-5xl font-black">
+                {metrics.earnedWeight.toFixed(
+                  2
+                )}{" "}
+                /{" "}
+                {metrics.maxWeight}
               </h2>
-              <p className="opacity-70 mt-2">EARNED WEIGHT</p>
 
-              <div className="mt-6 space-y-2">
-                {metrics.enteredStages.length === 0 ? (
-                  <p className="text-sm opacity-60">No stage entered yet.</p>
-                ) : (
-                  metrics.stageResults
-                    .filter((s) => s.hasGrades)
-                    .map((s) => (
-                      <div
-                        key={s.name}
-                        className="flex justify-between text-sm"
-                      >
-                        <span>{s.name}</span>
-                        <span>{s.stageGPA.toFixed(2)} / 5</span>
-                      </div>
-                    ))
-                )}
-              </div>
+              <p className="font-bold mt-2">
+                EARNED WEIGHT
+              </p>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
-              <div className="flex justify-between text-sm opacity-70">
-                <span>Filled subjects</span>
-                <span>
-                  {metrics.enteredSubjectsCount} / {metrics.allSubjects}
-                </span>
-              </div>
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 space-y-3">
+              {metrics.stageResults
+                .filter(
+                  (s) => s.hasGrades
+                )
+                .map((s) => (
+                  <div
+                    key={s.name}
+                    className="flex justify-between"
+                  >
+                    <span>
+                      {s.name}
+                    </span>
 
-              <div className="mt-4 h-3 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-emerald-500"
-                  style={{ width: `${metrics.progress}%` }}
-                />
-              </div>
+                    <span>
+                      {s.stageGPA.toFixed(
+                        2
+                      )}{" "}
+                      / 5
+                    </span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
