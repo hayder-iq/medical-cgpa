@@ -130,7 +130,7 @@ export default function MedIQPro() {
   // Persistence
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("medical-cgpa-v18");
+      const saved = localStorage.getItem("medical-cgpa-v17");
       if (saved) {
         const d = JSON.parse(saved);
         if (d.grades) setGrades(d.grades);
@@ -142,7 +142,7 @@ export default function MedIQPro() {
 
   useEffect(() => {
     try {
-      localStorage.setItem("medical-cgpa-v18", JSON.stringify({ grades, targetAvg, dark }));
+      localStorage.setItem("medical-cgpa-v17", JSON.stringify({ grades, targetAvg, dark }));
     } catch (_) {}
   }, [grades, targetAvg, dark]);
 
@@ -395,33 +395,17 @@ export default function MedIQPro() {
           .mediq-layout-grades{
             grid-template-columns:1fr !important;
           }
-          /* تحسين ظهور المراحل على الهاتف - شريط أفقي مع تمرير واضح */
           .mediq-stage-sidebar{
             border-right:none !important;
             border-bottom:1px solid var(--mediq-border) !important;
             padding:12px !important;
             flex-direction:row !important;
             overflow-x:auto !important;
-            scroll-snap-type: x mandatory;
-            gap: 8px !important;
-            -webkit-overflow-scrolling: touch;
+            align-items:stretch !important;
           }
-          .mediq-stage-sidebar > button {
-            scroll-snap-align: start;
-            min-width: 180px !important;
-            flex: 0 0 auto !important;
-            margin-right: 4px;
-          }
-          /* إضافة مؤشر وجود تمرير (تدرج شفاف) */
-          .mediq-stage-sidebar::after {
-            content: '';
-            position: sticky;
-            right: 0;
-            top: 0;
-            width: 30px;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1));
-            pointer-events: none;
+          .mediq-stage-sidebar > button{
+            min-width:220px !important;
+            flex:0 0 auto !important;
           }
           .mediq-stage-main,
           .mediq-stage-right,
@@ -439,7 +423,7 @@ export default function MedIQPro() {
           .mediq-header-left{flex:1 1 100%}
           .mediq-header-center{order:3;flex:1 1 100%;justify-content:flex-start}
           .mediq-header-right{flex:1 1 100%;justify-content:space-between}
-          /* إعادة ترتيب صفوف المواد */
+          /* تحسين عرض عمود Degree على الهواتف */
           .mediq-row {
             flex-wrap: wrap !important;
             gap: 8px !important;
@@ -452,7 +436,7 @@ export default function MedIQPro() {
         }
       `}</style>
 
-      {/* VIEWPORT META */}
+      {/* VIEWPORT META (ensures proper scaling on mobile) */}
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
 
       {/* HEADER */}
@@ -564,7 +548,6 @@ export default function MedIQPro() {
       {/* TAB: GRADES */}
       {tab === "grades" && (
         <div className="mediq-layout-grades">
-          {/* شريط المراحل الجانبي مع مؤشر تمرير */}
           <div className="mediq-stage-sidebar">
             {STAGES.map((s, idx) => {
               const sm = metrics.perStage[idx];
@@ -599,12 +582,6 @@ export default function MedIQPro() {
                 </button>
               );
             })}
-          </div>
-          {/* إضافة نص إرشادي للتمرير على الهواتف */}
-          <div style={{ display: 'block', textAlign: 'center', fontSize: 10, color: T.muted, marginTop: 4, marginBottom: 4 }}>
-            <span style={{ display: 'inline-block', background: dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', padding: '2px 8px', borderRadius: 20 }}>
-              👈 اسحب لليمين لرؤية كل المراحل 👉
-            </span>
           </div>
 
           <div className="mediq-stage-content-wrap">
@@ -863,7 +840,7 @@ export default function MedIQPro() {
   );
 }
 
-// Helper components (unchanged)
+// Helper components
 function Row({ label, val, color, muted }) {
   return (
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
