@@ -160,13 +160,17 @@ export default function App() {
       0
     );
 
-    const maxPoints = stageResults.length * 5;
+    const enteredStages = stageResults.filter(
+  (s) => s.avg > 0
+);
 
-    return {
-      stageResults,
-      totalStagePoints,
-      maxPoints,
-    };
+const maxPoints = enteredStages.length * 5
+
+   	return {
+  	stageResults,
+  	totalStagePoints,
+  	maxPoints,
+	};
   }, [grades]);
 
   const update = (stage, subject, value) => {
