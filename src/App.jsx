@@ -1,47 +1,56 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  BarChart, Bar, XAxis, YAxis,
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 
-// ─── CURRICULUM ─────────────────────────────────────────────
+// ─── DATA ───────────────────────────────────────────────
 const STAGES = [
   {
-    id: 0, label: "1st", full: "First Stage", arabic: "المرحلة الأولى",
-    color: "#60A5FA", weight: 5,
+    id: 0,
+    label: "1st",
+    full: "First Stage",
+    weight: 5,
     subjects: [
       { en: "Anatomy", u: 8 },
       { en: "Biology", u: 6 },
-      { en: "Chemistry", u: 6 },
-    ],
+      { en: "Chemistry", u: 6 }
+    ]
   },
   {
-    id: 1, label: "2nd", full: "Second Stage", arabic: "الثانية",
-    color: "#A78BFA", weight: 5,
+    id: 1,
+    label: "2nd",
+    full: "Second Stage",
+    weight: 5,
     subjects: [
       { en: "Physiology", u: 10 },
-      { en: "Anatomy", u: 8 },
-    ],
+      { en: "Anatomy", u: 8 }
+    ]
   },
   {
-    id: 2, label: "3rd", full: "Third Stage", arabic: "الثالثة",
-    color: "#F87171", weight: 5,
+    id: 2,
+    label: "3rd",
+    full: "Third Stage",
+    weight: 5,
     subjects: [
       { en: "Pathology", u: 10 },
-      { en: "Pharmacology", u: 8 },
-    ],
+      { en: "Pharmacology", u: 8 }
+    ]
   },
   {
-    id: 3, label: "4th", full: "Fourth Stage", arabic: "الرابعة",
-    color: "#FBBF24", weight: 20,
+    id: 3,
+    label: "4th",
+    full: "Fourth Stage",
+    weight: 20,
     subjects: [
       { en: "Medicine", u: 10 },
-      { en: "Surgery", u: 10 },
-    ],
-  },
+      { en: "Surgery", u: 10 }
+    ]
+  }
 ];
 
+// ─── CLASSIFY ───────────────────────────────────────────
 const classify = (g) => {
   if (g >= 90) return { label: "Excellent", color: "#10B981" };
   if (g >= 80) return { label: "Very Good", color: "#60A5FA" };
@@ -51,14 +60,15 @@ const classify = (g) => {
   return { label: "Fail", color: "#EF4444" };
 };
 
-// ─── APP ─────────────────────────────────────────────────────
+// ─── APP ────────────────────────────────────────────────
 export default function App() {
   const [grades, setGrades] = useState({});
   const [dark, setDark] = useState(false);
   const [active, setActive] = useState(0);
 
+  // ─── STORAGE SAFE ─────────────────────────────────────
   useEffect(() => {
-    const saved = localStorage.getItem("cgpa");
+    const saved = localStorage.getItem("cgpa_full");
     if (saved) {
       const d = JSON.parse(saved);
       setGrades(d.grades || {});
@@ -67,27 +77,28 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cgpa", JSON.stringify({ grades, dark }));
+    localStorage.setItem("cgpa_full", JSON.stringify({ grades, dark }));
   }, [grades, dark]);
 
   const setGrade = useCallback((sid, i, v) => {
     const key = `${sid}-${i}`;
-    setGrades(p => {
-      const c = { ...p };
-      if (v === "") delete c[key];
-      else c[key] = Number(v);
-      return c;
+    setGrades(prev => {
+      const copy = { ...prev };
+      if (v === "") delete copy[key];
+      else copy[key] = Number(v);
+      return copy;
     });
   }, []);
 
-  // ─── CORE FIXED LOGIC ───────────────────────────────
+  // ─── FIXED CGPA LOGIC ─────────────────────────────────
   const metrics = useMemo(() => {
-    let weighted = 0;
+    let weightedSum = 0;
     let completedWeight = 0;
 
     const perStage = STAGES.map(stage => {
       let sum = 0;
       let count = 0;
+
       const totalU = stage.subjects.reduce((a, s) => a + s.u, 0);
 
       stage.subjects.forEach((s, i) => {
@@ -104,7 +115,7 @@ export default function App() {
       let earned = 0;
 
       if (complete && avg != null) {
-        weighted += avg * stage.weight;
+        weightedSum += avg * stage.weight;
         completedWeight += stage.weight;
         earned = stage.weight;
       }
@@ -117,7 +128,7 @@ export default function App() {
       };
     });
 
-    const cgpa = weighted / 100;
+    const cgpa = weightedSum / 100;
 
     return {
       cgpa,
@@ -127,83 +138,137 @@ export default function App() {
     };
   }, [grades]);
 
+  // ─── THEME ────────────────────────────────────────────
   const T = {
-    bg: dark ? "#0B0F19" : "#F5F7FB",
-    card: dark ? "#121A2A" : "#fff",
-    text: dark ? "#fff" : "#111"
+    bg: dark ? "#0B0F19" : "#F6F7FB",
+    card: dark ? "#121A2A" : "#FFFFFF",
+    text: dark ? "#FFFFFF" : "#111827"
   };
 
+  // ─── UI ───────────────────────────────────────────────
   return (
-    <div style={{ background: T.bg, minHeight: "100vh", padding: 10, color: T.text }}>
+    <div style={{
+      minHeight: "100vh",
+      background: T.bg,
+      color: T.text,
+      padding: 12,
+      fontFamily: "system-ui"
+    }}>
 
-      {/* HEADER */}
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      {/* HEADER (MOBILE SAFE) */}
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        marginBottom: 12
+      }}>
         <div style={{ fontWeight: 900, fontSize: 20 }}>
           HAIDER EMAD
         </div>
+
         <button onClick={() => setDark(!dark)}>
-          Toggle
+          Toggle Theme
         </button>
       </div>
 
-      {/* CGPA */}
-      <div style={{ background: T.card, padding: 20, borderRadius: 12 }}>
+      {/* CGPA CARD */}
+      <div style={{
+        background: T.card,
+        padding: 16,
+        borderRadius: 12,
+        marginBottom: 12
+      }}>
         <div>CGPA</div>
-        <div style={{ fontSize: 40, fontWeight: 900 }}>
+        <div style={{ fontSize: 36, fontWeight: 900 }}>
           {metrics.cgpa.toFixed(2)}
         </div>
         <div style={{ color: metrics.cls.color }}>
           {metrics.cls.label}
         </div>
 
-        <div style={{ marginTop: 10 }}>
+        <div style={{ marginTop: 8 }}>
           Completed Weight: {metrics.completedWeight} / 100
         </div>
       </div>
 
-      {/* STAGES */}
+      {/* STAGES (FULL RESPONSIVE FIX) */}
       <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: 10,
-        marginTop: 20
+        display: "flex",
+        flexDirection: "column",
+        gap: 12
       }}>
-        {STAGES.map((s, si) => (
-          <div key={s.id} style={{ background: T.card, padding: 10, borderRadius: 10 }}>
-            <h3>{s.full}</h3>
+        {STAGES.map((stage, si) => (
+          <div key={stage.id} style={{
+            background: T.card,
+            padding: 12,
+            borderRadius: 12
+          }}>
 
-            <div style={{ marginBottom: 10 }}>
-              Weight: {s.weight}
+            <div style={{ fontWeight: 800, marginBottom: 8 }}>
+              {stage.full} ({stage.weight}%)
             </div>
 
-            <div>
-              {s.subjects.map((sub, i) => {
-                const key = `${s.id}-${i}`;
+            {/* SUBJECTS */}
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 10
+            }}>
+              {stage.subjects.map((s, i) => {
+                const key = `${stage.id}-${i}`;
+                const g = grades[key];
+
                 return (
-                  <div key={i} style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span>{sub.en}</span>
+                  <div key={i} style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}>
+                    <span style={{ fontSize: 13 }}>
+                      {s.en}
+                    </span>
+
                     <input
-                      style={{ width: 60 }}
-                      value={grades[key] ?? ""}
-                      onChange={(e) => setGrade(s.id, i, e.target.value)}
+                      type="number"
+                      value={g ?? ""}
+                      onChange={(e) => setGrade(stage.id, i, e.target.value)}
+                      style={{
+                        width: 70,
+                        padding: 6,
+                        borderRadius: 6,
+                        border: "1px solid #ccc",
+                        textAlign: "center"
+                      }}
                     />
                   </div>
                 );
               })}
             </div>
 
-            {/* STAGE RESULT */}
+            {/* STAGE STATUS */}
             <div style={{ marginTop: 10 }}>
               {metrics.perStage[si].complete ? (
                 <b style={{ color: "#10B981" }}>
-                  +{metrics.perStage[si].earned}
+                  Completed ✔
                 </b>
               ) : (
-                <span style={{ opacity: 0.5 }}>Not complete</span>
+                <span style={{ opacity: 0.5 }}>
+                  In progress
+                </span>
               )}
             </div>
           </div>
         ))}
+      </div>
+
+      {/* FOOTER */}
+      <div style={{
+        marginTop: 20,
+        textAlign: "center",
+        fontSize: 12,
+        opacity: 0.6
+      }}>
+        Fully Mobile Optimized + Fixed CGPA System
       </div>
     </div>
   );
