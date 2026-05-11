@@ -130,7 +130,7 @@ export default function MedIQPro() {
   // Persistence
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("medical-cgpa-v17");
+      const saved = localStorage.getItem("medical-cgpa-v18");
       if (saved) {
         const d = JSON.parse(saved);
         if (d.grades) setGrades(d.grades);
@@ -142,7 +142,7 @@ export default function MedIQPro() {
 
   useEffect(() => {
     try {
-      localStorage.setItem("medical-cgpa-v17", JSON.stringify({ grades, targetAvg, dark }));
+      localStorage.setItem("medical-cgpa-v18", JSON.stringify({ grades, targetAvg, dark }));
     } catch (_) {}
   }, [grades, targetAvg, dark]);
 
@@ -395,17 +395,22 @@ export default function MedIQPro() {
           .mediq-layout-grades{
             grid-template-columns:1fr !important;
           }
+          /* تحويل شريط المراحل إلى أفقي مع تمرير على الهواتف فقط */
           .mediq-stage-sidebar{
             border-right:none !important;
             border-bottom:1px solid var(--mediq-border) !important;
             padding:12px !important;
             flex-direction:row !important;
             overflow-x:auto !important;
-            align-items:stretch !important;
+            gap: 8px !important;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
           }
-          .mediq-stage-sidebar > button{
-            min-width:220px !important;
-            flex:0 0 auto !important;
+          .mediq-stage-sidebar > button {
+            scroll-snap-align: start;
+            min-width: 180px !important;
+            flex: 0 0 auto !important;
+            margin-right: 4px;
           }
           .mediq-stage-main,
           .mediq-stage-right,
@@ -418,12 +423,22 @@ export default function MedIQPro() {
             justify-content:center !important;
             text-align:center !important;
           }
+          /* إظهار النص الإرشادي للتمرير على الهواتف فقط */
+          .mobile-swipe-hint {
+            display: block !important;
+          }
+        }
+        @media (min-width: 769px) {
+          /* إخفاء النص الإرشادي على الشاشات الكبيرة (PC) */
+          .mobile-swipe-hint {
+            display: none !important;
+          }
         }
         @media (max-width: 520px){
           .mediq-header-left{flex:1 1 100%}
           .mediq-header-center{order:3;flex:1 1 100%;justify-content:flex-start}
           .mediq-header-right{flex:1 1 100%;justify-content:space-between}
-          /* تحسين عرض عمود Degree على الهواتف */
+          /* إعادة ترتيب صفوف المواد */
           .mediq-row {
             flex-wrap: wrap !important;
             gap: 8px !important;
@@ -436,7 +451,7 @@ export default function MedIQPro() {
         }
       `}</style>
 
-      {/* VIEWPORT META (ensures proper scaling on mobile) */}
+      {/* VIEWPORT META */}
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
 
       {/* HEADER */}
@@ -548,6 +563,7 @@ export default function MedIQPro() {
       {/* TAB: GRADES */}
       {tab === "grades" && (
         <div className="mediq-layout-grades">
+          {/* شريط المراحل الجانبي - على PC عمودي، على الهاتف أفقي مع تمرير */}
           <div className="mediq-stage-sidebar">
             {STAGES.map((s, idx) => {
               const sm = metrics.perStage[idx];
@@ -582,6 +598,12 @@ export default function MedIQPro() {
                 </button>
               );
             })}
+          </div>
+          {/* نص إرشادي يظهر فقط على الهواتف (باستخدام class mobile-swipe-hint) */}
+          <div className="mobile-swipe-hint" style={{ textAlign: 'center', fontSize: 10, color: T.muted, marginTop: 4, marginBottom: 4 }}>
+            <span style={{ display: 'inline-block', background: dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', padding: '2px 8px', borderRadius: 20 }}>
+              👈 اسحب لليمين لرؤية كل المراحل 👉
+            </span>
           </div>
 
           <div className="mediq-stage-content-wrap">
@@ -765,7 +787,7 @@ export default function MedIQPro() {
             ) : (
               <div style={{display:"flex",flexDirection:"column",gap:14}}>
                 <InsightRow icon="🏆" label="Highest Grade" value={best ? `${best.en} — ${best.g}` : "—"} sub={best ? `${best.stage} · ${best.u} units` : ""} color="#10B981" T={T} />
-                <InsightRow icon="📉" label="Lowest Grade" value={worst ? `${worst.en} — ${worst.g}` : "—"} sub={worst ? `${worst.stage} · ${worst.u} units` : ""} color="#FBBF24" T={T} />
+                <InsightRow icon="📉" label="Lowest Grade" value={worst ? `${worst.en} — ${worst.g}` : "—"} sub={worst ? `${worst.stage} · ${best.u} units` : ""} color="#FBBF24" T={T} />
                 <InsightRow icon="📊" label="Subjects Graded" value={`${allGraded.length} of ${STAGES.reduce((a,s)=>a+s.subjects.length,0)}`} sub={`${((allGraded.length/STAGES.reduce((a,s)=>a+s.subjects.length,0))*100).toFixed(0)}% of curriculum entered`} color="#60A5FA" T={T} />
                 {failing.length > 0 && <InsightRow icon="⚠️" label={`${failing.length} Failing Subject${failing.length>1?"s":""}`} value={failing.map(f=>f.en).join(", ")} sub="Subjects below 50 — requires attention" color="#EF4444" T={T} />}
                 <InsightRow icon="🎯" label="Best Stage" value={(() => { const avgs = metrics.perStage.map((p,i)=>({avg:p.avg,name:STAGES[i].full})); const valid = avgs.filter(a=>a.avg!=null); if(!valid.length) return "—"; const best = valid.reduce((a,b)=>b.avg>a.avg?b:a); return `${best.name} — ${best.avg.toFixed(2)}`; })()} sub="Stage with highest average" color="#34D399" T={T} />
@@ -840,7 +862,7 @@ export default function MedIQPro() {
   );
 }
 
-// Helper components
+// Helper components (unchanged)
 function Row({ label, val, color, muted }) {
   return (
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
