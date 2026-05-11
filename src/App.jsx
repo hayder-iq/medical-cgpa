@@ -91,6 +91,9 @@ const STAGES = [
 
 const TOTAL_UNITS = STAGES.reduce((acc, stage) => acc + stage.subjects.reduce((a, s) => a + s.u, 0), 0);
 
+// Cumulative weight milestones shown in the "details" panel.
+const WEIGHT_MILESTONES = [5, 10, 15, 35, 60, 100];
+
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 const classify = (g) => {
   if (g == null || g === 0) return null;
@@ -116,11 +119,11 @@ const gpa4 = (avg) => Math.min(4, avg / 25).toFixed(2);
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 export default function MedIQPro() {
-  const [grades,      setGrades     ] = useState({});
-  const [activeStage, setActiveStage ] = useState(0);
-  const [targetAvg,   setTargetAvg   ] = useState(85);
-  const [dark,        setDark        ] = useState(false); // Light mode first
-  const [tab,         setTab         ] = useState("grades"); // "grades" | "details" | "insights"
+  const [grades, setGrades] = useState({});
+  const [activeStage, setActiveStage] = useState(0);
+  const [targetAvg, setTargetAvg] = useState(85);
+  const [dark, setDark] = useState(false); // Light mode first
+  const [tab, setTab] = useState("grades"); // "grades" | "details" | "insights"
 
   // ── Persistence ──────────────────────────────────────────
   useEffect(() => {
@@ -128,8 +131,8 @@ export default function MedIQPro() {
       const saved = localStorage.getItem("medical-cgpa-v15");
       if (saved) {
         const d = JSON.parse(saved);
-        if (d.grades)      setGrades(d.grades);
-        if (d.targetAvg)    setTargetAvg(d.targetAvg);
+        if (d.grades) setGrades(d.grades);
+        if (d.targetAvg) setTargetAvg(d.targetAvg);
         if (d.dark != null) setDark(d.dark);
       }
     } catch (_) {}
@@ -145,16 +148,20 @@ export default function MedIQPro() {
   const setGrade = useCallback((sid, idx, raw) => {
     const key = `${sid}-${idx}`;
     setGrades(prev => {
-      if (raw === "" || raw == null) { const n = {...prev}; delete n[key]; return n; }
+      if (raw === "" || raw == null) {
+        const n = { ...prev };
+        delete n[key];
+        return n;
+      }
       const v = parseFloat(raw);
-      return isNaN(v) ? prev : {...prev, [key]: Math.min(100, Math.max(0, v))};
+      return isNaN(v) ? prev : { ...prev, [key]: Math.min(100, Math.max(0, v)) };
     });
   }, []);
 
-  // ── Advanced Weighted Metrics (count only fully completed stages) ─────────
+  // ── Advanced Weighted Metrics (ONLY completed stages count as weight) ─────
   const metrics = useMemo(() => {
-    let cgpaWeightedSum = 0;
-    let completedWeight = 0;
+    let scoreSum = 0;         // used only for target calculator
+    let completedWeight = 0;  // what you want to see
     let gradedU = 0;
 
     const perStage = STAGES.map(stage => {
@@ -170,7 +177,7 @@ export default function MedIQPro() {
       const complete = stageTotal > 0 && sU === stageTotal;
 
       if (complete && avg != null) {
-        cgpaWeightedSum += avg * stage.weight;
+        scoreSum += avg * stage.weight;
         completedWeight += stage.weight;
       }
 
@@ -187,14 +194,10 @@ export default function MedIQPro() {
       };
     });
 
-    // Final accumulated contribution out of 100
-    const cgpa = cgpaWeightedSum / 100;
-
     const remainW = 100 - completedWeight;
-    const needed  = remainW > 0 ? (targetAvg * 100 - cgpaWeightedSum) / remainW : null;
-    const cls     = classify(cgpa);
+    const needed  = remainW > 0 ? (targetAvg * 100 - scoreSum) / remainW : null;
 
-    return { cgpa, gpa4: gpa4(cgpa), cls, perStage, gradedU, completedWeight, remainW, needed };
+    return { perStage, gradedU, completedWeight, remainW, needed };
   }, [grades, targetAvg]);
 
   // ── Theme tokens ──────────────────────────────────────────────────────────
@@ -228,18 +231,28 @@ export default function MedIQPro() {
   const worst = allGraded.length ? allGraded.reduce((a, b) => b.g < a.g ? b : a) : null;
   const failing = allGraded.filter(x => x.g < 50);
 
+  const openTelegram = () => {
+    window.open("https://t.me/ddxo2", "_blank", "noopener,noreferrer");
+  };
+
+  // Milestone highlight based on completed weight
+  const milestoneActive = WEIGHT_MILESTONES.map(w => metrics.completedWeight >= w);
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="mediq-shell" style={{
-      minHeight:"100dvh",
-      width:"100%",
-      overflowX:"hidden",
-      background:T.bg,
-      color:T.text,
-      fontFamily:"'Outfit','DM Sans',system-ui,sans-serif",
-      transition:"background 0.3s,color 0.3s",
-      "--mediq-border": T.border,
-    }}>
+    <div
+      className="mediq-shell"
+      style={{
+        minHeight:"100dvh",
+        width:"100%",
+        overflowX:"hidden",
+        background:T.bg,
+        color:T.text,
+        fontFamily:"'Outfit','DM Sans',system-ui,sans-serif",
+        transition:"background 0.3s,color 0.3s",
+        "--mediq-border": T.border,
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&display=swap');
         *{box-sizing:border-box;margin:0;padding:0}
@@ -257,7 +270,7 @@ export default function MedIQPro() {
         .fade-up{animation:fadeUp 0.35s ease forwards}
 
         .mediq-header{
-          position:sticky; top:0; z-index:100;
+          position:sticky;top:0;z-index:100;
           background:inherit;
           backdrop-filter:blur(16px);
           border-bottom:1px solid var(--mediq-border);
@@ -377,7 +390,6 @@ export default function MedIQPro() {
           .mediq-stage-content-wrap{grid-template-columns:1fr}
           .mediq-stage-main{border-right:none;border-bottom:1px solid var(--mediq-border)}
           .mediq-insights{grid-template-columns:1fr}
-          .mediq-details > div:last-of-type{grid-column:1 / -1}
         }
 
         @media (max-width: 768px){
@@ -426,10 +438,13 @@ export default function MedIQPro() {
       `}</style>
 
       {/* ── HEADER ── */}
-      <header className="mediq-header" style={{
-        background: dark ? "rgba(7,9,15,0.92)" : "rgba(239,242,247,0.92)",
-        backdropFilter:"blur(16px)",
-      }}>
+      <header
+        className="mediq-header"
+        style={{
+          background: dark ? "rgba(7,9,15,0.92)" : "rgba(239,242,247,0.92)",
+          backdropFilter:"blur(16px)",
+        }}
+      >
         {/* Logo */}
         <div className="mediq-header-left">
           <div style={{
@@ -438,15 +453,27 @@ export default function MedIQPro() {
             display:"flex",alignItems:"center",justifyContent:"center",
             fontSize:18,fontFamily:"'Bebas Neue'",color:"white",letterSpacing:1,
           }}>CG</div>
+
           <div style={{minWidth:0}}>
-            <div style={{
-              fontFamily:"'Bebas Neue'",
-              fontSize:19,
-              letterSpacing:3,
-              lineHeight:1,
-              fontWeight:900
-            }}>
-              CUMULATIVE AVERAGE
+            <div
+              onClick={openTelegram}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") openTelegram();
+              }}
+              style={{
+                fontFamily:"'Bebas Neue'",
+                fontSize:19,
+                letterSpacing:3,
+                lineHeight:1,
+                fontWeight:900,
+                cursor:"pointer",
+                userSelect:"none",
+              }}
+              title="Open Telegram"
+            >
+              CUMULATIVE WEIGHT
             </div>
             <div style={{
               fontSize:9,
@@ -493,37 +520,37 @@ export default function MedIQPro() {
 
       {/* ── METRICS STRIP ── */}
       <div className="mediq-metrics">
-        {/* CGPA */}
+        {/* Earned Weight */}
         <div style={{
           background:`linear-gradient(135deg,rgba(0,212,170,0.12),rgba(59,130,246,0.08))`,
           border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px",
         }}>
           <div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2,marginBottom:6}}>
-            MEDICAL CGPA
+            EARNED WEIGHT
           </div>
           <div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA",letterSpacing:2}}>
-            {metrics.cgpa.toFixed(2)}
+            {metrics.completedWeight.toFixed(0)}
           </div>
           <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>/ 100</div>
         </div>
 
-        {/* GPA 4.0 */}
+        {/* Remaining Weight */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
-          <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:6}}>GPA / 4.0</div>
+          <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:6}}>REMAINING WEIGHT</div>
           <div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA",letterSpacing:2}}>
-            {metrics.gpa4}
+            {metrics.remainW.toFixed(0)}
           </div>
-          <div style={{fontSize:10,color:T.muted,marginTop:6}}>International scale</div>
+          <div style={{fontSize:10,color:T.muted,marginTop:6}}>To reach full 100%</div>
         </div>
 
-        {/* Classification */}
+        {/* Current Stage Class */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
-          <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>GRADE CLASS</div>
-          <div style={{fontSize:24,fontWeight:800,color:metrics.cls?.color ?? T.muted,lineHeight:1.1}}>
-            {metrics.cls?.label ?? "—"}
+          <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>CURRENT STAGE CLASS</div>
+          <div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color ?? T.muted,lineHeight:1.1}}>
+            {classify(sm.avg)?.label ?? "—"}
           </div>
-          <div style={{fontSize:16,color:metrics.cls?.color ?? T.muted,direction:"rtl",textAlign:"left",marginTop:4,opacity:0.8}}>
-            {metrics.cls?.ar ?? "أدخل الدرجات"}
+          <div style={{fontSize:16,color:classify(sm.avg)?.color ?? T.muted,direction:"rtl",textAlign:"left",marginTop:4,opacity:0.8}}>
+            {classify(sm.avg)?.ar ?? "أدخل الدرجات"}
           </div>
         </div>
 
@@ -533,9 +560,6 @@ export default function MedIQPro() {
           <div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>
             {metrics.gradedU % 1 === 0 ? metrics.gradedU : metrics.gradedU.toFixed(1)}
             <span style={{fontSize:13,color:T.muted,fontWeight:400}}> / {TOTAL_UNITS}</span>
-          </div>
-          <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>
-            Completed weight: {metrics.completedWeight.toFixed(0)} / 100
           </div>
           <div style={{height:5,background:dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.08)",
                         borderRadius:3,marginTop:12,overflow:"hidden"}}>
@@ -588,8 +612,8 @@ export default function MedIQPro() {
                   borderLeft: `3px solid ${active ? s.color : "transparent"}`,
                   transition:"all 0.2s", opacity: active ? 1 : 0.55,
                 }}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <div>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+                    <div style={{minWidth:0}}>
                       <div style={{fontSize:13,fontWeight:700,color:active?s.color:T.text,
                                     fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>
                         {s.full}
@@ -830,7 +854,6 @@ export default function MedIQPro() {
           {/* DNA strands */}
           <div style={{display:"flex",flexDirection:"column",gap:12}}>
             {STAGES.map((s, si) => {
-              const stageTotal = s.subjects.reduce((a,x)=>a+x.u,0);
               return (
                 <div key={si} style={{display:"flex",alignItems:"center",gap:16}}>
                   {/* Stage label */}
@@ -890,17 +913,17 @@ export default function MedIQPro() {
                   {/* Stage avg pill */}
                   <div style={{
                     width:72,flexShrink:0,textAlign:"center",
-                    background: metrics.perStage[si].avg != null
-                      ? `${gradeColor(metrics.perStage[si].avg)}18`
+                    background: sm.avg != null
+                      ? `${gradeColor(sm.avg)}18`
                       : T.sub,
-                    border:`1px solid ${metrics.perStage[si].avg!=null?gradeColor(metrics.perStage[si].avg)+"40":T.border}`,
+                    border:`1px solid ${sm.avg!=null?gradeColor(sm.avg)+"40":T.border}`,
                     borderRadius:10,padding:"8px 10px",
                   }}>
                     <div style={{
                       fontFamily:"'Bebas Neue'",fontSize:20,letterSpacing:1,
-                      color: metrics.perStage[si].avg!=null ? gradeColor(metrics.perStage[si].avg) : T.muted,
+                      color: sm.avg!=null ? gradeColor(sm.avg) : T.muted,
                     }}>
-                      {metrics.perStage[si].avg?.toFixed(1) ?? "—"}
+                      {sm.avg?.toFixed(1) ?? "—"}
                     </div>
                     <div style={{fontSize:8,color:T.muted,fontWeight:600}}>AVG</div>
                   </div>
@@ -915,9 +938,8 @@ export default function MedIQPro() {
             <Stat label="Total Units"    value={TOTAL_UNITS} color={T.text} />
             <Stat label="Graded Units"   value={`${metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)} / ${TOTAL_UNITS}`} color="#00D4AA" />
             <Stat label="Completed Weight" value={`${metrics.completedWeight.toFixed(0)} / 100`} color="#60A5FA" />
-            <Stat label="Completion"     value={`${((metrics.gradedU/TOTAL_UNITS)*100).toFixed(1)}%`} color="#34D399" />
-            <Stat label="Overall CGPA"   value={metrics.cgpa.toFixed(2)} color={gradeColor(metrics.cgpa)??T.muted} />
-            <Stat label="Classification" value={metrics.cls?.label ?? "—"} color={metrics.cls?.color ?? T.muted} />
+            <Stat label="Remaining Weight" value={`${metrics.remainW.toFixed(0)} / 100`} color="#FBBF24" />
+            <Stat label="Completion"     value={`${(metrics.completedWeight).toFixed(0)}%`} color="#34D399" />
           </div>
         </div>
       )}
@@ -1019,7 +1041,7 @@ export default function MedIQPro() {
               </div>
               {metrics.needed != null && metrics.needed >= 0 && metrics.needed <= 100 && (
                 <div style={{fontSize:12,color:T.muted,marginTop:8}}>
-                  You need a {metrics.needed.toFixed(1)} average across the remaining curriculum 
+                  You need a {metrics.needed.toFixed(1)} average across the remaining curriculum
                   ({metrics.remainW.toFixed(0)}% of your degree) to reach {targetAvg}.
                 </div>
               )}
@@ -1051,39 +1073,42 @@ export default function MedIQPro() {
             })}
           </div>
 
-          {/* Iraqi grading scale */}
+          {/* Weight milestones */}
           <div style={{
             gridColumn:"1 / -1",
             background:T.card,border:`1px solid ${T.border}`,borderRadius:20,padding:28,
           }}>
             <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:20}}>
-              IRAQI MEDICAL GRADING SCALE — الجامعات العراقية
+              WEIGHT MILESTONES — مراحل الاكمال
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:12}}>
               {[
-                {range:"90–100",label:"Excellent",ar:"امتياز",  color:"#10B981"},
-                {range:"80–89", label:"Very Good", ar:"جيد جداً",color:"#60A5FA"},
-                {range:"70–79", label:"Good",       ar:"جيد",    color:"#A78BFA"},
-                {range:"60–69", label:"Medium",     ar:"متوسط",  color:"#FBBF24"},
-                {range:"50–59", label:"Acceptable", ar:"مقبول",  color:"#F97316"},
-                {range:"<50",   label:"Fail",       ar:"راسب",   color:"#EF4444"},
-              ].map(g=>(
+                {range:"5",   label:"1st Stage", ar:"وزن أول مرحلة",  color:"#10B981"},
+                {range:"10",  label:"2nd Stage", ar:"وزن أول مرحلتين", color:"#60A5FA"},
+                {range:"15",  label:"3rd Stage", ar:"وزن أول 3 مراحل", color:"#A78BFA"},
+                {range:"35",  label:"4th Stage", ar:"+ المرحلة الرابعة", color:"#FBBF24"},
+                {range:"60",  label:"5th Stage", ar:"+ المرحلة الخامسة", color:"#F97316"},
+                {range:"100", label:"6th Stage", ar:"اكتمال الوزن",      color:"#EF4444"},
+              ].map((g, idx)=>(
                 <div key={g.label} style={{
                   padding:"16px 14px",borderRadius:14,textAlign:"center",
-                  background:`${g.color}12`,border:`1px solid ${g.color}30`,
+                  background: milestoneActive[idx] ? `${g.color}12` : (dark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)"),
+                  border:`1px solid ${milestoneActive[idx] ? g.color + "30" : T.border}`,
                 }}>
                   <div style={{fontFamily:"'Bebas Neue'",fontSize:18,color:g.color,letterSpacing:1}}>
                     {g.range}
                   </div>
                   <div style={{fontSize:12,fontWeight:700,color:T.text,marginTop:4}}>{g.label}</div>
                   <div style={{fontSize:14,color:g.color,marginTop:2}}>{g.ar}</div>
-                  {metrics.cgpa > 0 && (
-                    <div style={{marginTop:8,height:3,borderRadius:2,background:dark?"rgba(255,255,255,0.07)":"rgba(0,0,0,0.07)",overflow:"hidden"}}>
-                      {classify(metrics.cgpa)?.label === g.label && (
-                        <div style={{height:"100%",background:g.color,borderRadius:2}} />
-                      )}
-                    </div>
-                  )}
+                  <div style={{
+                    marginTop:8,height:3,borderRadius:2,
+                    background:dark?"rgba(255,255,255,0.07)":"rgba(0,0,0,0.07)",
+                    overflow:"hidden"
+                  }}>
+                    {milestoneActive[idx] && (
+                      <div style={{height:"100%",background:g.color,borderRadius:2}} />
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -1094,7 +1119,7 @@ export default function MedIQPro() {
       {/* FOOTER */}
       <footer className="mediq-footer">
         <div style={{fontSize:9,color:T.muted,fontFamily:"'JetBrains Mono'",letterSpacing:2}}>
-          CUMULATIVE AVERAGE · UNIVERSITY OF WARITH AL-ANBIYAA · DEV: HAIDER EMAD
+          CUMULATIVE WEIGHT · UNIVERSITY OF WARITH AL-ANBIYAA · DEV: HAIDER EMAD
         </div>
         <div style={{fontSize:9,color:T.muted,fontFamily:"'JetBrains Mono'"}}>
           {STAGES.reduce((a,s)=>a+s.subjects.length,0)} SUBJECTS · {TOTAL_UNITS} TOTAL UNITS · 6 STAGES
@@ -1107,9 +1132,9 @@ export default function MedIQPro() {
 // ─── Small helper components ─────────────────────────────────────────────────
 function Row({ label, val, color, muted }) {
   return (
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
       <span style={{color:muted}}>{label}</span>
-      <span style={{color,fontWeight:700}}>{val}</span>
+      <span style={{color,fontWeight:700,textAlign:"right"}}>{val}</span>
     </div>
   );
 }
