@@ -9,7 +9,7 @@ import {
 const STAGES = [
   {
     id: 0, label: "1st", full: "First Stage", arabic: "المرحلة الأولى",
-    color: "#60A5FA", weight: 5,
+    color: "#60A5FA", weight: 5, // 5% of total CGPA
     subjects: [
       { en: "Anatomy",                    ar: "التشريح",                        u: 8   },
       { en: "Medical Biology",            ar: "الاحياء الطبية",                 u: 6   },
@@ -24,7 +24,7 @@ const STAGES = [
   },
   {
     id: 1, label: "2nd", full: "Second Stage", arabic: "المرحلة الثانية",
-    color: "#A78BFA", weight: 5,
+    color: "#A78BFA", weight: 5, // 5% of total CGPA
     subjects: [
       { en: "Physiology",         ar: "فسلجة",                  u: 13 },
       { en: "Anatomy",            ar: "التشريح",                 u: 10 },
@@ -36,7 +36,7 @@ const STAGES = [
   },
   {
     id: 2, label: "3rd", full: "Third Stage", arabic: "المرحلة الثالثة",
-    color: "#F87171", weight: 5,
+    color: "#F87171", weight: 5, // 5% of total CGPA
     subjects: [
       { en: "Pathology",          ar: "الامراض",                  u: 11 },
       { en: "Microbiology",       ar: "الجراثيم",                 u: 9  },
@@ -49,7 +49,7 @@ const STAGES = [
   },
   {
     id: 3, label: "4th", full: "Fourth Stage", arabic: "المرحلة الرابعة",
-    color: "#FBBF24", weight: 20,
+    color: "#FBBF24", weight: 20, // 20% of total CGPA
     subjects: [
       { en: "Medicine",               ar: "الطب الباطني",           u: 13 },
       { en: "Surgery",                ar: "الجراحة",                u: 11 },
@@ -63,7 +63,7 @@ const STAGES = [
   },
   {
     id: 4, label: "5th", full: "Fifth Stage", arabic: "المرحلة الخامسة",
-    color: "#34D399", weight: 25,
+    color: "#34D399", weight: 25, // 25% of total CGPA
     subjects: [
       { en: "Internal Medicine",  ar: "الطب الباطني",           u: 7   },
       { en: "Minor Surgery",      ar: "جراحات فرعية",           u: 6   },
@@ -79,7 +79,7 @@ const STAGES = [
   },
   {
     id: 5, label: "6th", full: "Sixth Stage", arabic: "المرحلة السادسة",
-    color: "#22D3EE", weight: 40,
+    color: "#22D3EE", weight: 40, // 40% of total CGPA
     subjects: [
       { en: "Internal Medicine (Rotation)", ar: "طب باطني",   u: 12 },
       { en: "Surgery (Rotation)",           ar: "جراحة",      u: 12 },
@@ -112,24 +112,15 @@ const gradeColor = (g) => {
   return "#EF4444";
 };
 
-const gpa4 = (avg) => {
-  if (avg == null || Number.isNaN(avg)) return "0.00";
-  return Math.min(4, avg / 25).toFixed(2);
-};
+const gpa4 = (avg) => Math.min(4, avg / 25).toFixed(2);
 
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 export default function MedIQPro() {
-  const [grades, setGrades] = useState({});
-  const [activeStage, setActiveStage] = useState(0);
-  const [targetAvg, setTargetAvg] = useState(85);
-  const [dark, setDark] = useState(true);
-  const [tab, setTab] = useState("grades"); // "grades" | "details" | "insights"
-  const [mounted, setMounted] = useState(false);
-
-  // ── Mount guard ──────────────────────────────────────────
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [grades,      setGrades     ] = useState({});
+  const [activeStage, setActiveStage ] = useState(0);
+  const [targetAvg,   setTargetAvg   ] = useState(85);
+  const [dark,        setDark        ] = useState(false); // Light mode first
+  const [tab,         setTab         ] = useState("grades"); // "grades" | "details" | "insights"
 
   // ── Persistence ──────────────────────────────────────────
   useEffect(() => {
@@ -137,37 +128,24 @@ export default function MedIQPro() {
       const saved = localStorage.getItem("medical-cgpa-v15");
       if (saved) {
         const d = JSON.parse(saved);
-        if (d?.grades && typeof d.grades === "object") setGrades(d.grades);
-        if (typeof d?.targetAvg === "number") setTargetAvg(d.targetAvg);
-        if (typeof d?.dark === "boolean") setDark(d.dark);
+        if (d.grades)     setGrades(d.grades);
+        if (d.targetAvg)  setTargetAvg(d.targetAvg);
+        if (d.dark != null) setDark(d.dark);
       }
-    } catch (e) {
-      console.error("Failed to load saved data", e);
-    }
+    } catch (_) {}
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(
-        "medical-cgpa-v15",
-        JSON.stringify({ grades, targetAvg, dark })
-      );
-    } catch (e) {
-      console.error("Failed to save data", e);
-    }
+    localStorage.setItem("medical-cgpa-v15", JSON.stringify({ grades, targetAvg, dark }));
   }, [grades, targetAvg, dark]);
 
   // ── Grade setter ──────────────────────────────────────────────────────────
   const setGrade = useCallback((sid, idx, raw) => {
     const key = `${sid}-${idx}`;
     setGrades(prev => {
-      if (raw === "" || raw == null) {
-        const n = { ...prev };
-        delete n[key];
-        return n;
-      }
+      if (raw === "" || raw == null) { const n = {...prev}; delete n[key]; return n; }
       const v = parseFloat(raw);
-      return isNaN(v) ? prev : { ...prev, [key]: Math.min(100, Math.max(0, v)) };
+      return isNaN(v) ? prev : {...prev, [key]: Math.min(100, Math.max(0, v))};
     });
   }, []);
 
@@ -185,9 +163,10 @@ export default function MedIQPro() {
       });
 
       const stageTotal = stage.subjects.reduce((a, s) => a + s.u, 0);
-      const pct = stageTotal > 0 ? sU / stageTotal : 0;
+      const pct = sU / stageTotal;
       const avg = sU > 0 ? sW / sU : null;
 
+      // Apply the Iraqi percentage weight based on how much of the stage is graded
       if (avg != null) {
         const activeWeight = stage.weight * pct;
         cgpaWeightedSum += avg * activeWeight;
@@ -199,34 +178,24 @@ export default function MedIQPro() {
     });
 
     const cgpa = gradedWeights > 0 ? cgpaWeightedSum / gradedWeights : 0;
+    
+    // Calculate what's needed for the target
     const remainW = 100 - gradedWeights;
     const needed  = remainW > 0 ? (targetAvg * 100 - cgpaWeightedSum) / remainW : null;
     const cls     = classify(cgpa);
-
+    
     return { cgpa, gpa4: gpa4(cgpa), cls, perStage, gradedU, remainW, needed };
   }, [grades, targetAvg]);
 
   // ── Theme tokens ──────────────────────────────────────────────────────────
   const T = dark
-    ? {
-        bg:"#07090F",
-        card:"#0E1525",
-        border:"rgba(255,255,255,0.07)",
-        text:"#E2E8F0",
-        muted:"rgba(226,232,240,0.38)",
-        sub:"#1B263B"
-      }
-    : {
-        bg:"#EFF2F7",
-        card:"#FFFFFF",
-        border:"rgba(0,0,0,0.08)",
-        text:"#111827",
-        muted:"rgba(17,24,39,0.45)",
-        sub:"#F1F5F9"
-      };
+    ? { bg:"#07090F", card:"#0E1525", border:"rgba(255,255,255,0.07)",
+        text:"#E2E8F0", muted:"rgba(226,232,240,0.38)", sub:"#1B263B" }
+    : { bg:"#EFF2F7", card:"#FFFFFF",  border:"rgba(0,0,0,0.08)",
+        text:"#111827", muted:"rgba(17,24,39,0.45)",    sub:"#F1F5F9" };
 
   const stage = STAGES[activeStage];
-  const sm = metrics.perStage[activeStage];
+  const sm    = metrics.perStage[activeStage];
 
   const radarData = stage.subjects.map((sub, i) => ({
     s: sub.en.length > 11 ? sub.en.slice(0, 11) + "…" : sub.en,
@@ -249,41 +218,15 @@ export default function MedIQPro() {
   const worst = allGraded.length ? allGraded.reduce((a, b) => b.g < a.g ? b : a) : null;
   const failing = allGraded.filter(x => x.g < 50);
 
-  if (!mounted) {
-    return (
-      <div style={{
-        minHeight: "100dvh",
-        display: "grid",
-        placeItems: "center",
-        background: T.bg,
-        color: T.text,
-        fontFamily: "'Outfit','DM Sans',system-ui,sans-serif"
-      }}>
-        Loading...
-      </div>
-    );
-  }
-
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div
-      className="mediq-shell"
-      style={{
-        minHeight: "100dvh",
-        width: "100%",
-        overflowX: "hidden",
-        background: T.bg,
-        color: T.text,
-        fontFamily: "'Outfit','DM Sans',system-ui,sans-serif",
-        transition: "background 0.3s,color 0.3s",
-        "--mediq-border": T.border,
-      }}
-    >
+    <div style={{ minHeight:"100vh", background:T.bg, color:T.text,
+                  fontFamily:"'Outfit','DM Sans',system-ui,sans-serif",
+                  transition:"background 0.3s,color 0.3s" }}>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&display=swap');
         *{box-sizing:border-box;margin:0;padding:0}
-        html,body,#root{width:100%;height:100%}
-        body{overflow-x:hidden}
         input[type=number]{-moz-appearance:textfield}
         input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
         ::-webkit-scrollbar{width:4px;height:4px}
@@ -294,152 +237,32 @@ export default function MedIQPro() {
         .mediq-btn:hover{opacity:0.85}
         @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
         .fade-up{animation:fadeUp 0.35s ease forwards}
-
-        .mediq-header{
-          position:sticky;top:0;z-index:100;
-          backdrop-filter:blur(16px);
-          padding:12px 28px;
-          display:flex;align-items:center;justify-content:space-between;
-          gap:12px;min-height:64px;flex-wrap:wrap;
-          border-bottom:1px solid var(--mediq-border);
-        }
-
-        .mediq-header-left{display:flex;align-items:center;gap:14px;min-width:0;flex:1 1 320px}
-        .mediq-header-center{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;flex:1 1 260px}
-        .mediq-header-right{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:1 1 220px}
-
-        .mediq-metrics{
-          padding:20px 28px;
-          border-bottom:1px solid var(--mediq-border);
-          display:grid;
-          grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-          gap:16px;
-        }
-
-        .mediq-layout-grades{
-          display:grid;
-          grid-template-columns:minmax(220px,240px) minmax(0,1fr);
-          gap:0;
-          min-height:calc(100dvh - 200px);
-        }
-
-        .mediq-stage-sidebar{
-          border-right:1px solid var(--mediq-border);
-          padding:16px;
-          display:flex;
-          flex-direction:column;
-          gap:4px;
-          min-width:0;
-        }
-
-        .mediq-stage-content-wrap{
-          display:grid;
-          grid-template-columns:minmax(0,1fr) 380px;
-          gap:0;
-          min-width:0;
-        }
-
-        .mediq-stage-main{
-          padding:28px;
-          border-right:1px solid var(--mediq-border);
-          overflow-y:auto;
-          min-width:0;
-        }
-
-        .mediq-stage-right{
-          padding:28px;
-          display:flex;
-          flex-direction:column;
-          gap:24px;
-          min-width:0;
-        }
-
-        .mediq-details{
-          padding:32px;
-        }
-
-        .mediq-insights{
-          padding:32px;
-          display:grid;
-          grid-template-columns:1fr 1fr;
-          gap:24px;
-        }
-
-        .mediq-summary{
-          margin-top:32px;
-          padding:24px;
-          background:var(--mediq-card);
-          border:1px solid var(--mediq-border);
-          border-radius:20px;
-          display:grid;
-          grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-          gap:18px;
-          align-items:center;
-        }
-
-        .mediq-footer{
-          border-top:1px solid var(--mediq-border);
-          padding:16px 28px;
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          gap:12px;
-          flex-wrap:wrap;
-        }
-
-        @media (max-width: 1024px){
-          .mediq-stage-content-wrap{grid-template-columns:1fr}
-          .mediq-stage-main{border-right:none;border-bottom:1px solid var(--mediq-border)}
-          .mediq-insights{grid-template-columns:1fr}
-        }
-
-        @media (max-width: 768px){
-          .mediq-header{padding:12px 14px}
-          .mediq-metrics{padding:14px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
-          .mediq-layout-grades{grid-template-columns:1fr}
-          .mediq-stage-sidebar{
-            border-right:none;
-            border-bottom:1px solid var(--mediq-border);
-            padding:12px;
-            flex-direction:row;
-            overflow-x:auto;
-            align-items:stretch;
-          }
-          .mediq-stage-sidebar > button{
-            min-width:220px;
-            flex:0 0 auto;
-          }
-          .mediq-stage-main,
-          .mediq-stage-right,
-          .mediq-details,
-          .mediq-insights{
-            padding:14px;
-          }
-          .mediq-footer{
-            padding:14px;
-            justify-content:center;
-            text-align:center;
-          }
-        }
-
-        @media (max-width: 520px){
-          .mediq-header-left{flex:1 1 100%}
-          .mediq-header-center{order:3;flex:1 1 100%;justify-content:flex-start}
-          .mediq-header-right{flex:1 1 100%;justify-content:space-between}
-        }
       `}</style>
 
       {/* ── HEADER ── */}
-      <header className="mediq-header" style={{ background: dark ? "rgba(7,9,15,0.92)" : "rgba(239,242,247,0.92)" }}>
-        <div className="mediq-header-left">
+      <header style={{
+        position:"sticky", top:0, zIndex:100,
+        background: dark ? "rgba(7,9,15,0.92)" : "rgba(239,242,247,0.92)",
+        backdropFilter:"blur(16px)", borderBottom:`1px solid ${T.border}`,
+        padding:"0 28px", display:"flex", alignItems:"center",
+        justifyContent:"space-between", height:64,
+      }}>
+        {/* Logo */}
+        <div style={{display:"flex",alignItems:"center",gap:14}}>
           <div style={{
             width:40,height:40,borderRadius:12,flexShrink:0,
             background:"linear-gradient(135deg,#00D4AA,#3B82F6)",
             display:"flex",alignItems:"center",justifyContent:"center",
             fontSize:18,fontFamily:"'Bebas Neue'",color:"white",letterSpacing:1,
           }}>CG</div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{fontFamily:"'Bebas Neue'",fontSize:19,letterSpacing:3,lineHeight:1}}>
+          <div>
+            <div style={{
+              fontFamily:"'Bebas Neue'",
+              fontSize:19,
+              letterSpacing:3,
+              lineHeight:1,
+              fontWeight:900
+            }}>
               CUMULATIVE AVERAGE
             </div>
             <div style={{fontSize:9,color:T.muted,fontFamily:"'JetBrains Mono'",letterSpacing:1.5,marginTop:2}}>
@@ -448,7 +271,8 @@ export default function MedIQPro() {
           </div>
         </div>
 
-        <div className="mediq-header-center">
+        {/* Nav tabs */}
+        <div style={{display:"flex",gap:4}}>
           {[["grades","Grades"],["details","View in Details"],["insights","Insights"]].map(([k,l]) => (
             <button key={k} className="mediq-btn"
               onClick={() => setTab(k)}
@@ -462,13 +286,14 @@ export default function MedIQPro() {
           ))}
         </div>
 
-        <div className="mediq-header-right">
+        {/* Actions */}
+        <div style={{display:"flex",gap:8}}>
           <button className="mediq-btn" onClick={() => setDark(!dark)} style={{
             padding:"8px 16px",borderRadius:10,border:`1px solid ${T.border}`,
             background:"transparent",color:T.text,cursor:"pointer",
             fontSize:12,fontFamily:"'Outfit'",fontWeight:600,
           }}>{dark ? "☀ Light" : "☾ Dark"}</button>
-          <button className="mediq-btn" onClick={() => { if (window.confirm("Reset all grades?")) setGrades({}); }} style={{
+          <button className="mediq-btn" onClick={() => { if(window.confirm("Reset all grades?")) setGrades({}); }} style={{
             padding:"8px 16px",borderRadius:10,border:"1px solid rgba(239,68,68,0.3)",
             background:"rgba(239,68,68,0.06)",color:"#F87171",cursor:"pointer",
             fontSize:12,fontFamily:"'Outfit'",fontWeight:600,
@@ -477,7 +302,11 @@ export default function MedIQPro() {
       </header>
 
       {/* ── METRICS STRIP ── */}
-      <div className="mediq-metrics">
+      <div style={{
+        padding:"20px 28px",borderBottom:`1px solid ${T.border}`,
+        display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:16,
+      }}>
+        {/* CGPA */}
         <div style={{
           background:`linear-gradient(135deg,rgba(0,212,170,0.12),rgba(59,130,246,0.08))`,
           border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px",
@@ -491,6 +320,7 @@ export default function MedIQPro() {
           <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>/ 100</div>
         </div>
 
+        {/* GPA 4.0 */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:6}}>GPA / 4.0</div>
           <div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA",letterSpacing:2}}>
@@ -499,6 +329,7 @@ export default function MedIQPro() {
           <div style={{fontSize:10,color:T.muted,marginTop:6}}>International scale</div>
         </div>
 
+        {/* Classification */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>GRADE CLASS</div>
           <div style={{fontSize:24,fontWeight:800,color:metrics.cls?.color ?? T.muted,lineHeight:1.1}}>
@@ -509,6 +340,7 @@ export default function MedIQPro() {
           </div>
         </div>
 
+        {/* Units */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>UNITS GRADED</div>
           <div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>
@@ -523,10 +355,11 @@ export default function MedIQPro() {
           </div>
         </div>
 
+        {/* Target */}
         <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:18,padding:"18px 22px"}}>
           <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:8}}>TARGET GOAL</div>
           <input type="number" min={50} max={100} step={0.5} value={targetAvg}
-            onChange={e => setTargetAvg(parseFloat(e.target.value) || 0)}
+            onChange={e => setTargetAvg(parseFloat(e.target.value)||0)}
             style={{
               width:"100%",background:"transparent",border:"none",outline:"none",
               fontSize:32,fontFamily:"'Bebas Neue'",letterSpacing:2,color:T.text,
@@ -550,10 +383,13 @@ export default function MedIQPro() {
            TAB: GRADES
       ══════════════════════════════════════════════════════════════════════ */}
       {tab === "grades" && (
-        <div className="mediq-layout-grades">
+        <div style={{display:"grid",gridTemplateColumns:"240px 1fr",gap:0,minHeight:"calc(100vh - 200px)"}}>
 
           {/* Stage sidebar */}
-          <div className="mediq-stage-sidebar">
+          <div style={{
+            borderRight:`1px solid ${T.border}`,padding:16,
+            display:"flex",flexDirection:"column",gap:4,
+          }}>
             {STAGES.map((s, idx) => {
               const sm = metrics.perStage[idx];
               const active = activeStage === idx;
@@ -565,8 +401,8 @@ export default function MedIQPro() {
                   borderLeft: `3px solid ${active ? s.color : "transparent"}`,
                   transition:"all 0.2s", opacity: active ? 1 : 0.55,
                 }}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
-                    <div style={{minWidth:0}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div>
                       <div style={{fontSize:13,fontWeight:700,color:active?s.color:T.text,
                                     fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>
                         {s.full}
@@ -595,11 +431,12 @@ export default function MedIQPro() {
           </div>
 
           {/* Stage content */}
-          <div className="mediq-stage-content-wrap">
+          <div style={{display:"grid",gridTemplateColumns:"1fr 380px",gap:0}}>
 
             {/* Subject inputs */}
-            <div key={activeStage} className="fade-up mediq-stage-main">
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24,gap:16,flexWrap:"wrap"}}>
+            <div key={activeStage} className="fade-up"
+              style={{padding:28,borderRight:`1px solid ${T.border}`,overflowY:"auto"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24}}>
                 <div>
                   <div style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>
                     {stage.full}
@@ -608,7 +445,7 @@ export default function MedIQPro() {
                     {stage.arabic} — {stage.weight}% من المعدل التراكمي
                   </div>
                 </div>
-                <div style={{textAlign:"right",minWidth:110}}>
+                <div style={{textAlign:"right"}}>
                   {sm.avg != null ? (
                     <>
                       <div style={{fontFamily:"'Bebas Neue'",fontSize:52,lineHeight:1,
@@ -627,19 +464,20 @@ export default function MedIQPro() {
                 </div>
               </div>
 
+              {/* Subject rows */}
               <div style={{display:"flex",flexDirection:"column",gap:4}}>
                 {stage.subjects.map((sub, i) => {
-                  const key = `${stage.id}-${i}`;
-                  const g = grades[key];
-                  const cls = classify(g);
-                  const gc = gradeColor(g);
+                  const key  = `${stage.id}-${i}`;
+                  const g    = grades[key];
+                  const cls  = classify(g);
+                  const gc   = gradeColor(g);
                   return (
                     <div key={i} className="mediq-row" style={{
                       display:"flex",alignItems:"center",gap:12,
                       padding:"10px 14px",borderRadius:12,transition:"all 0.15s",
                       background: g != null ? `${gc}0A` : "transparent",
-                      minWidth:0,
                     }}>
+                      {/* Unit pill */}
                       <div style={{
                         width:36,height:22,borderRadius:6,flexShrink:0,
                         background:`${stage.color}20`,
@@ -648,13 +486,15 @@ export default function MedIQPro() {
                         fontFamily:"'JetBrains Mono'",
                       }}>{sub.u}</div>
 
+                      {/* Names */}
                       <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight:600,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{sub.en}</div>
-                        <div style={{fontSize:10,color:T.muted,direction:"rtl",textAlign:"left",marginTop:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                        <div style={{fontSize:13,fontWeight:600}}>{sub.en}</div>
+                        <div style={{fontSize:10,color:T.muted,direction:"rtl",textAlign:"left",marginTop:1}}>
                           {sub.ar}
                         </div>
                       </div>
 
+                      {/* Classification badge */}
                       {cls && (
                         <div style={{
                           fontSize:9,fontWeight:700,padding:"3px 8px",borderRadius:6,
@@ -663,6 +503,7 @@ export default function MedIQPro() {
                         }}>{cls.label}</div>
                       )}
 
+                      {/* Grade input */}
                       <input type="number" min={0} max={100} step={0.5}
                         placeholder="—"
                         value={g ?? ""}
@@ -682,28 +523,28 @@ export default function MedIQPro() {
             </div>
 
             {/* Right panel: Radar + mini-insights */}
-            <div className="mediq-stage-right">
+            <div style={{padding:28,display:"flex",flexDirection:"column",gap:24}}>
+
               <div>
                 <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:16}}>
                   STAGE RADAR
                 </div>
-                <div style={{width:"100%",height:260}}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData} margin={{top:10,right:10,bottom:10,left:10}}>
-                      <PolarGrid stroke={dark?"rgba(255,255,255,0.07)":"rgba(0,0,0,0.1)"} />
-                      <PolarAngleAxis dataKey="s"
-                        tick={{fontSize:9,fill:T.muted,fontFamily:"'Outfit'"}} />
-                      <Radar name="Grade" dataKey="g"
-                        stroke={stage.color} fill={stage.color} fillOpacity={0.18} strokeWidth={2} />
-                      <Tooltip contentStyle={{
-                        background:T.card,border:`1px solid ${T.border}`,
-                        borderRadius:10,fontSize:12,color:T.text,
-                      }} formatter={v => [v || "—","Grade"]} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
+                <ResponsiveContainer width="100%" height={260}>
+                  <RadarChart data={radarData} margin={{top:10,right:10,bottom:10,left:10}}>
+                    <PolarGrid stroke={dark?"rgba(255,255,255,0.07)":"rgba(0,0,0,0.1)"} />
+                    <PolarAngleAxis dataKey="s"
+                      tick={{fontSize:9,fill:T.muted,fontFamily:"'Outfit'"}} />
+                    <Radar name="Grade" dataKey="g"
+                      stroke={stage.color} fill={stage.color} fillOpacity={0.18} strokeWidth={2} />
+                    <Tooltip contentStyle={{
+                      background:T.card,border:`1px solid ${T.border}`,
+                      borderRadius:10,fontSize:12,color:T.text,
+                    }} formatter={v => [v||"—","Grade"]} />
+                  </RadarChart>
+                </ResponsiveContainer>
               </div>
 
+              {/* Stage mini-stats */}
               <div style={{background:T.sub,borderRadius:16,padding:18}}>
                 <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:14}}>
                   STAGE BREAKDOWN
@@ -729,31 +570,30 @@ export default function MedIQPro() {
                 })()}
               </div>
 
+              {/* Stage comparison bar */}
               <div>
                 <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:12}}>
                   ALL STAGES
                 </div>
-                <div style={{width:"100%",height:130}}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={barData} barCategoryGap="30%"
-                      margin={{top:0,right:0,bottom:0,left:-20}}>
-                      <CartesianGrid strokeDasharray="3 3"
-                        stroke={dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"} vertical={false} />
-                      <XAxis dataKey="label" tick={{fontSize:10,fill:T.muted}} axisLine={false} tickLine={false} />
-                      <YAxis domain={[0,100]} tick={{fontSize:9,fill:T.muted,fontFamily:"'JetBrains Mono'"}}
-                        axisLine={false} tickLine={false} />
-                      <Tooltip contentStyle={{background:T.card,border:`1px solid ${T.border}`,
-                        borderRadius:10,fontSize:11,color:T.text}}
-                        formatter={v=>[v?v.toFixed(1):"—","Avg"]} />
-                      <Bar dataKey="avg" radius={[5,5,0,0]}>
-                        {barData.map((_, i) => (
-                          <Cell key={i} fill={STAGES[i].color}
-                            fillOpacity={activeStage===i?1:0.4} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
+                <ResponsiveContainer width="100%" height={130}>
+                  <BarChart data={barData} barCategoryGap="30%"
+                    margin={{top:0,right:0,bottom:0,left:-20}}>
+                    <CartesianGrid strokeDasharray="3 3"
+                      stroke={dark?"rgba(255,255,255,0.05)":"rgba(0,0,0,0.07)"} vertical={false} />
+                    <XAxis dataKey="label" tick={{fontSize:10,fill:T.muted}} axisLine={false} tickLine={false} />
+                    <YAxis domain={[0,100]} tick={{fontSize:9,fill:T.muted,fontFamily:"'JetBrains Mono'"}}
+                      axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{background:T.card,border:`1px solid ${T.border}`,
+                      borderRadius:10,fontSize:11,color:T.text}}
+                      formatter={v=>[v?v.toFixed(1):"—","Avg"]} />
+                    <Bar dataKey="avg" radius={[5,5,0,0]}>
+                      {barData.map((_, i) => (
+                        <Cell key={i} fill={STAGES[i].color}
+                          fillOpacity={activeStage===i?1:0.4} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>
@@ -764,7 +604,7 @@ export default function MedIQPro() {
            TAB: DETAILS VIEW
       ══════════════════════════════════════════════════════════════════════ */}
       {tab === "details" && (
-        <div className="mediq-details fade-up">
+        <div style={{padding:32}} className="fade-up">
           <div style={{marginBottom:28}}>
             <div style={{fontFamily:"'Bebas Neue'",fontSize:32,letterSpacing:4,marginBottom:6}}>
               VIEW IN DETAILS
@@ -776,6 +616,7 @@ export default function MedIQPro() {
             </div>
           </div>
 
+          {/* Legend */}
           <div style={{display:"flex",gap:20,marginBottom:28,flexWrap:"wrap"}}>
             {[["≥90 Excellent","#10B981"],["≥80 Very Good","#60A5FA"],
               ["≥70 Good","#A78BFA"],["≥60 Medium","#FBBF24"],
@@ -788,10 +629,13 @@ export default function MedIQPro() {
             ))}
           </div>
 
+          {/* DNA strands */}
           <div style={{display:"flex",flexDirection:"column",gap:12}}>
             {STAGES.map((s, si) => {
+              const stageTotal = s.subjects.reduce((a,x)=>a+x.u,0);
               return (
-                <div key={si} style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+                <div key={si} style={{display:"flex",alignItems:"center",gap:16}}>
+                  {/* Stage label */}
                   <div style={{
                     width:110,flexShrink:0,textAlign:"right",
                     fontFamily:"'Bebas Neue'",fontSize:13,letterSpacing:2,color:s.color,
@@ -802,11 +646,12 @@ export default function MedIQPro() {
                     </div>
                   </div>
 
-                  <div style={{display:"flex",gap:3,flex:1,overflowX:"auto",paddingBottom:4,minWidth:"min(100%, 0px)"}}>
+                  {/* Subject blocks */}
+                  <div style={{display:"flex",gap:3,flex:1,overflowX:"auto",paddingBottom:4}}>
                     {s.subjects.map((sub, i) => {
-                      const g = grades[`${s.id}-${i}`];
+                      const g  = grades[`${s.id}-${i}`];
                       const gc = g != null ? gradeColor(g) : null;
-                      const w = Math.max(28, sub.u * 16);
+                      const w  = Math.max(28, sub.u * 16);
                       return (
                         <div key={i}
                           title={`${sub.en} (${sub.u} units)${g!=null?`: ${g}`:" — not entered"}`}
@@ -844,6 +689,7 @@ export default function MedIQPro() {
                     })}
                   </div>
 
+                  {/* Stage avg pill */}
                   <div style={{
                     width:72,flexShrink:0,textAlign:"center",
                     background: metrics.perStage[si].avg != null
@@ -865,7 +711,11 @@ export default function MedIQPro() {
             })}
           </div>
 
-          <div className="mediq-summary">
+          {/* Summary row */}
+          <div style={{
+            marginTop:32,padding:24,background:T.card,border:`1px solid ${T.border}`,
+            borderRadius:20,display:"flex",justifyContent:"space-around",alignItems:"center",
+          }}>
             <Stat label="Total Subjects" value={STAGES.reduce((a,s)=>a+s.subjects.length,0)} color={T.text} />
             <Stat label="Total Units"    value={TOTAL_UNITS} color={T.text} />
             <Stat label="Graded Units"   value={`${metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)} / ${TOTAL_UNITS}`} color="#00D4AA" />
@@ -880,8 +730,9 @@ export default function MedIQPro() {
            TAB: INSIGHTS
       ══════════════════════════════════════════════════════════════════════ */}
       {tab === "insights" && (
-        <div className="mediq-insights fade-up">
+        <div style={{padding:32,display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}} className="fade-up">
 
+          {/* Academic profile */}
           <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:20,padding:28}}>
             <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:20}}>
               ACADEMIC INTELLIGENCE PROFILE
@@ -915,8 +766,8 @@ export default function MedIQPro() {
                     const avgs = metrics.perStage.map((p,i)=>({avg:p.avg,name:STAGES[i].full}));
                     const valid = avgs.filter(a=>a.avg!=null);
                     if(!valid.length) return "—";
-                    const bestStage = valid.reduce((a,b)=>b.avg>a.avg?b:a);
-                    return `${bestStage.name} — ${bestStage.avg.toFixed(2)}`;
+                    const best = valid.reduce((a,b)=>b.avg>a.avg?b:a);
+                    return `${best.name} — ${best.avg.toFixed(2)}`;
                   })()}
                   sub="Stage with highest average"
                   color="#34D399" T={T} />
@@ -924,6 +775,7 @@ export default function MedIQPro() {
             )}
           </div>
 
+          {/* Target deep dive */}
           <div style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:20,padding:28}}>
             <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:20}}>
               TARGET CALCULATOR
@@ -971,12 +823,13 @@ export default function MedIQPro() {
               </div>
               {metrics.needed != null && metrics.needed >= 0 && metrics.needed <= 100 && (
                 <div style={{fontSize:12,color:T.muted,marginTop:8}}>
-                  You need a {metrics.needed.toFixed(1)} average across the remaining curriculum
+                  You need a {metrics.needed.toFixed(1)} average across the remaining curriculum 
                   ({metrics.remainW.toFixed(0)}% of your degree) to reach {targetAvg}.
                 </div>
               )}
             </div>
 
+            {/* Per-stage progress */}
             <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:14}}>
               STAGE-BY-STAGE PROGRESS
             </div>
@@ -984,10 +837,8 @@ export default function MedIQPro() {
               const sp = metrics.perStage[i];
               return (
                 <div key={i} style={{marginBottom:10}}>
-                  <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:11,gap:8}}>
-                    <span style={{color:T.text,fontWeight:600}}>
-                      {s.full} <span style={{opacity:0.5}}>({s.weight}%)</span>
-                    </span>
+                  <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,fontSize:11}}>
+                    <span style={{color:T.text,fontWeight:600}}>{s.full} <span style={{opacity:0.5}}>({s.weight}%)</span></span>
                     <span style={{color:sp.avg!=null?gradeColor(sp.avg):T.muted,
                                     fontFamily:"'JetBrains Mono'",fontWeight:700}}>
                       {sp.avg!=null ? `${sp.avg.toFixed(1)} — ${classify(sp.avg)?.label}` : "Not graded"}
@@ -1004,15 +855,15 @@ export default function MedIQPro() {
             })}
           </div>
 
+          {/* Iraqi grading scale */}
           <div style={{
-            gridColumn:"1 / -1",
+            gridColumn:"span 2",
             background:T.card,border:`1px solid ${T.border}`,borderRadius:20,padding:28,
-            minWidth:0,
           }}>
             <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:2,marginBottom:20}}>
               IRAQI MEDICAL GRADING SCALE — الجامعات العراقية
             </div>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:12}}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:12}}>
               {[
                 {range:"90–100",label:"Excellent",ar:"امتياز",  color:"#10B981"},
                 {range:"80–89", label:"Very Good", ar:"جيد جداً",color:"#60A5FA"},
@@ -1045,7 +896,10 @@ export default function MedIQPro() {
       )}
 
       {/* FOOTER */}
-      <footer className="mediq-footer">
+      <footer style={{
+        borderTop:`1px solid ${T.border}`,padding:"16px 28px",
+        display:"flex",justifyContent:"space-between",alignItems:"center",
+      }}>
         <div style={{fontSize:9,color:T.muted,fontFamily:"'JetBrains Mono'",letterSpacing:2}}>
           CUMULATIVE AVERAGE · UNIVERSITY OF WARITH AL-ANBIYAA · DEV: HAIDER EMAD
         </div>
@@ -1060,16 +914,16 @@ export default function MedIQPro() {
 // ─── Small helper components ─────────────────────────────────────────────────
 function Row({ label, val, color, muted }) {
   return (
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12,gap:12}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",fontSize:12}}>
       <span style={{color:muted}}>{label}</span>
-      <span style={{color,fontWeight:700,textAlign:"right"}}>{val}</span>
+      <span style={{color,fontWeight:700}}>{val}</span>
     </div>
   );
 }
 
 function Stat({ label, value, color }) {
   return (
-    <div style={{textAlign:"center",minWidth:0}}>
+    <div style={{textAlign:"center"}}>
       <div style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:2,color,lineHeight:1}}>
         {value}
       </div>
@@ -1085,15 +939,15 @@ function InsightRow({ icon, label, value, sub, color, T }) {
   return (
     <div style={{
       display:"flex",gap:14,alignItems:"flex-start",padding:"14px 16px",
-      borderRadius:14,background:T.sub,minWidth:0,
+      borderRadius:14,background:T.sub,
     }}>
       <div style={{fontSize:20,flexShrink:0,lineHeight:1.2}}>{icon}</div>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontSize:10,color:T.muted,fontWeight:700,letterSpacing:1.5,marginBottom:4}}>
           {label.toUpperCase()}
         </div>
-        <div style={{fontSize:13,fontWeight:700,color,marginBottom:2,wordBreak:"break-word"}}>{value}</div>
-        {sub && <div style={{fontSize:11,color:T.muted,wordBreak:"break-word"}}>{sub}</div>}
+        <div style={{fontSize:13,fontWeight:700,color,marginBottom:2}}>{value}</div>
+        {sub && <div style={{fontSize:11,color:T.muted}}>{sub}</div>}
       </div>
     </div>
   );
