@@ -491,7 +491,7 @@ export default function MedIQPro() {
             {metrics.completedDegreeSum.toFixed(2)}
           </div>
           <div style={{fontSize:10,color:T.muted,marginTop:6,fontFamily:"'JetBrains Mono'"}}>
-            / 30
+            / 100
           </div>
         </div>
 
