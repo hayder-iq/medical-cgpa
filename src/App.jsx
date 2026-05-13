@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, Fragment } from "react";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -43,7 +43,7 @@ const TH = (d) => d ? {
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA DATA & UTILITIES
+// CGPA STAGE DATA (الكامل والأصلي)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const STAGES = [
   {id:0,label:"1st",full:"First Stage",arabic:"المرحلة الأولى",color:"#60A5FA",weight:5,subjects:[{en:"Anatomy",ar:"التشريح",u:8},{en:"Medical Biology",ar:"الاحياء الطبية",u:6},{en:"Medical Chemistry",ar:"الكيمياء الطبية",u:6},{en:"Medical Physics",ar:"الفيزياء الطبية",u:6},{en:"English Language",ar:"اللغة الانكليزية",u:4},{en:"Computer Science",ar:"الحاسبات",u:3},{en:"Medical Terminology",ar:"المصطلحات الطبية",u:2},{en:"Basics of Medicine",ar:"اساسيات الطب",u:2},{en:"Democracy & Human Rights",ar:"الديمقراطية وحقوق الانسان",u:2}]},
@@ -55,7 +55,10 @@ const STAGES = [
 ];
 const TOTAL_UNITS = STAGES.reduce((a,s)=>a+s.subjects.reduce((b,x)=>b+x.u,0),0);
 
-const classify = (g)=>{if(g==null||g===0)return null;if(g>=90)return{label:"Excellent",ar:"امتياز",color:"#10B981"};if(g>=80)return{label:"Very Good",ar:"جيد جداً",color:"#60A5FA"};if(g>=70)return{label:"Good",ar:"جيد",color:"#A78BFA"};if(g>=60)return{label:"Medium",ar:"متوسط",color:"#FBBF24"};if(g>=50)return{label:"Acceptable",ar:"مقبول",color:"#F97316"};return{label:"Fail",ar:"راسب",color:"#EF4444"};};
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// UTILITIES
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const classify=(g)=>{if(g==null||g===0)return null;if(g>=90)return{label:"Excellent",ar:"امتياز",color:"#10B981"};if(g>=80)return{label:"Very Good",ar:"جيد جداً",color:"#60A5FA"};if(g>=70)return{label:"Good",ar:"جيد",color:"#A78BFA"};if(g>=60)return{label:"Medium",ar:"متوسط",color:"#FBBF24"};if(g>=50)return{label:"Acceptable",ar:"مقبول",color:"#F97316"};return{label:"Fail",ar:"راسب",color:"#EF4444"};};
 const gc=(g)=>{if(g==null)return"#888";if(g>=90)return"#10B981";if(g>=80)return"#60A5FA";if(g>=70)return"#A78BFA";if(g>=60)return"#FBBF24";if(g>=50)return"#F97316";return"#EF4444";};
 const diffC=(d)=>({Easy:"#10B981",Medium:"#FBBF24",Hard:"#EF4444"}[d]||"#888");
 const fmtTime=(s)=>`${Math.floor(s/60)}:${(s%60).toString().padStart(2,"0")}`;
@@ -64,7 +67,7 @@ const WD=(g,u,total,w)=>g==null||total===0?null:(g/100)*(u/total)*w;
 const hlStem=(t)=>t?.replace(/(most likely|next best step|most appropriate|best initial|diagnosis|which of the following|first-line|what is the)/gi,"<mark>$1</mark>")||t;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// FALLBACK QUESTIONS
+// SAMPLE FALLBACK QUESTIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const SAMPLE_QS = [
   {id:"q1",system:"Cardiology",subject:"Internal Medicine",difficulty:"Medium",text:"Which ECG finding is most specific for prior MI?",options:["ST elevation","ST depression","T wave inversion","Prolonged QT interval","Pathological Q wave"],correctAnswer:"Pathological Q wave",explanation:"Pathological Q waves indicate transmural infarction.",educationalObjective:"Recognize ECG signs of prior MI.",tags:["ECG","MI"],hint:"Think about permanent changes.",imageUrl:null,type:"single"},
@@ -72,7 +75,7 @@ const SAMPLE_QS = [
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR (مختصر لكن كامل)
+// CGPA CALCULATOR (مع إصلاح عرض المواد بـ CSS Grid)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -111,81 +114,130 @@ function CGPAView({dark}) {
   const failing=allGraded.filter(x=>x.g<50);
 
   return(
-    <div style={{minHeight:"100dvh",background:C.bg,color:C.text}}>
+    <div style={{minHeight:"100dvh",background:C.bg,color:C.text,"--br":C.border}}>
+      {/* Metrics strip */}
       <div style={{padding:"20px 28px",borderBottom:`1px solid ${C.border}`,display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16}}>
-        <div style={{background:`linear-gradient(135deg,rgba(0,212,170,.12),rgba(59,130,246,.06))`,border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2}}>STAGE DEGREE SUM</div><div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA"}}>{metrics.completedWD.toFixed(2)}</div><div style={{fontSize:10,color:C.muted}}>/100</div></div>
-        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>REMAINING WEIGHT</div><div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA"}}>{metrics.remainW.toFixed(0)}</div></div>
-        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>CURRENT STAGE CLASS</div><div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color??C.muted}}>{classify(sm.avg)?.label??"—"}</div><div style={{fontSize:16,color:classify(sm.avg)?.color??C.muted,direction:"rtl",textAlign:"left"}}>{classify(sm.avg)?.ar??"أدخل الدرجات"}</div></div>
-        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>UNITS GRADED</div><div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>{metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)}<span style={{fontSize:13,color:C.muted,fontWeight:400}}> / {TOTAL_UNITS}</span></div><div style={{height:5,background:dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.08)",borderRadius:3,marginTop:10,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#00D4AA,#3B82F6)",width:`${(metrics.gradedU/TOTAL_UNITS)*100}%`}}/></div></div>
+        <div style={{background:`linear-gradient(135deg,rgba(0,212,170,.12),rgba(59,130,246,.06))`,border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2}}>STAGE DEGREE SUM</div><div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA"}}>{metrics.completedWD.toFixed(2)}</div><div style={{fontSize:10,color:C.muted,fontFamily:"'JetBrains Mono'"}}>/100</div></div>
+        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>REMAINING WEIGHT</div><div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA"}}>{metrics.remainW.toFixed(0)}</div><div style={{fontSize:10,color:C.muted}}>to reach 100%</div></div>
+        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>CURRENT STAGE CLASS</div><div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color??C.muted}}>{classify(sm.avg)?.label??"—"}</div><div style={{fontSize:16,color:classify(sm.avg)?.color??C.muted,direction:"rtl",textAlign:"left",opacity:.8}}>{classify(sm.avg)?.ar??"أدخل الدرجات"}</div></div>
+        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>UNITS GRADED</div><div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>{metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)}<span style={{fontSize:13,color:C.muted,fontWeight:400}}> / {TOTAL_UNITS}</span></div><div style={{height:5,background:dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.08)",borderRadius:3,marginTop:10,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#00D4AA,#3B82F6)",width:`${(metrics.gradedU/TOTAL_UNITS)*100}%`,transition:"width .6s"}}/></div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>TARGET AVERAGE</div><input type="number" min={50} max={100} step={0.5} value={targetAvg} onChange={e=>setTargetAvg(parseFloat(e.target.value)||0)} style={{width:"100%",background:"transparent",border:"none",outline:"none",fontSize:32,fontFamily:"'Bebas Neue'",letterSpacing:2,color:C.text}}/>{metrics.needed!=null&&<div style={{fontSize:11,fontWeight:700,marginTop:4,color:metrics.needed<0?"#10B981":metrics.needed>100?"#EF4444":"#FBBF24"}}>{metrics.needed<0?"✓ Target achieved!":metrics.needed>100?"✗ Not achievable":`Need ${metrics.needed.toFixed(1)} avg remaining`}</div>}</div>
       </div>
+      {/* Tabs */}
       <div style={{display:"flex",gap:4,padding:"12px 28px",borderBottom:`1px solid ${C.border}`}}>
-        {[["grades","Grades"],["details","Visual Fingerprint"],["insights","Insights"]].map(([k,l])=><button key={k} className="btn" onClick={()=>setTab(k)} style={{padding:"8px 18px",borderRadius:10,background:tab===k?(dark?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)"):"transparent",color:tab===k?C.text:C.muted,fontWeight:600}}>{l}</button>)}
+        {[["grades","Grades"],["details","Visual Fingerprint"],["insights","Insights"]].map(([k,l])=><button key={k} className="btn" onClick={()=>setTab(k)} style={{padding:"8px 18px",borderRadius:10,background:tab===k?(dark?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)"):"transparent",color:tab===k?C.text:C.muted,fontWeight:600,fontSize:12}}>{l}</button>)}
       </div>
       {tab==="grades"&&(
         <div style={{display:"grid",gridTemplateColumns:"220px 1fr",minHeight:"calc(100dvh - 280px)"}}>
-          <div style={{borderRight:`1px solid ${C.border}`,padding:16,display:"flex",flexDirection:"column",gap:4}}>
-            {STAGES.map((s,idx)=>{const sp=metrics.perStage[idx],act=activeStage===idx;return(<button key={idx} className="btn" onClick={()=>setActiveStage(idx)} style={{width:"100%",textAlign:"left",padding:"11px 13px",borderRadius:11,background:act?`${s.color}15`:"transparent",borderLeft:`3px solid ${act?s.color:"transparent"}`,opacity:act?1:.5}}><div style={{display:"flex",justifyContent:"space-between"}}><div><div style={{fontSize:13,fontWeight:700,color:act?s.color:C.text,fontFamily:"'Bebas Neue'"}}>{s.full}</div><div style={{fontSize:9,color:C.muted}}>{s.weight}% Weight</div></div><div>{sp.avg!=null?<><div style={{fontSize:17,fontWeight:900,fontFamily:"'Bebas Neue'",color:gc(sp.avg)}}>{sp.avg.toFixed(1)}</div><div style={{fontSize:9,color:C.muted}}>{sp.complete?`+${s.weight}/${s.weight}`:`0/${s.weight}`}</div></>:<div>—</div>}</div></div>{sp.gradedU>0&&<div style={{height:2,background:dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.08)",borderRadius:1,marginTop:7}}><div style={{height:"100%",background:s.color,width:`${sp.pct*100}%`}}/></div>}</button>);})}
+          {/* Sidebar للمراحل */}
+          <div style={{borderRight:`1px solid ${C.border}`,padding:16,display:"flex",flexDirection:"column",gap:4,overflowY:"auto"}}>
+            {STAGES.map((s,idx)=>{const sp=metrics.perStage[idx],act=activeStage===idx;return(<button key={idx} className="btn" onClick={()=>setActiveStage(idx)} style={{width:"100%",textAlign:"left",padding:"11px 13px",borderRadius:11,background:act?`${s.color}15`:"transparent",borderLeft:`3px solid ${act?s.color:"transparent"}`,opacity:act?1:.5}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><div style={{fontSize:13,fontWeight:700,color:act?s.color:C.text,fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>{s.full}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{s.weight}% Weight</div></div><div style={{textAlign:"right"}}>{sp.avg!=null?(<><div style={{fontSize:17,fontWeight:900,fontFamily:"'Bebas Neue'",color:gc(sp.avg)}}>{sp.avg.toFixed(1)}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{sp.complete?`+${s.weight}/${s.weight}`:`0/${s.weight}`}</div></>):(<div style={{fontSize:17,fontFamily:"'Bebas Neue'",color:C.muted}}>—</div>)}</div></div>{sp.gradedU>0&&<div style={{height:2,background:dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.08)",borderRadius:1,marginTop:7}}><div style={{height:"100%",background:s.color,width:`${sp.pct*100}%`}}/></div>}</button>);})}
           </div>
+          {/* منطقة المحتوى + الجدول */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 360px"}}>
-            <div style={{padding:28,borderRight:`1px solid ${C.border}`}}>
-              <div style={{display:"flex",justifyContent:"space-between",marginBottom:24}}><div><div style={{fontFamily:"'Bebas Neue'",fontSize:28,color:stage.color}}>{stage.full}</div><div style={{fontSize:13,color:C.muted,direction:"rtl",textAlign:"left"}}>{stage.arabic} — {stage.weight}% من المعدل التراكمي</div></div><div>{sm.avg!=null?<><div style={{fontFamily:"'Bebas Neue'",fontSize:50,color:gc(sm.avg)}}>{sm.avg.toFixed(2)}</div><div style={{fontSize:11,color:classify(sm.avg)?.color}}>{classify(sm.avg)?.label} · {classify(sm.avg)?.ar}</div></>:<div>——</div>}</div></div>
-              <div>{stage.subjects.map((sub,i)=>{const g=grades[`${stage.id}-${i}`];const wd=WD(g,sub.u,stageTot,stage.weight);return(<div key={i} style={{display:"flex",alignItems:"center",gap:11,padding:"10px 13px",borderRadius:11,background:g!=null?`${gc(g)}08`:"transparent"}}><div style={{width:34,height:21,borderRadius:6,background:`${stage.color}20`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10}}>{sub.u}</div><div style={{flex:1}}><div>{sub.en}</div><div style={{fontSize:10,color:C.muted}}>{sub.ar}</div></div>{wd!=null&&<div style={{fontSize:11,fontWeight:600,fontFamily:"'JetBrains Mono'",color:"#FBBF24",background:"rgba(251,191,36,.12)",padding:"2px 9px",borderRadius:20}}>{wd.toFixed(5)}</div>}{classify(g)&&<div style={{fontSize:9,fontWeight:700,padding:"3px 7px",borderRadius:6,background:`${classify(g).color}18`,color:classify(g).color}}>{classify(g).label}</div>}<input type="number" value={g??""} onChange={e=>setGrade(stage.id,i,e.target.value)} style={{width:65,height:36,textAlign:"center",borderRadius:9,background:dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)",border:`1.5px solid ${g!=null?gc(g)+"60":C.border}`,color:g!=null?gc(g):C.text}}/></div>);})}</div>
-              {sm.totalWD>0&&<div style={{marginTop:18,textAlign:"right",borderTop:`1px solid ${C.border}`,paddingTop:14}}><div>Stage Weighted Degree</div><div style={{fontFamily:"'Bebas Neue'",fontSize:32,color:"#FBBF24"}}>{sm.totalWD.toFixed(5)}</div><div>Max = {stage.weight}</div></div>}
+            <div className="fade-up" style={{padding:28,borderRight:`1px solid ${C.border}`,overflowY:"auto"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24,flexWrap:"wrap",gap:12}}>
+                <div><div style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</div><div style={{fontSize:13,color:C.muted,direction:"rtl",textAlign:"left",marginTop:2}}>{stage.arabic} — {stage.weight}% من المعدل التراكمي</div></div>
+                <div style={{textAlign:"right"}}>{sm.avg!=null?(<><div style={{fontFamily:"'Bebas Neue'",fontSize:50,lineHeight:1,color:gc(sm.avg),letterSpacing:2}}>{sm.avg.toFixed(2)}</div><div style={{fontSize:11,color:classify(sm.avg)?.color,fontWeight:700,marginTop:2}}>{classify(sm.avg)?.label} · {classify(sm.avg)?.ar}</div></>):(<div style={{fontFamily:"'Bebas Neue'",fontSize:40,color:C.muted}}>——</div>)}</div>
+              </div>
+              {/* جدول المواد بإصلاح CSS Grid */}
+              <div style={{display:"grid",gridTemplateColumns:"60px 1fr auto auto auto",gap:"8px 12px",alignItems:"center"}}>
+                {stage.subjects.map((sub,i)=>{
+                  const g=grades[`${stage.id}-${i}`];
+                  const cls=classify(g);
+                  const gco=gc(g);
+                  const wd=WD(g,sub.u,stageTot,stage.weight);
+                  return(
+                    <Fragment key={i}>
+                      {/* وحدة المادة */}
+                      <div style={{textAlign:"center",background:`${stage.color}20`,borderRadius:8,padding:"4px 0",fontSize:14,fontWeight:700,color:stage.color}}>{sub.u}</div>
+                      {/* اسم المادة */}
+                      <div><div style={{fontWeight:600}}>{sub.en}</div><div style={{fontSize:12,color:C.muted,marginTop:2,direction:"rtl",textAlign:"right"}}>{sub.ar}</div></div>
+                      {/* الدرجة المرجحة */}
+                      {wd!=null&&<div style={{fontFamily:"'JetBrains Mono'",fontSize:12,background:"rgba(251,191,36,0.12)",padding:"4px 8px",borderRadius:12,textAlign:"center",minWidth:80}}>{wd.toFixed(5)}</div>}
+                      {/* التصنيف */}
+                      {cls&&<div style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:12,background:`${cls.color}18`,color:cls.color,textAlign:"center"}}>{cls.label}</div>}
+                      {/* حقل الإدخال */}
+                      <input type="number" min={0} max={100} step={0.5} placeholder="—" value={g??""} onChange={e=>setGrade(stage.id,i,e.target.value)} style={{width:70,height:38,textAlign:"center",borderRadius:10,background:dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)",border:`1.5px solid ${g!=null?gco+"60":C.border}`,color:g!=null?gco:C.text,fontSize:14,fontWeight:800,fontFamily:"'JetBrains Mono'",outline:"none"}}/>
+                    </Fragment>
+                  );
+                })}
+              </div>
+              {sm.totalWD>0&&<div style={{marginTop:18,textAlign:"right",borderTop:`1px solid ${C.border}`,paddingTop:14}}><div style={{fontSize:11,color:C.muted,letterSpacing:1}}>Stage Weighted Degree</div><div style={{fontFamily:"'Bebas Neue'",fontSize:32,color:"#FBBF24"}}>{sm.totalWD.toFixed(5)}</div><div style={{fontSize:10,color:C.muted}}>Max = {stage.weight}</div></div>}
             </div>
-            <div style={{padding:28}}>
-              <div><div style={{fontSize:10,color:C.muted,fontWeight:700}}>STAGE RADAR</div><ResponsiveContainer width="100%" height={240}><RadarChart data={radarData}><PolarGrid stroke={dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.1)"}/><PolarAngleAxis dataKey="s" tick={{fontSize:9,fill:C.muted}}/><Radar dataKey="g" stroke={stage.color} fill={stage.color} fillOpacity={.18} strokeWidth={2}/><Tooltip contentStyle={{background:C.card,border:`1px solid ${C.border}`}}/></RadarChart></ResponsiveContainer></div>
-              <div style={{background:C.sub,borderRadius:14,padding:16,marginTop:16}}><div style={{fontSize:10,color:C.muted,fontWeight:700}}>STAGE BREAKDOWN</div>{(()=>{const items=stage.subjects.map((s,i)=>({...s,g:grades[`${stage.id}-${i}`]})).filter(s=>s.g!=null);if(!items.length)return<div>Enter grades</div>;const b=items.reduce((a,x)=>x.g>a.g?x:a),w=items.reduce((a,x)=>x.g<a.g?x:a);return(<div>{[["↑ Best",b.en,"#10B981"],["↓ Weakest",w.en,"#FBBF24"],["Graded",`${items.length}/${stage.subjects.length}`,C.text]].map(([l,v,c])=><div key={l} style={{display:"flex",justifyContent:"space-between"}}><span style={{color:C.muted}}>{l}</span><span style={{color:c}}>{v}</span></div>)}</div>);})()}</div>
+            {/* الشريط الجانبي الأيمن (رادار و breakdown) */}
+            <div style={{padding:28,display:"flex",flexDirection:"column",gap:22,overflowY:"auto"}}>
+              <div><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE RADAR</div><ResponsiveContainer width="100%" height={240}><RadarChart data={radarData} margin={{top:8,right:8,bottom:8,left:8}}><PolarGrid stroke={dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.1)"}/><PolarAngleAxis dataKey="s" tick={{fontSize:9,fill:C.muted}}/><Radar dataKey="g" stroke={stage.color} fill={stage.color} fillOpacity={.18} strokeWidth={2}/><Tooltip contentStyle={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10}} formatter={v=>[v||"—","Grade"]}/></RadarChart></ResponsiveContainer></div>
+              <div style={{background:C.sub,borderRadius:14,padding:16}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE BREAKDOWN</div>{(()=>{const items=stage.subjects.map((s,i)=>({...s,g:grades[`${stage.id}-${i}`]})).filter(s=>s.g!=null);if(!items.length)return<div style={{fontSize:12,color:C.muted,fontStyle:"italic"}}>Enter grades to see breakdown</div>;const b=items.reduce((a,x)=>x.g>a.g?x:a),w=items.reduce((a,x)=>x.g<a.g?x:a);return(<div style={{display:"flex",flexDirection:"column",gap:9}}>{[["↑ Best",b.en,"#10B981"],["↓ Weakest",w.en,"#FBBF24"],["Graded",`${items.length}/${stage.subjects.length}`,C.text],["Classification",classify(sm.avg)?.label??"",classify(sm.avg)?.color??C.muted]].map(([l,v,c])=><div key={l} style={{display:"flex",justifyContent:"space-between",fontSize:12,gap:8}}><span style={{color:C.muted}}>{l}</span><span style={{color:c,fontWeight:700}}>{v}</span></div>)}</div>);})()}</div>
+              <div><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>ALL STAGES</div><ResponsiveContainer width="100%" height={120}><BarChart data={barData} margin={{top:0,right:0,bottom:0,left:-20}}><CartesianGrid strokeDasharray="3 3" stroke={dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.07)"} vertical={false}/><XAxis dataKey="label" tick={{fontSize:10,fill:C.muted}} axisLine={false} tickLine={false}/><YAxis domain={[0,100]} tick={{fontSize:9,fill:C.muted}} axisLine={false} tickLine={false}/><Tooltip contentStyle={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10}} formatter={v=>[v?v.toFixed(1):"—","Avg"]}/><Bar dataKey="avg" radius={[5,5,0,0]}>{barData.map((_,i)=><Cell key={i} fill={STAGES[i].color} fillOpacity={activeStage===i?1:.35}/>)}</Bar></BarChart></ResponsiveContainer></div>
             </div>
           </div>
         </div>
       )}
-      {tab==="details"&&<div style={{padding:32}}>Details view (click on blocks in original version)</div>}
-      {tab==="insights"&&<div style={{padding:32}}>Insights view</div>}
+      {tab==="details"&&(
+        <div className="fade-up" style={{padding:32}}>
+          <div style={{fontFamily:"'Bebas Neue'",fontSize:30,letterSpacing:4,marginBottom:6}}>VISUAL FINGERPRINT</div>
+          <div style={{fontSize:12,color:C.muted,marginBottom:22}}>Each block represents one subject — width proportional to credit units, color reflects grade. Click any block to navigate.</div>
+          <div style={{display:"flex",gap:18,marginBottom:24,flexWrap:"wrap"}}>{[["≥90 Excellent","#10B981"],["≥80 Very Good","#60A5FA"],["≥70 Good","#A78BFA"],["≥60 Medium","#FBBF24"],["≥50 Acceptable","#F97316"],["<50 Fail","#EF4444"],["Not entered",dark?"rgba(255,255,255,.08)":"rgba(0,0,0,.06)"]].map(([l,c])=>(<div key={l} style={{display:"flex",alignItems:"center",gap:6,fontSize:11,color:C.muted}}><div style={{width:10,height:10,borderRadius:3,background:c}}/>{l}</div>))}</div>
+          <div style={{display:"flex",flexDirection:"column",gap:10}}>{STAGES.map((s,si)=>{const sp=metrics.perStage[si];return(<div key={si} style={{display:"flex",alignItems:"center",gap:14}}><div style={{width:110,flexShrink:0,textAlign:"right",fontFamily:"'Bebas Neue'",fontSize:13,letterSpacing:2,color:s.color}}><div>{s.full}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{s.weight}% wt</div></div><div style={{display:"flex",gap:3,flex:1,overflowX:"auto",paddingBottom:3}}>{s.subjects.map((sub,i)=>{const g=grades[`${s.id}-${i}`];const gco=g!=null?gc(g):null;const w=Math.max(28,sub.u*15);return(<div key={i} title={`${sub.en} (${sub.u}u)${g!=null?`: ${g}`:""}`} onClick={()=>{setActiveStage(si);setTab("grades");}} style={{width:w,height:46,borderRadius:7,flexShrink:0,background:gco||(dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.06)"),border:`1px solid ${gco?gco+"40":C.border}`,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:2,transition:"transform .14s",opacity:g!=null?.92:.4}} onMouseEnter={e=>e.currentTarget.style.transform="translateY(-2px)"} onMouseLeave={e=>e.currentTarget.style.transform=""}>{g!=null&&<span style={{fontSize:10,fontWeight:900,color:"white",fontFamily:"'JetBrains Mono'",textShadow:"0 1px 4px rgba(0,0,0,.7)"}}>{g}</span>}<span style={{fontSize:7,color:g!=null?"rgba(255,255,255,.7)":C.muted,textAlign:"center",lineHeight:1.2,maxWidth:w-6,overflow:"hidden"}}>{sub.en.length>Math.floor(w/5)?sub.en.slice(0,Math.floor(w/5))+"…":sub.en}</span></div>);})}</div><div style={{width:68,flexShrink:0,textAlign:"center",background:sp.avg!=null?`${gc(sp.avg)}18`:C.sub,border:`1px solid ${sp.avg!=null?gc(sp.avg)+"40":C.border}`,borderRadius:9,padding:"7px 9px"}}><div style={{fontFamily:"'Bebas Neue'",fontSize:18,color:sp.avg!=null?gc(sp.avg):C.muted}}>{sp.avg?.toFixed(1)??"—"}</div><div style={{fontSize:8,color:C.muted,fontWeight:600}}>AVG</div></div></div>);})}</div>
+        </div>
+      )}
+      {tab==="insights"&&(
+        <div className="fade-up" style={{padding:32,display:"grid",gridTemplateColumns:"1fr 1fr",gap:22}}>
+          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:20,padding:26}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>ACADEMIC PROFILE</div>{allGraded.length===0?<div>Enter grades to generate insights.</div>:<div style={{display:"flex",flexDirection:"column",gap:12}}>{[["🏆 Highest",best,"#10B981"],["📉 Lowest",worst,"#FBBF24"]].map(([l,item,c])=>item&&<div key={l} style={{padding:"13px 15px",borderRadius:13,background:C.sub}}><div style={{fontSize:10,color:C.muted,letterSpacing:1.5}}>{l.toUpperCase()}</div><div style={{fontSize:13,fontWeight:700,color:c}}>{item.en} — {item.g}</div><div style={{fontSize:11,color:C.muted}}>{item.stage} · {item.u} units</div></div>)}{failing.length>0&&<div style={{padding:"13px 15px",borderRadius:13,background:"rgba(239,68,68,.08)",border:"1px solid rgba(239,68,68,.25)"}}><div style={{fontSize:10,color:"#EF4444",fontWeight:700}}>⚠ FAILING</div><div style={{fontSize:12,color:"#EF4444"}}>{failing.map(x=>x.en).join(", ")}</div></div>}<div style={{padding:"13px 15px",borderRadius:13,background:C.sub}}><div style={{fontSize:10,color:C.muted,letterSpacing:1.5}}>SUBJECTS ENTERED</div><div style={{fontSize:13,fontWeight:700}}>{allGraded.length} of {STAGES.reduce((a,s)=>a+s.subjects.length,0)} ({((allGraded.length/STAGES.reduce((a,s)=>a+s.subjects.length,0))*100).toFixed(0)}%)</div></div></div>}</div>
+          <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:20,padding:26}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>TARGET CALCULATOR</div><div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:18}}>{[50,60,70,80,90,95].map(v=><button key={v} className="btn" onClick={()=>setTargetAvg(v)} style={{padding:"7px 14px",borderRadius:9,border:`1px solid ${targetAvg===v?gc(v)+"80":C.border}`,background:targetAvg===v?`${gc(v)}15`:"transparent",color:targetAvg===v?gc(v):C.muted,fontWeight:700,fontSize:14,fontFamily:"'JetBrains Mono'"}}>{v}</button>)}</div><div style={{padding:18,borderRadius:14,marginBottom:16,background:metrics.needed==null?C.sub:metrics.needed<0?"rgba(16,185,129,.1)":metrics.needed>100?"rgba(239,68,68,.1)":"rgba(251,191,36,.1)",border:`1px solid ${metrics.needed==null?C.border:metrics.needed<0?"rgba(16,185,129,.3)":metrics.needed>100?"rgba(239,68,68,.3)":"rgba(251,191,36,.3)"}`}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>NEEDED IN REMAINING {metrics.remainW.toFixed(0)}% WEIGHT</div><div style={{fontFamily:"'Bebas Neue'",fontSize:52,letterSpacing:3,color:metrics.needed==null?C.muted:metrics.needed<0?"#10B981":metrics.needed>100?"#EF4444":"#FBBF24"}}>{metrics.needed==null?"——":metrics.needed<0?"ACHIEVED ✓":metrics.needed>100?"IMPOSSIBLE":metrics.needed.toFixed(2)}</div></div><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>PER-STAGE PROGRESS</div>{STAGES.map((s,i)=>{const sp=metrics.perStage[i];return(<div key={i} style={{marginBottom:9}}><div style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span>{s.full} <span style={{opacity:.5}}>({s.weight}%)</span></span><span style={{color:sp.avg!=null?gc(sp.avg):C.muted,fontFamily:"'JetBrains Mono'",fontWeight:700}}>{sp.avg!=null?`${sp.avg.toFixed(1)}%`:"—"}</span></div><div style={{height:5,background:dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.07)",borderRadius:3}}><div style={{height:"100%",borderRadius:3,background:sp.avg!=null?gc(sp.avg):C.border,width:`${sp.pct*100}%`}}/></div></div>);})}</div>
+        </div>
+      )}
     </div>
   );
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// LIBRARY COMPONENT (مع أزرار الأنظمة وبدون زر تنزيل)
+// LIBRARY COMPONENT (مع أزرار المصدر والأنظمة، زر في الوسط)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function Library({ questions, onStart, dark }) {
+function Library({ questions, bankQuestionsList, previousExamsList, onStart, dark }) {
   const C = TH(dark);
+  const [source, setSource] = useState("all");
   const [selectedSystem, setSelectedSystem] = useState("all");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const PER = 12;
 
+  const currentQuestions = useMemo(() => {
+    if (source === "bank") return bankQuestionsList;
+    if (source === "previous") return previousExamsList;
+    return questions;
+  }, [source, questions, bankQuestionsList, previousExamsList]);
+
   const systemStats = useMemo(() => {
-    const stats = { all: questions.length };
-    questions.forEach(q => {
+    const stats = { all: currentQuestions.length };
+    currentQuestions.forEach(q => {
       const sys = q.system || "General";
       stats[sys] = (stats[sys] || 0) + 1;
     });
     return stats;
-  }, [questions]);
+  }, [currentQuestions]);
 
   const systemList = useMemo(() => {
-    const systems = new Set(questions.map(q => q.system || "General"));
+    const systems = new Set(currentQuestions.map(q => q.system || "General"));
     return Array.from(systems).sort();
-  }, [questions]);
+  }, [currentQuestions]);
+
+  const filteredBySystem = useMemo(() => {
+    if (selectedSystem === "all") return currentQuestions;
+    return currentQuestions.filter(q => (q.system || "General") === selectedSystem);
+  }, [currentQuestions, selectedSystem]);
 
   const filtered = useMemo(() => {
-    let result = questions;
-    if (selectedSystem !== "all") {
-      result = result.filter(q => (q.system || "General") === selectedSystem);
-    }
-    if (search) {
-      const term = search.toLowerCase();
-      result = result.filter(q =>
-        q.text?.toLowerCase().includes(term) ||
-        q.system?.toLowerCase().includes(term) ||
-        q.subject?.toLowerCase().includes(term) ||
-        q.tags?.some(t => t.toLowerCase().includes(term))
-      );
-    }
-    return result;
-  }, [questions, selectedSystem, search]);
+    if (!search) return filteredBySystem;
+    const term = search.toLowerCase();
+    return filteredBySystem.filter(q =>
+      q.text?.toLowerCase().includes(term) ||
+      q.system?.toLowerCase().includes(term) ||
+      q.subject?.toLowerCase().includes(term) ||
+      q.tags?.some(t => t.toLowerCase().includes(term))
+    );
+  }, [filteredBySystem, search]);
 
   const paged = filtered.slice(page * PER, (page + 1) * PER);
   const pages = Math.ceil(filtered.length / PER);
@@ -194,68 +246,52 @@ function Library({ questions, onStart, dark }) {
     <div className="fade-up" style={{ minHeight: "100dvh", background: C.bg, color: C.text, padding: "32px 24px", maxWidth: 1200, margin: "0 auto" }}>
       <div style={{ marginBottom: 32 }}>
         <h1 style={{ fontFamily: "'Bebas Neue'", fontSize: 42, letterSpacing: 4, color: C.acc, marginBottom: 8 }}>QUESTION LIBRARY</h1>
-        <p style={{ color: C.muted, fontSize: 14 }}>Browse and start a practice session from {questions.length} questions.</p>
+        <p style={{ color: C.muted, fontSize: 14 }}>Browse and start a practice session from {currentQuestions.length} questions.</p>
       </div>
 
-      {/* System Buttons */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 32 }}>
-        <button
-          onClick={() => setSelectedSystem("all")}
-          style={{
-            padding: "8px 20px",
-            borderRadius: 40,
-            background: selectedSystem === "all" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp,
-            border: `1px solid ${selectedSystem === "all" ? "transparent" : C.border}`,
-            color: selectedSystem === "all" ? "white" : C.text,
-            fontWeight: 600,
-            fontSize: 13,
-            cursor: "pointer"
-          }}
-        >
-          All Systems ({systemStats.all})
+      {/* أزرار تصفية المصدر */}
+      <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 24 }}>
+        <button onClick={() => { setSource("all"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "all" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "all" ? "white" : C.text, border: `1px solid ${source === "all" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>
+          📚 All Questions ({questions.length})
         </button>
-        {systemList.map(sys => (
-          <button
-            key={sys}
-            onClick={() => setSelectedSystem(sys)}
-            style={{
-              padding: "8px 20px",
-              borderRadius: 40,
-              background: selectedSystem === sys ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp,
-              border: `1px solid ${selectedSystem === sys ? "transparent" : C.border}`,
-              color: selectedSystem === sys ? "white" : C.text,
-              fontWeight: 600,
-              fontSize: 13,
-              cursor: "pointer"
-            }}
-          >
-            {sys} ({systemStats[sys]})
-          </button>
-        ))}
+        <button onClick={() => { setSource("bank"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "bank" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "bank" ? "white" : C.text, border: `1px solid ${source === "bank" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>
+          📖 Bank Questions ({bankQuestionsList.length})
+        </button>
+        <button onClick={() => { setSource("previous"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "previous" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "previous" ? "white" : C.text, border: `1px solid ${source === "previous" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>
+          📝 Previous Exams ({previousExamsList.length})
+        </button>
       </div>
 
-      {/* START NEW SESSION - زر في الوسط */}
+      {/* أزرار الأنظمة (تظهر فقط للمصادر التي تحتوي على أنظمة) */}
+      {source !== "previous" && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 32 }}>
+          <button onClick={() => setSelectedSystem("all")} style={{ padding: "6px 16px", borderRadius: 40, background: selectedSystem === "all" ? C.acc : C.inp, color: selectedSystem === "all" ? "white" : C.text, border: `1px solid ${C.border}`, cursor: "pointer" }}>
+            All Systems ({systemStats.all})
+          </button>
+          {systemList.filter(sys => sys !== "Previous Exams").map(sys => (
+            <button key={sys} onClick={() => setSelectedSystem(sys)} style={{ padding: "6px 16px", borderRadius: 40, background: selectedSystem === sys ? C.acc : C.inp, color: selectedSystem === sys ? "white" : C.text, border: `1px solid ${C.border}`, cursor: "pointer" }}>
+              {sys} ({systemStats[sys]})
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* زر بدء الجلسة في المنتصف */}
       <div style={{ textAlign: "center", marginBottom: 24 }}>
         <button onClick={onStart} className="btn" style={{ padding: "12px 32px", borderRadius: 40, background: `linear-gradient(135deg, ${C.acc}, ${C.acc2})`, color: "white", fontSize: 16, fontWeight: 700, letterSpacing: 1 }}>
           🚀 START NEW SESSION
         </button>
       </div>
 
-      {/* Search bar - في صف منفصل تحت الزر */}
+      {/* شريط البحث */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
         <div style={{ position: "relative", width: "100%", maxWidth: 300 }}>
-          <input
-            type="text"
-            placeholder="Search questions..."
-            value={search}
-            onChange={e => { setSearch(e.target.value); setPage(0); }}
-            style={{ width: "100%", padding: "10px 16px 10px 40px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, color: C.text, fontSize: 13, outline: "none" }}
-          />
+          <input type="text" placeholder="Search questions..." value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} style={{ width: "100%", padding: "10px 16px 10px 40px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, color: C.text, fontSize: 13, outline: "none" }} />
           <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 14, color: C.muted }}>🔍</span>
         </div>
       </div>
 
-      {/* Questions list (نفسه) */}
+      {/* قائمة الأسئلة */}
       <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 24, padding: "20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1, color: C.acc }}>QUESTIONS <span style={{ color: C.muted }}>({filtered.length})</span></div>
@@ -288,8 +324,9 @@ function Library({ questions, onStart, dark }) {
     </div>
   );
 }
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SESSION CONFIG, ACTIVE SESSION, REVIEW (مختصرة لكن كاملة)
+// SESSION CONFIG (تكوين الجلسة)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({questions, onStart, onBack, dark}) {
   const C=TH(dark);
@@ -309,7 +346,7 @@ function SessionConfig({questions, onStart, onBack, dark}) {
     let qs=available.slice();
     if(randomize)qs=shuffle(qs);
     qs=qs.slice(0,finalCount);
-    if(!qs.length) alert("No questions match filters.");
+    if(!qs.length) alert("No questions match your filters.");
     else onStart({name,mode,timeLimit:timeLimit*60,questions:qs,startTime:Date.now()});
   };
   return (
@@ -329,6 +366,9 @@ function SessionConfig({questions, onStart, onBack, dark}) {
   );
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ACTIVE SESSION (الجلسة النشطة)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function ActiveSession({config, onEnd, dark}) {
   const C=TH(dark);
   const {questions,mode,timeLimit,name}=config;
@@ -373,6 +413,9 @@ function ActiveSession({config, onEnd, dark}) {
   );
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SESSION REVIEW (مراجعة الجلسة)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionReview({result, onExit, onRetry, dark}) {
   const C=TH(dark);
   const {questions,answers,marked,notes,name,mode,elapsed}=result;
@@ -390,60 +433,57 @@ function SessionReview({result, onExit, onRetry, dark}) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// QBANK APP (تحميل الأسئلة من ملفات JSON منفصلة)
+// QBANK APP (تحميل الأسئلة من public/data/)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function QbankApp({dark}) {
   const [view,setView]=useState("library");
-  const [questions,setQuestions]=useState([]);
+  const [allQuestions,setAllQuestions]=useState([]);
+  const [bankQuestions,setBankQuestions]=useState([]);
+  const [prevExams,setPrevExams]=useState([]);
   const [loading,setLoading]=useState(true);
   const [sessionConfig,setSessionConfig]=useState(null);
   const [sessionResult,setSessionResult]=useState(null);
 
-useEffect(() => {
-  const loadAllQuestions = async () => {
-    const systemFiles = ["questions" , "previous exams" , "cardiology", "respiratory", "nephrology", "gastroenterology", "endocrinology", "neurology", "hematology"];
-    const allQs = [];
+  useEffect(()=>{
+    const load=async()=>{
+      const systemFiles=["cardiology","gastroenterology","nephrology","hepatology","pulmonology","endocrinology","rheumatology","neurology","infectious"];
+      const bankQs=[];
+      let prevQs=[];
 
-    for (const file of systemFiles) {
-      try {
-        const res = await fetch(`/data/${file}.json`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) {
-            console.log(`✅ Loaded ${file}.json: ${data.length} questions`);
-            allQs.push(...data);
-          } else {
-            console.warn(`⚠️ ${file}.json is not an array`);
-          }
-        } else {
-          console.warn(`❌ ${file}.json not found (status ${res.status})`);
-        }
-      } catch (err) {
-        console.error(`🔥 Error loading ${file}.json:`, err);
+      for(const file of systemFiles){
+        try{
+          const res=await fetch(`/data/${file}.json`);
+          if(res.ok){
+            const data=await res.json();
+            if(Array.isArray(data)) bankQs.push(...data);
+          }else{ console.warn(`${file}.json not found`); }
+        }catch(e){ console.error(`Error loading ${file}.json`,e); }
       }
-    }
 
-    if (allQs.length) {
-      setQuestions(allQs);
-      localStorage.setItem("qbank-library", JSON.stringify(allQs));
-    } else {
-      console.warn("No questions loaded, using fallback.");
-      setQuestions(SAMPLE_QS);
-    }
-    setLoading(false);
-  };
+      try{
+        const prevRes=await fetch("/data/previous-exams.json");
+        if(prevRes.ok){
+          const data=await prevRes.json();
+          if(Array.isArray(data)) prevQs=data;
+        }else{ console.warn("previous-exams.json not found"); }
+      }catch(e){ console.error("Error loading previous-exams.json",e); }
 
-  loadAllQuestions();
-}, []);
+      setBankQuestions(bankQs);
+      setPrevExams(prevQs);
+      setAllQuestions([...bankQs,...prevQs]);
+      setLoading(false);
+    };
+    load();
+  },[]);
 
-  if (loading) return <div style={{minHeight:"100dvh",display:"flex",alignItems:"center",justifyContent:"center",color:TH(dark).text}}>Loading questions...</div>;
+  if(loading) return <div style={{minHeight:"100dvh",display:"flex",alignItems:"center",justifyContent:"center",color:TH(dark).text}}>Loading questions...</div>;
 
   return (
     <>
-      {view === "library" && <Library questions={questions} onStart={() => setView("config")} dark={dark} />}
-      {view === "config" && <SessionConfig questions={questions} onStart={cfg => { setSessionConfig(cfg); setView("session"); }} onBack={() => setView("library")} dark={dark} />}
-      {view === "session" && sessionConfig && <ActiveSession config={sessionConfig} onEnd={res => { setSessionResult(res); setView("review"); }} dark={dark} />}
-      {view === "review" && sessionResult && <SessionReview result={sessionResult} onExit={() => setView("library")} onRetry={() => setView("config")} dark={dark} />}
+      {view==="library" && <Library questions={allQuestions} bankQuestionsList={bankQuestions} previousExamsList={prevExams} onStart={()=>setView("config")} dark={dark}/>}
+      {view==="config" && <SessionConfig questions={allQuestions} onStart={cfg=>{setSessionConfig(cfg); setView("session");}} onBack={()=>setView("library")} dark={dark}/>}
+      {view==="session" && sessionConfig && <ActiveSession config={sessionConfig} onEnd={res=>{setSessionResult(res); setView("review");}} dark={dark}/>}
+      {view==="review" && sessionResult && <SessionReview result={sessionResult} onExit={()=>setView("library")} onRetry={()=>setView("config")} dark={dark}/>}
     </>
   );
 }
@@ -452,7 +492,7 @@ useEffect(() => {
 // ROOT APP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function App() {
-  const [tab, setTab] = useState("cgpa"); // الآن الافتراضي CGPA
+  const [tab, setTab] = useState("cgpa");
   const [dark, setDark] = useState(true);
   const C = TH(dark);
 
@@ -482,7 +522,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* القسم الأوسط - الأزرار (في المنتصف تماماً) */}
+        {/* القسم الأوسط - أزرار التنقل (في المنتصف) */}
         <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
           <div style={{ display: "flex", gap: 12, background: "transparent", borderRadius: 40, padding: "4px" }}>
             <button
@@ -501,12 +541,8 @@ export default function App() {
                 boxShadow: tab === "cgpa" ? "0 4px 12px rgba(0,212,170,0.3)" : "none",
                 transform: tab === "cgpa" ? "scale(1.02)" : "scale(1)",
               }}
-              onMouseEnter={(e) => {
-                if (tab !== "cgpa") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                if (tab !== "cgpa") e.currentTarget.style.background = "transparent";
-              }}
+              onMouseEnter={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }}
+              onMouseLeave={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = "transparent"; }}
             >
               📊 CGPA
             </button>
@@ -526,12 +562,8 @@ export default function App() {
                 boxShadow: tab === "qbank" ? "0 4px 12px rgba(0,212,170,0.3)" : "none",
                 transform: tab === "qbank" ? "scale(1.02)" : "scale(1)",
               }}
-              onMouseEnter={(e) => {
-                if (tab !== "qbank") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                if (tab !== "qbank") e.currentTarget.style.background = "transparent";
-              }}
+              onMouseEnter={(e) => { if (tab !== "qbank") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }}
+              onMouseLeave={(e) => { if (tab !== "qbank") e.currentTarget.style.background = "transparent"; }}
             >
               📚 Qbank
             </button>
