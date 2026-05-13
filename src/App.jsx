@@ -452,7 +452,7 @@ useEffect(() => {
 // ROOT APP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function App() {
-  const [tab, setTab] = useState("cgpa");
+  const [tab, setTab] = useState("qbank");
   const [dark, setDark] = useState(true);
   const C = TH(dark);
   return (
@@ -466,30 +466,11 @@ export default function App() {
   	<div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>WARITH AL-ANBIYAA · HAIDER EMAD</div>
 	</div>
         </div>
-<div style={{ position: "sticky", top: 0, zIndex: 100, background: C.hdr, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-  {/* القسم الأيسر (لوجو + اسم) */}
-  <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
-    <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#00D4AA,#3B82F6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontFamily: "'Bebas Neue'", color: "white" }}>M</div>
-    <div onClick={() => window.open("https://t.me/ddxo2", "_blank", "noopener,noreferrer")} style={{ cursor: "pointer", userSelect: "none" }}>
-      <div style={{ fontFamily: "'Bebas Neue'", fontSize: 18, letterSpacing: 2 }}>MedIQ Pro</div>
-      <div style={{ fontSize: 9, color: C.muted, fontFamily: "'JetBrains Mono'" }}>WARITH AL-ANBIYAA · HAIDER EMAD</div>
-    </div>
-  </div>
-
-  {/* القسم الأوسط (الأزرار - الآن في المنتصف) */}
-  <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
-    <div style={{ display: "flex", gap: 12, background: "transparent", borderRadius: 40, padding: "4px" }}>
-      {/* الأزرار كما هي موضحة أعلاه */}
-    </div>
-  </div>
-
-  {/* القسم الأيمن (Dark Mode) */}
-  <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", flex: 1 }}>
-    <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12, fontWeight: 600, color: C.text }}>
-      {dark ? "☀️ Light" : "🌙 Dark"}
-    </button>
-  </div>
-</div>
+        <div style={{ display: "flex", gap: 6 }}>
+          <button onClick={() => setTab("cgpa")} style={{ padding: "6px 16px", borderRadius: 20, background: tab === "cgpa" ? (dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)") : "transparent", color: tab === "cgpa" ? C.text : C.muted, fontWeight: 600 }}>📊 CGPA</button>
+          <button onClick={() => setTab("qbank")} style={{ padding: "6px 16px", borderRadius: 20, background: tab === "qbank" ? (dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)") : "transparent", color: tab === "qbank" ? C.text : C.muted, fontWeight: 600 }}>📚 Qbank</button>
+          <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12 }}>{dark ? "☀️ Light" : "🌙 Dark"}</button>
+        </div>
       </div>
       {tab === "cgpa" ? <CGPAView dark={dark} /> : <QbankApp dark={dark} />}
     </div>
