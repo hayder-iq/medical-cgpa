@@ -601,7 +601,7 @@ function QbankApp({ dark }) {
 
   useEffect(() => {
     const load = async () => {
-      const systemFiles = ["cardiology", "gastroenterology", "nephrology", "hepatology", "pulmonology", "endocrinology", "rheumatology", "neurology", "infectious"];
+      const systemFiles = ["previous-exams","questions","cardiology", "gastroenterology", "nephrology", "hepatology", "pulmonology", "endocrinology", "rheumatology", "neurology", "infectious"];
       let bankQs = [];
       let prevQs = [];
       for (const file of systemFiles) {
