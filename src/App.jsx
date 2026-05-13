@@ -6,7 +6,7 @@ import {
 } from "recharts";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// GLOBAL STYLES (نفس السابق)
+// GLOBAL STYLES
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const GCSS = `
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&display=swap');
@@ -75,7 +75,7 @@ const SAMPLE_QS = [
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR (مع كامل التفاصيل + Visual Fingerprint + Insights)
+// CGPA CALCULATOR (المعدل التراكمي)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -115,7 +115,7 @@ function CGPAView({dark}) {
 
   return(
     <div style={{minHeight:"100dvh",background:C.bg,color:C.text,"--br":C.border}}>
-      {/* Metrics strip (كما هو) */}
+      {/* Metrics strip */}
       <div style={{padding:"20px 28px",borderBottom:`1px solid ${C.border}`,display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16}}>
         <div style={{background:`linear-gradient(135deg,rgba(0,212,170,.12),rgba(59,130,246,.06))`,border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2}}>STAGE DEGREE SUM</div><div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA"}}>{metrics.completedWD.toFixed(2)}</div><div style={{fontSize:10,color:C.muted,fontFamily:"'JetBrains Mono'"}}>/100</div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>REMAINING WEIGHT</div><div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA"}}>{metrics.remainW.toFixed(0)}</div><div style={{fontSize:10,color:C.muted}}>to reach 100%</div></div>
@@ -133,14 +133,24 @@ function CGPAView({dark}) {
           <div style={{borderRight:`1px solid ${C.border}`,padding:16,display:"flex",flexDirection:"column",gap:4,overflowY:"auto"}}>
             {STAGES.map((s,idx)=>{const sp=metrics.perStage[idx],act=activeStage===idx;return(<button key={idx} className="btn" onClick={()=>setActiveStage(idx)} style={{width:"100%",textAlign:"left",padding:"11px 13px",borderRadius:11,background:act?`${s.color}15`:"transparent",borderLeft:`3px solid ${act?s.color:"transparent"}`,opacity:act?1:.5}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><div style={{fontSize:13,fontWeight:700,color:act?s.color:C.text,fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>{s.full}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{s.weight}% Weight</div></div><div style={{textAlign:"right"}}>{sp.avg!=null?(<><div style={{fontSize:17,fontWeight:900,fontFamily:"'Bebas Neue'",color:gc(sp.avg)}}>{sp.avg.toFixed(1)}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{sp.complete?`+${s.weight}/${s.weight}`:`0/${s.weight}`}</div></>):(<div style={{fontSize:17,fontFamily:"'Bebas Neue'",color:C.muted}}>—</div>)}</div></div>{sp.gradedU>0&&<div style={{height:2,background:dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.08)",borderRadius:1,marginTop:7}}><div style={{height:"100%",background:s.color,width:`${sp.pct*100}%`}}/></div>}</button>);})}
           </div>
-          {/* منطقة المحتوى */}
+          {/* منطقة المحتوى المركزية */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 360px"}}>
             <div className="fade-up" style={{padding:28,borderRight:`1px solid ${C.border}`,overflowY:"auto"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:24,flexWrap:"wrap",gap:12}}>
-                <div><div style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</div><div style={{fontSize:13,color:C.muted,direction:"rtl",textAlign:"left",marginTop:2}}>{stage.arabic} — {stage.weight}% من المعدل التراكمي</div></div>
-                <div style={{textAlign:"right"}}>{sm.avg!=null?(<><div style={{fontFamily:"'Bebas Neue'",fontSize:50,lineHeight:1,color:gc(sm.avg),letterSpacing:2}}>{sm.avg.toFixed(2)}</div><div style={{fontSize:11,color:classify(sm.avg)?.color,fontWeight:700,marginTop:2}}>{classify(sm.avg)?.label} · {classify(sm.avg)?.ar}</div></>):(<div style={{fontFamily:"'Bebas Neue'",fontSize:40,color:C.muted}}>——</div>)}</div>
+              {/* عنوان المرحلة في المنتصف */}
+              <div style={{textAlign:"center",marginBottom:24}}>
+                <div style={{display:"inline-block",background:`${stage.color}20`,borderRadius:60,padding:"8px 24px",marginBottom:12}}>
+                  <span style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</span>
+                </div>
+                <div style={{fontSize:14,color:C.muted,marginTop:4}}>{stage.arabic} — {stage.weight}% من المعدل التراكمي</div>
+                {sm.avg!=null && (
+                  <div style={{marginTop:12}}>
+                    <div style={{fontFamily:"'Bebas Neue'",fontSize:42,lineHeight:1,color:gc(sm.avg),letterSpacing:2}}>{sm.avg.toFixed(2)}</div>
+                    <div style={{fontSize:12,color:classify(sm.avg)?.color,fontWeight:700,marginTop:4}}>{classify(sm.avg)?.label} · {classify(sm.avg)?.ar}</div>
+                  </div>
+                )}
               </div>
-              {/* جدول المواد - تم إصلاح المحاذاة */}
+
+              {/* جدول المواد */}
               <div style={{display:"grid",gridTemplateColumns:"60px 1fr auto auto auto",gap:"8px 12px",alignItems:"center"}}>
                 {stage.subjects.map((sub,i)=>{
                   const g=grades[`${stage.id}-${i}`];
@@ -149,15 +159,10 @@ function CGPAView({dark}) {
                   const wd=WD(g,sub.u,stageTot,stage.weight);
                   return(
                     <Fragment key={i}>
-                      {/* وحدة المادة */}
                       <div style={{textAlign:"center",background:`${stage.color}20`,borderRadius:8,padding:"4px 0",fontSize:14,fontWeight:700,color:stage.color}}>{sub.u}</div>
-                      {/* اسم المادة (إنجليزي + عربي بمحاذاة صحيحة) */}
                       <div><div style={{fontWeight:600}}>{sub.en}</div><div style={{fontSize:12,color:C.muted,marginTop:2,textAlign:"right",direction:"rtl"}}>{sub.ar}</div></div>
-                      {/* الدرجة المرجحة */}
                       {wd!=null&&<div style={{fontFamily:"'JetBrains Mono'",fontSize:12,background:"rgba(251,191,36,0.12)",padding:"4px 8px",borderRadius:12,textAlign:"center",minWidth:80}}>{wd.toFixed(5)}</div>}
-                      {/* التصنيف */}
                       {cls&&<div style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:12,background:`${cls.color}18`,color:cls.color,textAlign:"center"}}>{cls.label}</div>}
-                      {/* حقل الإدخال */}
                       <input type="number" min={0} max={100} step={0.5} placeholder="—" value={g??""} onChange={e=>setGrade(stage.id,i,e.target.value)} style={{width:70,height:38,textAlign:"center",borderRadius:10,background:dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)",border:`1.5px solid ${g!=null?gco+"60":C.border}`,color:g!=null?gco:C.text,fontSize:14,fontWeight:800,fontFamily:"'JetBrains Mono'",outline:"none"}}/>
                     </Fragment>
                   );
@@ -240,7 +245,7 @@ function CGPAView({dark}) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// LIBRARY COMPONENT (نفس السابق - محسن)
+// LIBRARY COMPONENT (Qbank)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function Library({ questions, bankQuestionsList, previousExamsList, onStart, dark }) {
   const C = TH(dark);
@@ -348,7 +353,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SESSION CONFIG, ACTIVE SESSION, REVIEW (نفس السابق - مختصر)
+// SESSION CONFIG, ACTIVE SESSION, REVIEW (مختصر)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({questions, onStart, onBack, dark}) {
   const C=TH(dark);
