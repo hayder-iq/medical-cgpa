@@ -1,0 +1,442 @@
+[
+  {
+    "id": "q1",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 63-year-old woman presents to the emergency department after experiencing exertional chest discomfort and a transient loss of consciousness while walking. She noticed non-radiating retrosternal chest discomfort starting 3 weeks ago. On examination, her blood pressure is 150/80 mm Hg, heart rate is 88/min and regular. Cardiac auscultation reveals a 3/6 systolic ejection murmur with radiation to the carotids, a soft S2, and diminished carotid upstroke. Lungs are clear. What is the most likely diagnosis?",
+    "options": [
+      "mitral insufficiency",
+      "mitral stenosis",
+      "tricuspid stenosis",
+      "aortic stenosis",
+      "aortic insufficiency"
+    ],
+    "correctAnswer": "D",
+    "explanation": "The combination of a systolic ejection murmur radiating to the carotids, diminished second heart sound, and reduced carotid pulse suggests aortic stenosis. This condition commonly presents with exertional symptoms such as angina, syncope, and dyspnea due to the fixed obstruction of blood flow from the left ventricle. In severe cases, the reduced output may lead to syncope during exertion. Mitral stenosis and insufficiency typically present with different murmur characteristics and do not involve radiation to the carotids or diminished carotid upstroke.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q2",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 42-year-old man presents with a 1-week history of fever and chills but no localizing symptoms or recent travel history. He has a history of congenital valvular heart disease, which has been asymptomatic. On examination, his blood pressure is 120/70 mm Hg, heart rate is 100/min, and there is a 3/6 pansystolic murmur at the apex radiating to the axilla, along with conjunctival petechiae and tender, erythematous nodules on the distal fingertips. What is the most likely mechanism for these findings?",
+    "options": [
+      "vascular phenomena",
+      "preexisting cardiac dysfunction",
+      "immune response",
+      "valvular damage",
+      "direct bacterial invasion"
+    ],
+    "correctAnswer": "A",
+    "explanation": "The patient's presentation is consistent with infective endocarditis, which often results in embolic and vascular phenomena such as petechiae, Osler nodes (painful nodules on the fingertips), and splinter hemorrhages. These findings are typically due to embolic events stemming from vegetations on the heart valves. While direct bacterial invasion and immune response are involved in the pathophysiology of endocarditis, the specific physical findings described are more directly related to embolic phenomena.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q3",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 61-year-old man is admitted to the coronary care unit after an anterior ST-elevation myocardial infarction (MI) and successful primary angioplasty. The next day, he develops asymptomatic bradycardia without chest pain or shortness of breath. His medications include clopidogrel, aspirin, metoprolol, and ramipril. On examination, his blood pressure is 126/84 mm Hg, pulse is 50/min, and heart sounds are normal without extra sounds or rubs. His ECG shows new changes from the post-angioplasty ECG. Which ECG finding would most strongly indicate the need for a pacemaker?",
+    "options": [
+      "second-degree AV block Mobitz type I",
+      "new right bundle branch block",
+      "left bundle branch block (LBBB) and second-degree AV block Mobitz type II",
+      "persistent bradycardia",
+      "first-degree AV block"
+    ],
+    "correctAnswer": "C",
+    "explanation": "The presence of a new left bundle branch block (LBBB) combined with a second-degree AV block Mobitz type II is a strong indication for pacemaker insertion, especially in the setting of an MI. Mobitz type II block carries a risk of progressing to complete heart block, and LBBB may indicate significant conduction system disease. Persistent bradycardia alone or first-degree AV block usually does not require pacing unless associated with symptoms. A new right bundle branch block would warrant monitoring but is less likely to require pacing.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q4",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 22-year-old woman presents to the emergency department with prolonged palpitations. She has no associated chest discomfort, shortness of breath, or lightheadedness. The palpitations have occurred twice before, lasting about 5 minutes each time, and resolved spontaneously. She cannot identify any specific triggers. Her medical history is unremarkable, and she is not on any medications. On examination, her blood pressure is 110/70 mm Hg, heart rate is 160/min and regular. Cardiac and lung examinations are normal. ECG shows a heart rate of 160/min, which abruptly decreases to 72/min after carotid sinus pressure. What is the most likely diagnosis?",
+    "options": [
+      "paroxysmal ventricular tachycardia",
+      "paroxysmal atrial fibrillation",
+      "paroxysmal atrial flutter",
+      "sinus tachycardia",
+      "paroxysmal supraventricular tachycardia (PsVT)"
+    ],
+    "correctAnswer": "E",
+    "explanation": "The patient's symptoms and ECG findings are consistent with paroxysmal supraventricular tachycardia (PsVT). PsVT typically presents with a sudden onset and termination of palpitations, and it is often triggered by reentrant circuits within the atria or AV node. Carotid sinus pressure increases vagal tone, which can terminate PsVT by disrupting the reentrant circuit. Sinus tachycardia does not usually start and stop abruptly, while atrial fibrillation and atrial flutter typically present with an irregular rhythm. Paroxysmal ventricular tachycardia would present with a wide complex on ECG.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q5",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 62-year-old man with a history of coronary artery disease (CAD) presents to the emergency department with a feeling of faintness. The symptoms began earlier in the day and worsen upon standing. He reports no chest pain or dyspnea. His medical history includes type 2 diabetes, dyslipidemia, and hypertension. Current medications are atenolol, metformin, atorvastatin, and ramipril. On examination, his blood pressure is 125/70 mm Hg, heart rate is 56/min and irregular. Heart sounds (S1 and S2) are normal, the lungs are clear, and he is alert and oriented. An ECG reveals Wenckebach type atrioventricular (AV) block. Which ECG finding is most characteristic of this condition?",
+    "options": [
+      "progressive lengthening of the PR interval",
+      "progressive PR shortening",
+      "dropped beat after progressive lengthening of the PR interval",
+      "tachycardia",
+      "fixed 2:1 block"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Wenckebach, or Mobitz type I second-degree AV block, is typically identified on an ECG by a progressive lengthening of the PR interval until a P wave fails to conduct, leading to a 'dropped' beat. After the dropped beat, the cycle repeats. This pattern is usually due to impaired conduction through the AV node. The condition often results in bradycardia and is characterized by normal QRS complexes. Progressive PR shortening is not associated with this type of block. Tachycardia is also not typical of Mobitz type I AV block, which usually presents with a slower heart rate. While a 2:1 AV block may occur, distinguishing it between type I and type II requires close analysis of the PR intervals in other cycles.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q6",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 40-year-old man is brought to the emergency department 7 days after an open cholecystectomy, with sudden-onset shortness of breath (SOB) and chest pain. The pain is sharp, non-radiating, and worsens with inspiration. He denies fever, cough, or sputum production. On examination, his blood pressure is 145/86 mm Hg, pulse is 120/min, respirations are 24/min, and oxygen saturation is 97%. Heart sounds are normal, the lungs are clear, and there is no chest wall tenderness on palpation. The left calf diameter is larger than the right. Pulmonary embolism is suspected. What is the most common ECG finding in pulmonary embolism?",
+    "options": [
+      "sinus tachycardia",
+      "prominent Q wave in lead I and inversion of T wave in lead III",
+      "clockwise rotation in the precordial leads",
+      "depressed ST segments in leads I and II",
+      "a deep S wave in lead I"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Sinus tachycardia is the most common ECG finding in patients with pulmonary embolism. While the S1Q3T3 pattern (a deep S wave in lead I, a Q wave in lead III, and an inverted T wave in lead III) is often cited as a classic sign, it is relatively rare and typically seen in cases of massive pulmonary embolism. In submissive pulmonary embolism, the ECG may show nonspecific ST changes or simply sinus tachycardia. The primary role of the ECG in suspected pulmonary embolism is to rule out myocardial infarction and other cardiac conditions.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q7",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "Which of the following best describes the effect of calcium ions on the myocardium?",
+    "options": [
+      "negatively chronotropic",
+      "positively inotropic",
+      "excitation-contraction uncoupling",
+      "negatively inotropic",
+      "positively chronotropic"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Calcium ions play a crucial role in the excitation-contraction coupling process within the myocardium. Their influx during the plateau phase of the cardiac action potential leads to increased contractility, making calcium a positively inotropic agent. This enhanced contractility is critical for the heart's ability to pump blood effectively. Calcium does not have direct chronotropic effects (those that affect heart rate) and is not involved in excitation-contraction uncoupling.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q8",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 67-year-old man presents to the emergency department with anterior chest discomfort radiating to his left arm, accompanied by sweating and shortness of breath. An ECG reveals an anterior myocardial infarction (MI), and he is treated with thrombolytics. Three days later, he develops chest pain that worsens when lying down and improves with sitting up. The pain is sharp, non-radiating, and different from his initial MI pain. Physical examination reveals a biphasic rub heard best at the apex, and ECG shows new PR-segment depression with 1-mm ST-segment elevation in all limb leads. What is the most likely diagnosis?",
+    "options": [
+      "post-MI pericarditis",
+      "viral infection",
+      "reinfarction",
+      "pulmonary embolus"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Post-MI pericarditis, also known as Dressler's syndrome, typically occurs within a few days to weeks following a myocardial infarction. It is characterized by pleuritic chest pain, a pericardial friction rub, and ECG changes such as diffuse ST-segment elevation and PR-segment depression. The pain associated with pericarditis often differs from that of an MI, as it is positional, worsening when lying down and improving when sitting up. Reinfarction would present with recurrent ischemic pain and localized ST changes, rather than diffuse changes. Pulmonary embolus and viral infection are less likely given the clinical context and ECG findings.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q9",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 73-year-old man with a history of paroxysmal atrial fibrillation, hypertension, dyslipidemia, and type 2 diabetes presents for routine follow-up. Medications include amiodarone, enalapril, diltiazem, atorvastatin, and warfarin. On examination, his blood pressure is 135/80 mm Hg, heart rate is 72/min and regular, with a normal heart sound and an S4. Lungs are clear. Which of the following drugs mediates its effect by interfering with calcium movement through the slow channel?",
+    "options": [
+      "amiodarone",
+      "warfarin",
+      "enalapril",
+      "atorvastatin",
+      "diltiazem"
+    ],
+    "correctAnswer": "E",
+    "explanation": "Diltiazem, a calcium channel blocker, exerts its effects by inhibiting the influx of calcium ions through the slow channels in cardiac and smooth muscle cells. This action reduces the contractility of the myocardium and decreases heart rate, particularly by affecting the AV node. The other medications listed do not interfere with calcium channels. Enalapril is an ACE inhibitor, atorvastatin is an HMG-CoA reductase inhibitor, amiodarone is an antiarrhythmic with multiple effects including potassium channel blockade, and warfarin is a vitamin K antagonist.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q10",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 73-year-old man presents with new-onset chest pain and shortness of breath on exertion. The pain is described as non-radiating retrosternal pressure. His medical history includes hypertension, type 2 diabetes, and dyslipidemia. He is taking atenolol, metformin, glyburide, and simvastatin. On examination, his blood pressure is 140/90 mm Hg, heart rate is 60/min, and cardiac auscultation reveals a murmur. ECG shows sinus rhythm with signs of left ventricular hypertrophy. Coronary angiography reveals non-critical coronary artery stenosis. Which valvular heart disease is most frequently associated with this condition?",
+    "options": [
+      "pulmonary stenosis",
+      "mitral insufficiency",
+      "mitral stenosis",
+      "aortic insufficiency",
+      "aortic stenosis"
+    ],
+    "correctAnswer": "E",
+    "explanation": "Aortic stenosis is commonly associated with angina and exertional symptoms, even in the absence of critical coronary artery disease. The left ventricular hypertrophy seen on ECG is a common finding in aortic stenosis due to the increased pressure load on the left ventricle. Mitral stenosis and insufficiency typically present with different clinical features and are less likely to be associated with non-critical coronary artery stenosis. Pulmonary stenosis and aortic insufficiency would also present with different murmur characteristics and hemodynamic effects.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q11",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "An 82-year-old woman presents to the emergency department with new-onset syncope. She was walking when the event occurred and had no prodrome. She quickly regained her baseline mental status after a brief period of disorientation. She has recently experienced shortness of breath on exertion but denies chest discomfort. On examination, her blood pressure is 110/95 mm Hg, heart rate is 80/min, and a harsh systolic ejection murmur is heard best at the base of the heart with radiation to both carotids. The carotid pulse is late-peaking and diminished in volume. Which finding would you most likely observe in the second heart sound at the base?",
+    "options": [
+      "it is widely split due to delayed ventricular ejection",
+      "it is diminished",
+      "it shows fixed splitting",
+      "it is accentuated",
+      "it is normal in character"
+    ],
+    "correctAnswer": "B",
+    "explanation": "In aortic stenosis, the second heart sound (S2) is typically diminished because of the decreased mobility of the stenotic aortic valve. This reduced mobility also causes the aortic component of S2 (A2) to be delayed, potentially resulting in paradoxical splitting of S2. The diminished volume and delayed timing of A2 contrast with the normal or accentuated pulmonic component (P2), leading to an overall softer S2. This finding, along with the characteristic late-peaking carotid pulse and harsh systolic murmur, is indicative of severe aortic stenosis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q12",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 47-year-old woman presents to the emergency department with transient right arm weakness and word-finding difficulty lasting 3 hours. She also reports exertional dyspnea and a syncopal event 1 month ago. Her medical history includes two uneventful pregnancies, and she is not on any medications. Physical examination reveals normal vital signs and no residual neurological deficits. ECG and brain CT are normal, but echocardiography reveals a pedunculated tumor in the left atrium attached to the endocardium. What is the most likely diagnosis?",
+    "options": [
+      "rhabdomyoma",
+      "sarcoma",
+      "lipoma",
+      "fibroma",
+      "myxoma"
+    ],
+    "correctAnswer": "E",
+    "explanation": "The most likely diagnosis is an atrial myxoma, which is the most common primary cardiac tumor, usually located in the left atrium. Myxomas are typically pedunculated and can cause a variety of symptoms, including embolic events (such as transient ischemic attacks) and obstructive symptoms. The tumor's pedunculated nature and its attachment to the endocardium are characteristic of myxomas. Sarcomas, while the most common malignant cardiac tumors, are usually found on the right side of the heart. Rhabdomyomas and fibromas are more common in children and typically occur in the ventricles. Lipomas are rare and usually asymptomatic.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q13",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 69-year-old woman presents to the emergency department with easy fatigue and one episode of syncope. She has no chest pain, fever, cough, or shortness of breath. Her medical history includes angina, hypertension, and dyslipidemia. She takes metoprolol, amlodipine, and atorvastatin. On examination, her blood pressure is 110/80 mm Hg, and her heart rate is 56/min and regular. The jugular venous pressure (JVP) shows irregular large a waves. ECG shows fixed PP and RR intervals but varying PR intervals. What is the most likely cause of her condition?",
+    "options": [
+      "a heart rate under 60 beats/min",
+      "a re-entry phenomenon",
+      "a drug effect of amlodipine",
+      "surgical removal of an atrium",
+      "independent beating of atria and ventricles"
+    ],
+    "correctAnswer": "E",
+    "explanation": "The patient's ECG findings are consistent with atrioventricular (AV) dissociation, characterized by the independent beating of the atria and ventricles. This condition is recognized by fixed intervals between P waves (PP intervals) and between R waves (RR intervals) with varying PR intervals. AV dissociation often occurs due to third-degree AV block, where the atria and ventricles are no longer synchronized. The presence of large a waves in the JVP is due to atrial contraction against a closed tricuspid valve, further supporting the diagnosis. Amlodipine is unlikely to cause this condition as it does not affect the AV node in this way.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q14",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man undergoing cardiac catheterization for evaluation of chest pain symptoms expresses concern about the risks involved. During the informed consent process, which of the following best describes an important risk associated with coronary angiography?",
+    "options": [
+      "it is generally performed with cardiopulmonary bypass",
+      "it is contraindicated in the presence of cyanosis",
+      "it requires carotid artery puncture",
+      "it may cause renal failure",
+      "it is considered noninvasive"
+    ],
+    "correctAnswer": "D",
+    "explanation": "Coronary angiography, though an essential diagnostic tool, carries the risk of contrast-induced nephropathy, especially in patients with pre-existing renal impairment or diabetes. Proper hydration and the use of low-osmolality contrast agents can reduce this risk. The procedure is invasive, requiring arterial access, usually through the femoral or radial artery, not the carotid. It does not require cardiopulmonary bypass, and it is not contraindicated in the presence of cyanosis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q15",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 23-year-old man presents with sharp, left-sided chest pain that is not affected by respiration but worsens when lying down and improves when sitting up. He had a flu-like illness with fevers, chills, and myalgias a week prior. He has no significant past medical history and denies any other symptoms. On examination, his blood pressure is 130/75 mm Hg, heart rate is 92/min, and cardiac auscultation reveals a friction rub heard at the lower left sternal border, unaffected by respiration. Lungs are clear. What is the most likely cause of his symptoms?",
+    "options": [
+      "myocardial infarction (MI)",
+      "tuberculosis (TB)",
+      "herpes simplex virus",
+      "coxsackievirus",
+      "rheumatic fever"
+    ],
+    "correctAnswer": "D",
+    "explanation": "The patient's presentation is consistent with acute pericarditis, likely caused by a viral infection such as coxsackievirus. Pericarditis often follows a viral illness and is characterized by pleuritic chest pain that improves when sitting up and worsens when lying down. A pericardial friction rub is a key clinical finding. While rheumatic fever, TB, and MI can cause pericarditis, the recent viral illness and the typical features of the pain make a viral etiology, particularly coxsackievirus, the most likely cause. Herpes simplex virus is not commonly associated with pericarditis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q16",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 28-year-old man presents with several weeks of fever, chills, and night sweats. He denies cough, sputum production, and dysuria. He has no significant past medical history and is not taking any medications. On examination, his blood pressure is 120/70 mm Hg, heart rate is 100/min, and temperature is 38.5°C. Cardiac auscultation reveals a 3/6 systolic murmur. Lungs are clear, and the abdomen is nontender. Peripheral examination is unremarkable. Two days later, blood cultures are positive for viridans group streptococci in multiple sets. Which cardiac lesion carries the highest risk for developing endocarditis?",
+    "options": [
+      "asymmetric septal hypertrophy",
+      "atrial septal defect, secundum type",
+      "pure mitral stenosis",
+      "mitral valve prolapse with regurgitation",
+      "ventricular septal defect"
+    ],
+    "correctAnswer": "E",
+    "explanation": "A ventricular septal defect (VSD) is considered a high-risk lesion for developing infective endocarditis. The turbulent flow across the defect predisposes to endothelial damage and subsequent colonization by bacteria, such as viridans group streptococci. Mitral valve prolapse with regurgitation and asymmetric septal hypertrophy are associated with an intermediate risk of endocarditis. Pure mitral stenosis and atrial septal defects of the secundum type carry a lower risk. The presence of a systolic murmur in this patient with positive blood cultures is consistent with infective endocarditis, particularly given the high-risk lesion of a VSD.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q17",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "Several elderly patients in your practice, who have vascular risk factors such as diabetes or hypertension but no cardiac symptoms, plan to start exercise programs. In these patients, which of the following best describes the role of exercise electrocardiography?",
+    "options": [
+      "it has a morbidity of approximately 5%",
+      "it is used in pulmonary embolism",
+      "it detects latent disease",
+      "it is an invasive procedure",
+      "it is contraindicated in patients over 65 years of age"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Exercise electrocardiography is a noninvasive method used to detect latent coronary artery disease, particularly in patients with risk factors like diabetes or hypertension who plan to engage in physical activity. It is not invasive, nor is it contraindicated in older adults. While it is a valuable tool for screening, the morbidity associated with the procedure is very low, certainly not 5%. Exercise electrocardiography is not used to diagnose pulmonary embolism; other imaging modalities, such as CT pulmonary angiography, are preferred for that purpose.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q18",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 72-year-old woman with a history of hypertension, dyslipidemia, and osteoarthritis presents with sudden-onset palpitations and dyspnea. She denies chest pain, fever, or lightheadedness. Her medications include enalapril, hydrochlorothiazide, simvastatin, and acetaminophen. ECG reveals new-onset atrial flutter with a ventricular rate of 150/min. She is hemodynamically stable with a blood pressure of 155/90 mm Hg but is symptomatic. Which of the following intravenous drugs is the best choice for controlling her heart rate?",
+    "options": [
+      "atropine",
+      "lidocaine",
+      "diltiazem",
+      "aminophylline",
+      "magnesium"
+    ],
+    "correctAnswer": "C",
+    "explanation": "Diltiazem, a calcium channel blocker, is effective in controlling the ventricular rate in atrial flutter by slowing conduction through the AV node. It is particularly useful in hemodynamically stable patients like this one. Other options such as lidocaine, aminophylline, and magnesium do not target the AV node and are not suitable for rate control in atrial flutter. Atropine, which increases AV nodal conduction, is contraindicated as it could worsen the tachycardia. In some cases, catheter ablation may be considered for long-term management of atrial flutter.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q19",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 72-year-old woman with a history of angina and heart failure undergoes right and left cardiac catheterization. The pulmonary capillary wedge pressure (PCWP) is measured as part of the procedure. PCWP is an approximation of the pressure in which of the following structures?",
+    "options": [
+      "left atrium",
+      "pulmonary artery (PA)",
+      "right atrium",
+      "vena cava",
+      "pulmonary vein"
+    ],
+    "correctAnswer": "A",
+    "explanation": "Pulmonary capillary wedge pressure (PCWP) is an indirect measurement of left atrial pressure. It is obtained by advancing a catheter into a small pulmonary artery branch and inflating a balloon at the catheter tip, which 'wedges' in the artery, blocking blood flow and allowing the catheter to measure pressure distal to the balloon. This pressure closely approximates the pressure in the left atrium, as there is no significant resistance between the pulmonary veins and the left atrium. PCWP is useful in assessing left-sided heart function and diagnosing conditions such as heart failure and mitral valve disease.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q20",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 57-year-old man presents to the emergency department with a 1-day history of chest pain and shortness of breath. ECG confirms an evolving anterior myocardial infarction (MI), and he is treated with aspirin, metoprolol, and heparin. His post-MI course is complicated by the development of heart failure. In which of the following scenarios would nitroglycerin be the most appropriate initial medication?",
+    "options": [
+      "clear lungs, blood pressure 80 mm Hg systolic",
+      "moderate pulmonary congestion, blood pressure 130 mm Hg systolic",
+      "clear lungs, blood pressure 160 mm Hg systolic",
+      "severe pulmonary congestion, blood pressure 80 mm Hg systolic",
+      "clear lungs, blood pressure 120 mm Hg systolic"
+    ],
+    "correctAnswer": "B",
+    "explanation": "Nitroglycerin is particularly effective in treating heart failure in the setting of myocardial infarction when there is pulmonary congestion and the blood pressure is sufficiently maintained. It reduces preload and afterload by dilating veins and arteries, thereby decreasing myocardial oxygen demand and improving symptoms of congestion. In cases of severe hypotension (e.g., systolic BP 80 mm Hg), nitroglycerin should be avoided as it can exacerbate low cardiac output states. Thus, moderate pulmonary congestion with a systolic blood pressure of 130 mm Hg is the most appropriate scenario for initiating nitroglycerin.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "q21",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 19-year-old man presents with chest discomfort on exertion. He describes the discomfort as heaviness radiating to his arms and neck, which occurs with exertion and is relieved with rest. There is no history of chest trauma, respiratory symptoms, or cocaine use. His medical history is unremarkable, and there is no family history of sudden cardiac death. On examination, his heart rate is 75/min and blood pressure is 120/80 mm Hg. A harsh systolic crescendo-decrescendo murmur is heard at the left lower sternal border that increases in intensity when the patient stands from a squatting position. What is the most likely diagnosis?",
+    "options": [
+      "aortic stenosis",
+      "hypertrophic cardiomyopathy",
+      "mitral valve prolapse",
+      "ventricular septal defect",
+      "anomalous coronary artery"
+    ],
+    "correctAnswer": "B",
+    "explanation": "The clinical presentation of exertional chest pain in a young patient with a murmur that increases with decreased preload (standing or Valsalva maneuver) is highly suggestive of hypertrophic cardiomyopathy (HCM). Unlike aortic stenosis, which decreases in intensity with standing due to reduced stroke volume across the valve, the obstruction in HCM is dynamic. Reducing left ventricular volume (as seen with standing) brings the anterior leaflet of the mitral valve closer to the hypertrophied septum, worsening the obstruction and increasing the murmur's intensity.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  }
+]
