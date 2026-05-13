@@ -75,7 +75,7 @@ const SAMPLE_QS = [
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR (المعدل التراكمي)
+// CGPA CALCULATOR (جميع المراحل متطابقة في التصميم)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -114,29 +114,32 @@ function CGPAView({dark}) {
   const failing=allGraded.filter(x=>x.g<50);
 
   return(
-    <div style={{minHeight:"100dvh",background:C.bg,color:C.text,"--br":C.border}}>
+    <div style={{minHeight:"100dvh",background:C.bg,color:C.text}}>
       {/* Metrics strip */}
       <div style={{padding:"20px 28px",borderBottom:`1px solid ${C.border}`,display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16}}>
         <div style={{background:`linear-gradient(135deg,rgba(0,212,170,.12),rgba(59,130,246,.06))`,border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2}}>STAGE DEGREE SUM</div><div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA"}}>{metrics.completedWD.toFixed(2)}</div><div style={{fontSize:10,color:C.muted,fontFamily:"'JetBrains Mono'"}}>/100</div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>REMAINING WEIGHT</div><div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA"}}>{metrics.remainW.toFixed(0)}</div><div style={{fontSize:10,color:C.muted}}>to reach 100%</div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>CURRENT STAGE CLASS</div><div style={{fontSize:24,fontWeight:800,color:classify(sm.avg)?.color??C.muted}}>{classify(sm.avg)?.label??"—"}</div><div style={{fontSize:16,color:classify(sm.avg)?.color??C.muted,direction:"rtl",textAlign:"left",opacity:.8}}>{classify(sm.avg)?.ar??"أدخل الدرجات"}</div></div>
-        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>UNITS GRADED</div><div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>{metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)}<span style={{fontSize:13,color:C.muted,fontWeight:400}}> / {TOTAL_UNITS}</span></div><div style={{height:5,background:dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.08)",borderRadius:3,marginTop:10,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#00D4AA,#3B82F6)",width:`${(metrics.gradedU/TOTAL_UNITS)*100}%`,transition:"width .6s"}}/></div></div>
+        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>UNITS GRADED</div><div style={{fontSize:28,fontWeight:800,fontFamily:"'JetBrains Mono'"}}>{metrics.gradedU%1===0?metrics.gradedU:metrics.gradedU.toFixed(1)}<span style={{fontSize:13,color:C.muted,fontWeight:400}}> / {TOTAL_UNITS}</span></div><div style={{height:5,background:dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.08)",borderRadius:3,marginTop:10,overflow:"hidden"}}><div style={{height:"100%",background:"linear-gradient(90deg,#00D4AA,#3B82F6)",width:`${(metrics.gradedU/TOTAL_UNITS)*100}%`}}/></div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>TARGET AVERAGE</div><input type="number" min={50} max={100} step={0.5} value={targetAvg} onChange={e=>setTargetAvg(parseFloat(e.target.value)||0)} style={{width:"100%",background:"transparent",border:"none",outline:"none",fontSize:32,fontFamily:"'Bebas Neue'",letterSpacing:2,color:C.text}}/>{metrics.needed!=null&&<div style={{fontSize:11,fontWeight:700,marginTop:4,color:metrics.needed<0?"#10B981":metrics.needed>100?"#EF4444":"#FBBF24"}}>{metrics.needed<0?"✓ Target achieved!":metrics.needed>100?"✗ Not achievable":`Need ${metrics.needed.toFixed(1)} avg remaining`}</div>}</div>
       </div>
+
       {/* Tabs */}
       <div style={{display:"flex",gap:4,padding:"12px 28px",borderBottom:`1px solid ${C.border}`}}>
         {[["grades","Grades"],["details","Visual Fingerprint"],["insights","Insights"]].map(([k,l])=><button key={k} className="btn" onClick={()=>setTab(k)} style={{padding:"8px 18px",borderRadius:10,background:tab===k?(dark?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)"):"transparent",color:tab===k?C.text:C.muted,fontWeight:600,fontSize:12}}>{l}</button>)}
       </div>
+
       {tab==="grades"&&(
         <div style={{display:"grid",gridTemplateColumns:"220px 1fr",minHeight:"calc(100dvh - 280px)"}}>
-          {/* Sidebar للمراحل */}
+          {/* شريط المراحل الجانبي */}
           <div style={{borderRight:`1px solid ${C.border}`,padding:16,display:"flex",flexDirection:"column",gap:4,overflowY:"auto"}}>
             {STAGES.map((s,idx)=>{const sp=metrics.perStage[idx],act=activeStage===idx;return(<button key={idx} className="btn" onClick={()=>setActiveStage(idx)} style={{width:"100%",textAlign:"left",padding:"11px 13px",borderRadius:11,background:act?`${s.color}15`:"transparent",borderLeft:`3px solid ${act?s.color:"transparent"}`,opacity:act?1:.5}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><div style={{fontSize:13,fontWeight:700,color:act?s.color:C.text,fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>{s.full}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{s.weight}% Weight</div></div><div style={{textAlign:"right"}}>{sp.avg!=null?(<><div style={{fontSize:17,fontWeight:900,fontFamily:"'Bebas Neue'",color:gc(sp.avg)}}>{sp.avg.toFixed(1)}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{sp.complete?`+${s.weight}/${s.weight}`:`0/${s.weight}`}</div></>):(<div style={{fontSize:17,fontFamily:"'Bebas Neue'",color:C.muted}}>—</div>)}</div></div>{sp.gradedU>0&&<div style={{height:2,background:dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.08)",borderRadius:1,marginTop:7}}><div style={{height:"100%",background:s.color,width:`${sp.pct*100}%`}}/></div>}</button>);})}
           </div>
-          {/* منطقة المحتوى المركزية */}
+
+          {/* المحتوى الرئيسي */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 360px"}}>
             <div className="fade-up" style={{padding:28,borderRight:`1px solid ${C.border}`,overflowY:"auto"}}>
-              {/* عنوان المرحلة في المنتصف */}
+              {/* عنوان المرحلة في المنتصف (جميع المراحل متطابقة) */}
               <div style={{textAlign:"center",marginBottom:24}}>
                 <div style={{display:"inline-block",background:`${stage.color}20`,borderRadius:60,padding:"8px 24px",marginBottom:12}}>
                   <span style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</span>
@@ -150,7 +153,7 @@ function CGPAView({dark}) {
                 )}
               </div>
 
-              {/* جدول المواد */}
+              {/* جدول المواد (نفس الأعمدة لجميع المراحل) */}
               <div style={{display:"grid",gridTemplateColumns:"60px 1fr auto auto auto",gap:"8px 12px",alignItems:"center"}}>
                 {stage.subjects.map((sub,i)=>{
                   const g=grades[`${stage.id}-${i}`];
@@ -170,7 +173,8 @@ function CGPAView({dark}) {
               </div>
               {sm.totalWD>0&&<div style={{marginTop:18,textAlign:"right",borderTop:`1px solid ${C.border}`,paddingTop:14}}><div style={{fontSize:11,color:C.muted,letterSpacing:1}}>Stage Weighted Degree</div><div style={{fontFamily:"'Bebas Neue'",fontSize:32,color:"#FBBF24"}}>{sm.totalWD.toFixed(5)}</div><div style={{fontSize:10,color:C.muted}}>Max = {stage.weight}</div></div>}
             </div>
-            {/* الشريط الجانبي الأيمن (رادار و breakdown) */}
+
+            {/* الشريط الجانبي الأيمن */}
             <div style={{padding:28,display:"flex",flexDirection:"column",gap:22,overflowY:"auto"}}>
               <div><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE RADAR</div><ResponsiveContainer width="100%" height={240}><RadarChart data={radarData} margin={{top:8,right:8,bottom:8,left:8}}><PolarGrid stroke={dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.1)"}/><PolarAngleAxis dataKey="s" tick={{fontSize:9,fill:C.muted}}/><Radar dataKey="g" stroke={stage.color} fill={stage.color} fillOpacity={.18} strokeWidth={2}/><Tooltip contentStyle={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10}} formatter={v=>[v||"—","Grade"]}/></RadarChart></ResponsiveContainer></div>
               <div style={{background:C.sub,borderRadius:14,padding:16}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE BREAKDOWN</div>{(()=>{const items=stage.subjects.map((s,i)=>({...s,g:grades[`${stage.id}-${i}`]})).filter(s=>s.g!=null);if(!items.length)return<div style={{fontSize:12,color:C.muted,fontStyle:"italic"}}>Enter grades to see breakdown</div>;const b=items.reduce((a,x)=>x.g>a.g?x:a),w=items.reduce((a,x)=>x.g<a.g?x:a);return(<div style={{display:"flex",flexDirection:"column",gap:9}}>{[["↑ Best",b.en,"#10B981"],["↓ Weakest",w.en,"#FBBF24"],["Graded",`${items.length}/${stage.subjects.length}`,C.text],["Classification",classify(sm.avg)?.label??"",classify(sm.avg)?.color??C.muted]].map(([l,v,c])=><div key={l} style={{display:"flex",justifyContent:"space-between",fontSize:12,gap:8}}><span style={{color:C.muted}}>{l}</span><span style={{color:c,fontWeight:700}}>{v}</span></div>)}</div>);})()}</div>
@@ -179,6 +183,7 @@ function CGPAView({dark}) {
           </div>
         </div>
       )}
+
       {tab==="details"&&(
         <div className="fade-up" style={{padding:32}}>
           <div style={{fontFamily:"'Bebas Neue'",fontSize:30,letterSpacing:4,marginBottom:6}}>VISUAL FINGERPRINT</div>
@@ -212,6 +217,7 @@ function CGPAView({dark}) {
           </div>
         </div>
       )}
+
       {tab==="insights"&&(
         <div className="fade-up" style={{padding:32,display:"grid",gridTemplateColumns:"1fr 1fr",gap:22}}>
           <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:20,padding:26}}>
