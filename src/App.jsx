@@ -373,7 +373,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({ questions, onStart, onBack, dark }) {
   const C = TH(dark);
-  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && q.text && q.options && q.correctAnswer) : [];
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && typeof q === 'object' && q.text && q.options && q.correctAnswer) : [];
   const allSystems = [...new Set(safeQuestions.map(q => q.system || "General"))].sort();
   const allDiffs = ["Easy", "Medium", "Hard"];
   const [name, setName] = useState("Custom Session");
@@ -391,7 +391,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
 
   const handleStart = () => {
     if (!available.length) {
-      alert("No questions match your filters.");
+      alert("No valid questions match your filters.");
       return;
     }
     let qs = randomize ? shuffle(available) : available.slice();
@@ -434,7 +434,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
 function ActiveSession({ config, onEnd, dark }) {
   const C = TH(dark);
   const { questions, mode, timeLimit, name } = config;
-  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && q.text && q.options && q.correctAnswer) : [];
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && typeof q === 'object' && q.text && q.options && q.correctAnswer) : [];
   const [cur, setCur] = useState(0);
   const [answers, setAnswers] = useState({});
   const [marked, setMarked] = useState({});
@@ -570,7 +570,7 @@ function ActiveSession({ config, onEnd, dark }) {
 function SessionReview({ result, onExit, onRetry, dark }) {
   const C = TH(dark);
   const { questions, answers, marked, notes, name, mode, elapsed } = result;
-  const safeQuestions = Array.isArray(questions) ? questions.filter(q => q && q.text) : [];
+  const safeQuestions = Array.isArray(questions) ? questions.filter(q => q && typeof q === 'object' && q.text) : [];
   const [expanded, setExpanded] = useState(null);
   const correct = Object.values(answers).filter(a => a && a.correct).length;
   const score = safeQuestions.length ? Math.round((correct / safeQuestions.length) * 100) : 0;
@@ -586,7 +586,7 @@ function SessionReview({ result, onExit, onRetry, dark }) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// QBANK APP (تحميل أسئلة آمن)
+// QBANK APP (آمن)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function QbankApp({ dark }) {
   const [view, setView] = useState("library");
@@ -624,7 +624,8 @@ function QbankApp({ dark }) {
       const safePrev = sanitize(prevQs);
       setBankQuestions(safeBank);
       setPrevExams(safePrev);
-      setAllQuestions([...safeBank, ...safePrev]);
+      const merged = [...safeBank, ...safePrev];
+      setAllQuestions(merged.length ? merged : DEFAULT_QUESTIONS);
       setLoading(false);
     };
     load();
