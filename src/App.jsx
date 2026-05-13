@@ -75,7 +75,7 @@ const SAMPLE_QS = [
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR (جميع المراحل متطابقة في التصميم)
+// CGPA CALCULATOR
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -139,7 +139,7 @@ function CGPAView({dark}) {
           {/* المحتوى الرئيسي */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 360px"}}>
             <div className="fade-up" style={{padding:28,borderRight:`1px solid ${C.border}`,overflowY:"auto"}}>
-              {/* عنوان المرحلة في المنتصف (جميع المراحل متطابقة) */}
+              {/* عنوان المرحلة في المنتصف */}
               <div style={{textAlign:"center",marginBottom:24}}>
                 <div style={{display:"inline-block",background:`${stage.color}20`,borderRadius:60,padding:"8px 24px",marginBottom:12}}>
                   <span style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</span>
@@ -153,8 +153,8 @@ function CGPAView({dark}) {
                 )}
               </div>
 
-              {/* جدول المواد (نفس الأعمدة لجميع المراحل) */}
-              <div style={{display:"grid",gridTemplateColumns:"60px 1fr auto auto auto",gap:"8px 12px",alignItems:"center"}}>
+              {/* جدول المواد بأعمدة ثابتة */}
+              <div style={{display:"grid", gridTemplateColumns:"60px 1fr 100px 100px 80px", gap:"8px 12px", alignItems:"center"}}>
                 {stage.subjects.map((sub,i)=>{
                   const g=grades[`${stage.id}-${i}`];
                   const cls=classify(g);
@@ -163,9 +163,16 @@ function CGPAView({dark}) {
                   return(
                     <Fragment key={i}>
                       <div style={{textAlign:"center",background:`${stage.color}20`,borderRadius:8,padding:"4px 0",fontSize:14,fontWeight:700,color:stage.color}}>{sub.u}</div>
-                      <div><div style={{fontWeight:600}}>{sub.en}</div><div style={{fontSize:12,color:C.muted,marginTop:2,textAlign:"right",direction:"rtl"}}>{sub.ar}</div></div>
-                      {wd!=null&&<div style={{fontFamily:"'JetBrains Mono'",fontSize:12,background:"rgba(251,191,36,0.12)",padding:"4px 8px",borderRadius:12,textAlign:"center",minWidth:80}}>{wd.toFixed(5)}</div>}
-                      {cls&&<div style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:12,background:`${cls.color}18`,color:cls.color,textAlign:"center"}}>{cls.label}</div>}
+                      <div>
+                        <div style={{fontWeight:600}}>{sub.en}</div>
+                        <div style={{fontSize:12,color:C.muted,marginTop:2,textAlign:"right",direction:"rtl"}}>{sub.ar}</div>
+                      </div>
+                      <div style={{fontFamily:"'JetBrains Mono'",fontSize:12,background:wd!=null?"rgba(251,191,36,0.12)":"transparent",padding:"4px 8px",borderRadius:12,textAlign:"center",minWidth:80}}>
+                        {wd!=null ? wd.toFixed(5) : ""}
+                      </div>
+                      <div style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:12,background:cls?`${cls.color}18`:"transparent",color:cls?.color||C.muted,textAlign:"center"}}>
+                        {cls?.label || ""}
+                      </div>
                       <input type="number" min={0} max={100} step={0.5} placeholder="—" value={g??""} onChange={e=>setGrade(stage.id,i,e.target.value)} style={{width:70,height:38,textAlign:"center",borderRadius:10,background:dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)",border:`1.5px solid ${g!=null?gco+"60":C.border}`,color:g!=null?gco:C.text,fontSize:14,fontWeight:800,fontFamily:"'JetBrains Mono'",outline:"none"}}/>
                     </Fragment>
                   );
@@ -359,7 +366,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SESSION CONFIG, ACTIVE SESSION, REVIEW (مختصر)
+// SESSION CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({questions, onStart, onBack, dark}) {
   const C=TH(dark);
@@ -399,6 +406,9 @@ function SessionConfig({questions, onStart, onBack, dark}) {
   );
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ACTIVE SESSION
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function ActiveSession({config, onEnd, dark}) {
   const C=TH(dark);
   const {questions,mode,timeLimit,name}=config;
@@ -443,6 +453,9 @@ function ActiveSession({config, onEnd, dark}) {
   );
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SESSION REVIEW
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionReview({result, onExit, onRetry, dark}) {
   const C=TH(dark);
   const {questions,answers,marked,notes,name,mode,elapsed}=result;
@@ -526,9 +539,7 @@ export default function App() {
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text }}>
       <style>{GCSS}</style>
-      
       <div style={{ position: "sticky", top: 0, zIndex: 100, background: C.hdr, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        {/* Left: Logo + Telegram */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#00D4AA,#3B82F6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontFamily: "'Bebas Neue'", color: "white" }}>M</div>
           <div onClick={() => window.open("https://t.me/ddxo2", "_blank", "noopener,noreferrer")} style={{ cursor: "pointer", userSelect: "none" }}>
@@ -536,21 +547,16 @@ export default function App() {
             <div style={{ fontSize: 9, color: C.muted, fontFamily: "'JetBrains Mono'" }}>WARITH AL-ANBIYAA · HAIDER EMAD</div>
           </div>
         </div>
-
-        {/* Center: Tabs */}
         <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
           <div style={{ display: "flex", gap: 12, background: "transparent", borderRadius: 40, padding: "4px" }}>
             <button onClick={() => setTab("cgpa")} style={{ padding: "8px 24px", borderRadius: 40, border: "none", fontWeight: 700, fontSize: "15px", letterSpacing: "0.5px", cursor: "pointer", transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)", background: tab === "cgpa" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent", color: tab === "cgpa" ? "white" : C.text, boxShadow: tab === "cgpa" ? "0 4px 12px rgba(0,212,170,0.3)" : "none", transform: tab === "cgpa" ? "scale(1.02)" : "scale(1)", }} onMouseEnter={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }} onMouseLeave={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = "transparent"; }}>📊 CGPA</button>
             <button onClick={() => setTab("qbank")} style={{ padding: "8px 24px", borderRadius: 40, border: "none", fontWeight: 700, fontSize: "15px", letterSpacing: "0.5px", cursor: "pointer", transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)", background: tab === "qbank" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent", color: tab === "qbank" ? "white" : C.text, boxShadow: tab === "qbank" ? "0 4px 12px rgba(0,212,170,0.3)" : "none", transform: tab === "qbank" ? "scale(1.02)" : "scale(1)", }} onMouseEnter={(e) => { if (tab !== "qbank") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }} onMouseLeave={(e) => { if (tab !== "qbank") e.currentTarget.style.background = "transparent"; }}>📚 Qbank</button>
           </div>
         </div>
-
-        {/* Right: Dark mode toggle */}
         <div style={{ display: "flex", justifyContent: "flex-end", flex: 1 }}>
           <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12, fontWeight: 600, color: C.text, cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.background = dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>{dark ? "☀️ Light" : "🌙 Dark"}</button>
         </div>
       </div>
-
       {tab === "cgpa" ? <CGPAView dark={dark} /> : <QbankApp dark={dark} />}
     </div>
   );
