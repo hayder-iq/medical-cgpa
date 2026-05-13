@@ -452,7 +452,7 @@ useEffect(() => {
 // ROOT APP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function App() {
-  const [tab, setTab] = useState("qbank");
+  const [tab, setTab] = useState("cgpa");
   const [dark, setDark] = useState(true);
   const C = TH(dark);
   return (
