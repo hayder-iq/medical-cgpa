@@ -371,9 +371,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 function SessionConfig({ questions, onStart, onBack, dark }) {
   const C = TH(dark);
   // التأكد من أن questions مصفوفة ولها طول
-  const safeQuestions = (arr) => arr.filter(q => q && typeof q === 'object' && q.text && q.options && q.correctAnswer);
-setBankQuestions(safeQuestions(bankQs));
-setAllQuestions(safeQuestions([...bankQs, ...prevQs]));
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions : [];
   const allSystems = [...new Set(safeQuestions.map(q => q.system || "General"))].sort();
   const allDiffs = ["Easy", "Medium", "Hard"];
   const [name, setName] = useState("Custom Session");
@@ -595,7 +593,7 @@ function ActiveSession({ config, onEnd, dark }) {
                 return (
                   <div key={qItem.id} onClick={() => setCur(idx)} style={{ padding: "8px 12px", borderRadius: 12, background: cur === idx ? `${C.acc}15` : "transparent", border: `1px solid ${cur === idx ? C.acc + "40" : "transparent"}`, cursor: "pointer", display: "flex", gap: 10, marginBottom: 6 }}>
                     <div className={dot.pulse ? "pu" : ""} style={{ width: 24, height: 24, borderRadius: 6, background: dot.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "white" }}>{idx + 1}</div>
-                    <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text ? qItem.text.substring(0,40) : "No text"}…</div>
+                    <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text.substring(0, 40)}…</div>
                     {marked[qItem.id] && <span style={{ color: "#FBBF24" }}>★</span>}
                   </div>
                 );
@@ -611,8 +609,7 @@ function ActiveSession({ config, onEnd, dark }) {
             <span style={{ background: `${diffC(q.difficulty)}20`, padding: "2px 10px", borderRadius: 20, color: diffC(q.difficulty) }}>{q.difficulty}</span>
             <button onClick={() => setMarked(m => ({ ...m, [q.id]: !m[q.id] }))} style={{ marginLeft: "auto", padding: "6px 12px", borderRadius: 20, border: `1px solid ${marked[q.id] ? "#FBBF24" : C.border}`, background: marked[q.id] ? "#FBBF2410" : C.inp }}>{marked[q.id] ? "★ Marked" : "☆ Mark"}</button>
           </div>
-          <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, marginBottom: 24, fontSize: 16 }} dangerouslySetInnerHTML={{ __html: q.text ? hlStem(q.text) : "" }} />
-
+          <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, marginBottom: 24, fontSize: 16 }} dangerouslySetInnerHTML={{ __html: hlStem(q.text) }} />
           <div style={{ marginBottom: 24 }}>
             {q.options.map((opt, idx) => {
               const letter = String.fromCharCode(65 + idx);
