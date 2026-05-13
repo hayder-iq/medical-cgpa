@@ -67,15 +67,18 @@ const WD=(g,u,total,w)=>g==null||total===0?null:(g/100)*(u/total)*w;
 const hlStem=(t)=>t?.replace(/(most likely|next best step|most appropriate|best initial|diagnosis|which of the following|first-line|what is the)/gi,"<mark>$1</mark>")||t;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SAMPLE FALLBACK QUESTIONS
+// DEFAULT QUESTIONS (صالحة وآمنة)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const SAMPLE_QS = [
-  {id:"q1",system:"Cardiology",subject:"Internal Medicine",difficulty:"Medium",text:"Which ECG finding is most specific for prior MI?",options:["ST elevation","ST depression","T wave inversion","Prolonged QT interval","Pathological Q wave"],correctAnswer:"Pathological Q wave",explanation:"Pathological Q waves indicate transmural infarction.",educationalObjective:"Recognize ECG signs of prior MI.",tags:["ECG","MI"],hint:"Think about permanent changes.",imageUrl:null,type:"single"},
-  {id:"q2",system:"Respiratory",subject:"Internal Medicine",difficulty:"Medium",text:"A 60-year-old patient presents with pleuritic chest pain and a pericardial rub that has persisted for 4 weeks and fever following MI.",options:["Recurrent MI","Pulmonary embolism","Ventricular aneurysm","Infectious pericarditis","Dressler's syndrome"],correctAnswer:"Dressler's syndrome",explanation:"Dressler's syndrome is post-MI pericarditis.",educationalObjective:"Differentiate early from late post-MI pericarditis.",tags:["MI","Pericarditis"],hint:"Timing is key.",imageUrl:null,type:"single"},
+const DEFAULT_QUESTIONS = [
+  { id: "def1", system: "Cardiology", subject: "Internal Medicine", difficulty: "Medium", text: "Which ECG finding is most specific for prior MI?", options: ["ST elevation", "ST depression", "T wave inversion", "Prolonged QT interval", "Pathological Q wave"], correctAnswer: "Pathological Q wave", explanation: "Pathological Q waves indicate transmural infarction.", educationalObjective: "Recognize ECG signs of prior MI.", tags: ["ECG", "MI"], hint: "Think about permanent changes.", imageUrl: null, type: "single" },
+  { id: "def2", system: "Respiratory", subject: "Internal Medicine", difficulty: "Medium", text: "A 60-year-old patient presents with pleuritic chest pain and a pericardial rub that has persisted for 4 weeks and fever following MI.", options: ["Recurrent MI", "Pulmonary embolism", "Ventricular aneurysm", "Infectious pericarditis", "Dressler's syndrome"], correctAnswer: "Dressler's syndrome", explanation: "Dressler's syndrome is post-MI pericarditis.", educationalObjective: "Differentiate early from late post-MI pericarditis.", tags: ["MI", "Pericarditis"], hint: "Timing is key.", imageUrl: null, type: "single" },
+  { id: "def3", system: "Nephrology", subject: "Internal Medicine", difficulty: "Medium", text: "A urinalysis reveals muddy brown granular casts. Most likely diagnosis?", options: ["Acute Tubular Necrosis (ATN)", "Renal tubular acidosis", "Glomerulonephritis", "Aspiration", "Obstruction"], correctAnswer: "Acute Tubular Necrosis (ATN)", explanation: "Muddy brown granular casts are characteristic of ATN.", educationalObjective: "Urine sediment in ATN.", tags: ["ATN", "Casts"], hint: "Ischemic or nephrotoxic injury.", imageUrl: null, type: "single" },
+  { id: "def4", system: "Gastroenterology", subject: "Internal Medicine", difficulty: "Medium", text: "Mr. Salam has recurrent bloody diarrhea over several weeks. Suspect ulcerative colitis. What advice would you give?", options: ["This is a relapsing-remitting disease", "He may require sigmoidoscopy followed by colonoscopy", "Definitive treatment would be given straightforward irrespective of colonic biopsy", "Biological medicines may be used", "Total colectomy may be required at a later stage"], correctAnswer: "This is a relapsing-remitting disease", explanation: "Ulcerative colitis typically has a relapsing-remitting course.", educationalObjective: "Understand the natural history of UC.", tags: ["UC", "IBD"], hint: "Chronicity.", imageUrl: null, type: "single" },
+  { id: "def5", system: "Endocrinology", subject: "Internal Medicine", difficulty: "Medium", text: "A 24-year-old male with tall stature, eunuchoid habitus, sparse pubic hair, small firm testes (1.5 cm). FSH & LH elevated, testosterone low. Next step?", options: ["Semen analysis", "Testosterone replacement therapy", "Karyotyping", "Testicular biopsy", "Pituitary MRI"], correctAnswer: "Karyotyping", explanation: "Elevated gonadotropins with hypogonadism suggests primary testicular failure; karyotyping for Klinefelter syndrome.", educationalObjective: "Evaluation of hypergonadotropic hypogonadism.", tags: ["Hypogonadism", "Klinefelter"], hint: "Small firm testes.", imageUrl: null, type: "single" }
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR
+// CGPA CALCULATOR (مع إصلاح جدول المواد)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -153,7 +156,7 @@ function CGPAView({dark}) {
                 )}
               </div>
 
-              {/* جدول المواد بأعمدة ثابتة */}
+              {/* جدول المواد بأعمدة ثابتة وآمنة */}
               <div style={{display:"grid", gridTemplateColumns:"60px 1fr 100px 100px 80px", gap:"8px 12px", alignItems:"center"}}>
                 {stage.subjects.map((sub,i)=>{
                   const g=grades[`${stage.id}-${i}`];
@@ -352,7 +355,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
             <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", borderRadius: 14, background: C.sub }}>
               <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 12, fontWeight: 700, color: C.acc, minWidth: 36 }}>Q{page * PER + idx + 1}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{q.text}</div>
+                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{q.text || "No text"}</div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap", fontSize: 11, color: C.muted }}><span>📚 {q.system || "General"}</span><span>📖 {q.subject || "—"}</span>{q.difficulty && <span style={{ color: diffC(q.difficulty), fontWeight: 600 }}>{q.difficulty}</span>}</div>
               </div>
               <div style={{ fontSize: 11, color: C.muted }}>{q.options?.length || 0} opts</div>
@@ -366,12 +369,11 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SESSION CONFIG
+// SESSION CONFIG (آمن)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({ questions, onStart, onBack, dark }) {
   const C = TH(dark);
-  // التأكد من أن questions مصفوفة ولها طول
-  const safeQuestions = Array.isArray(questions) && questions.length ? questions : [];
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && q.text && q.options && q.correctAnswer) : [];
   const allSystems = [...new Set(safeQuestions.map(q => q.system || "General"))].sort();
   const allDiffs = ["Easy", "Medium", "Hard"];
   const [name, setName] = useState("Custom Session");
@@ -392,13 +394,8 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
       alert("No questions match your filters.");
       return;
     }
-    let qs = available.slice();
-    if (randomize) qs = shuffle(qs);
+    let qs = randomize ? shuffle(available) : available.slice();
     qs = qs.slice(0, finalCount);
-    if (!qs.length) {
-      alert("No questions selected.");
-      return;
-    }
     onStart({ name, mode, timeLimit: timeLimit * 60, questions: qs, startTime: Date.now() });
   };
 
@@ -406,7 +403,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
     return (
       <div className="fade-up" style={{ padding: "32px 24px", maxWidth: 800, margin: "0 auto", background: C.bg, color: C.text, textAlign: "center" }}>
         <button onClick={onBack} className="btn" style={{ padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>← Back</button>
-        <p style={{ marginTop: 24 }}>No questions available. Please upload questions or use sample data.</p>
+        <p style={{ marginTop: 24 }}>No valid questions available. Please add questions or use sample data.</p>
       </div>
     );
   }
@@ -418,70 +415,26 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
         <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: 32, color: C.acc }}>SESSION SETUP</h2>
       </div>
       <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        <div>
-          <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: C.muted }}>SESSION NAME</label>
-          <input value={name} onChange={e => setName(e.target.value)} style={{ width: "100%", marginTop: 6, padding: "10px 14px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} />
-        </div>
-        <div>
-          <label>MODE</label>
-          <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
-            {["study", "timed", "review"].map(m => (
-              <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: "10px", borderRadius: 12, border: `1.5px solid ${mode === m ? C.acc : C.border}`, background: mode === m ? `${C.acc}10` : C.inp, color: mode === m ? C.acc : C.text, fontWeight: 600 }}>
-                {m === "study" ? "📖 Study" : m === "timed" ? "⏱ Timed" : "📋 Review"}
-              </button>
-            ))}
-          </div>
-        </div>
-        {mode === "timed" && (
-          <div>
-            <label>Time (min)</label>
-            <div style={{ display: "flex", gap: 6 }}>
-              {[15, 30, 45, 60, 90].map(t => (
-                <button key={t} onClick={() => setTimeLimit(t)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${timeLimit === t ? C.acc : C.border}`, background: timeLimit === t ? `${C.acc}10` : C.inp }}>{t}m</button>
-              ))}
-            </div>
-          </div>
-        )}
-        <div>
-          <label>Systems</label>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            <button onClick={() => setSystems(new Set(allSystems))} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${C.acc}` }}>All</button>
-            {allSystems.map(s => (
-              <button key={s} onClick={() => toggleSet(systems, setSystems, s)} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${systems.has(s) ? C.acc : C.border}`, background: systems.has(s) ? `${C.acc}20` : C.inp }}>{s}</button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <label>Difficulty</label>
-          <div style={{ display: "flex", gap: 6 }}>
-            {allDiffs.map(d => (
-              <button key={d} onClick={() => toggleSet(diffs, setDiffs, d)} style={{ flex: 1, padding: "6px", borderRadius: 12, border: `1.5px solid ${diffs.has(d) ? diffC(d) : C.border}`, background: diffs.has(d) ? `${diffC(d)}15` : C.inp, color: diffs.has(d) ? diffC(d) : C.text }}>{d}</button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <label>Questions ({finalCount}/{available.length})</label>
-          <input type="range" min={1} max={available.length || 1} value={count} onChange={e => setCount(Number(e.target.value))} style={{ width: "100%", accentColor: C.acc }} />
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => setRandomize(r => !r)} style={{ width: 36, height: 20, borderRadius: 20, background: randomize ? C.acc : C.border, position: "relative" }}>
-            <div style={{ width: 16, height: 16, borderRadius: "50%", background: "white", position: "absolute", top: 2, left: randomize ? 18 : 2, transition: "left 0.2s" }} />
-          </button>
-          <span>Randomize order</span>
-        </div>
+        <div><label style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: C.muted }}>SESSION NAME</label><input value={name} onChange={e => setName(e.target.value)} style={{ width: "100%", marginTop: 6, padding: "10px 14px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} /></div>
+        <div><label>MODE</label><div style={{ display: "flex", gap: 8, marginTop: 6 }}>{["study", "timed", "review"].map(m => (<button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: "10px", borderRadius: 12, border: `1.5px solid ${mode === m ? C.acc : C.border}`, background: mode === m ? `${C.acc}10` : C.inp, color: mode === m ? C.acc : C.text, fontWeight: 600 }}>{m === "study" ? "📖 Study" : m === "timed" ? "⏱ Timed" : "📋 Review"}</button>))}</div></div>
+        {mode === "timed" && (<div><label>Time (min)</label><div style={{ display: "flex", gap: 6 }}>{[15, 30, 45, 60, 90].map(t => (<button key={t} onClick={() => setTimeLimit(t)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${timeLimit === t ? C.acc : C.border}`, background: timeLimit === t ? `${C.acc}10` : C.inp }}>{t}m</button>))}</div></div>)}
+        <div><label>Systems</label><div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}><button onClick={() => setSystems(new Set(allSystems))} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${C.acc}` }}>All</button>{allSystems.map(s => (<button key={s} onClick={() => toggleSet(systems, setSystems, s)} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${systems.has(s) ? C.acc : C.border}`, background: systems.has(s) ? `${C.acc}20` : C.inp }}>{s}</button>))}</div></div>
+        <div><label>Difficulty</label><div style={{ display: "flex", gap: 6 }}>{allDiffs.map(d => (<button key={d} onClick={() => toggleSet(diffs, setDiffs, d)} style={{ flex: 1, padding: "6px", borderRadius: 12, border: `1.5px solid ${diffs.has(d) ? diffC(d) : C.border}`, background: diffs.has(d) ? `${diffC(d)}15` : C.inp, color: diffs.has(d) ? diffC(d) : C.text }}>{d}</button>))}</div></div>
+        <div><label>Questions ({finalCount}/{available.length})</label><input type="range" min={1} max={available.length || 1} value={count} onChange={e => setCount(Number(e.target.value))} style={{ width: "100%", accentColor: C.acc }} /></div>
+        <div style={{ display: "flex", gap: 8 }}><button onClick={() => setRandomize(r => !r)} style={{ width: 36, height: 20, borderRadius: 20, background: randomize ? C.acc : C.border, position: "relative" }}><div style={{ width: 16, height: 16, borderRadius: "50%", background: "white", position: "absolute", top: 2, left: randomize ? 18 : 2, transition: "left 0.2s" }} /></button><span>Randomize order</span></div>
         <button onClick={handleStart} style={{ padding: "14px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white", fontWeight: 700 }}>BEGIN SESSION</button>
       </div>
     </div>
   );
 }
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ACTIVE SESSION
+// ACTIVE SESSION (آمن تماماً)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function ActiveSession({ config, onEnd, dark }) {
   const C = TH(dark);
   const { questions, mode, timeLimit, name } = config;
-  // التأكد من وجود أسئلة
-  const safeQuestions = Array.isArray(questions) && questions.length ? questions : [];
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions.filter(q => q && q.text && q.options && q.correctAnswer) : [];
   const [cur, setCur] = useState(0);
   const [answers, setAnswers] = useState({});
   const [marked, setMarked] = useState({});
@@ -494,7 +447,7 @@ function ActiveSession({ config, onEnd, dark }) {
   if (safeQuestions.length === 0) {
     return (
       <div style={{ minHeight: "100dvh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-        <p>No questions in this session. Please go back and select different filters.</p>
+        <p>No valid questions in this session.</p>
         <button onClick={() => onEnd({ ...config, answers, marked, notes, elapsed: 0 })} style={{ marginTop: 16, padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>Exit Session</button>
       </div>
     );
@@ -525,26 +478,17 @@ function ActiveSession({ config, onEnd, dark }) {
     return () => clearInterval(t);
   }, [isTimed, timeLeft]);
 
-  const handleSelect = (opt) => {
-    if (submitted) return;
-    setSelected(opt);
-  };
-
+  const handleSelect = (opt) => { if (!submitted) setSelected(opt); };
   const handleSubmit = () => {
     if (!selected) return;
     const correct = selected === q.correctAnswer;
     setAnswers(a => ({ ...a, [q.id]: { selected, correct } }));
     setSubmitted(true);
   };
-
   const handleNext = () => {
-    if (cur + 1 < safeQuestions.length) {
-      setCur(c => c + 1);
-    } else {
-      onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft });
-    }
+    if (cur + 1 < safeQuestions.length) setCur(c => c + 1);
+    else onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft });
   };
-
   const progress = Math.round((Object.keys(answers).length / safeQuestions.length) * 100);
   const timerColor = timeLeft < 60 ? "#EF4444" : timeLeft < 300 ? "#FBBF24" : C.acc;
 
@@ -557,10 +501,7 @@ function ActiveSession({ config, onEnd, dark }) {
   };
 
   const optStyle = (opt) => {
-    const base = {
-      display: "flex", alignItems: "flex-start", gap: 12, padding: "13px 16px", borderRadius: 12, border: "1.5px solid", marginBottom: 8,
-      transition: "all .15s", cursor: submitted ? "default" : "pointer"
-    };
+    const base = { display: "flex", alignItems: "flex-start", gap: 12, padding: "13px 16px", borderRadius: 12, border: "1.5px solid", marginBottom: 8, transition: "all .15s", cursor: submitted ? "default" : "pointer" };
     if (!submitted && selected === opt) return { ...base, borderColor: C.acc, background: "rgba(0,212,170,.08)", color: C.text };
     if (!submitted) return { ...base, borderColor: C.border, background: C.sub, color: C.text };
     if (opt === q.correctAnswer) return { ...base, borderColor: "#10B981", background: "rgba(16,185,129,.1)", color: C.text };
@@ -571,29 +512,21 @@ function ActiveSession({ config, onEnd, dark }) {
   return (
     <div style={{ minHeight: "100dvh", background: C.bg, color: C.text }}>
       <div style={{ position: "sticky", top: 0, zIndex: 20, background: C.hdr, backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}`, padding: "12px 20px", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-        <div>
-          <button onClick={() => onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft })} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>← Exit</button>
-          <span style={{ marginLeft: 12 }}>{name} ({Object.keys(answers).length} answered)</span>
-        </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          {isTimed && <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 22, fontWeight: 700, color: timerColor }}>⏱ {fmtTime(timeLeft)}</div>}
-          <button onClick={() => setSidebarOpen(o => !o)} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>📋 {sidebarOpen ? "Hide" : "Show"}</button>
-        </div>
+        <div><button onClick={() => onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft })} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>← Exit</button><span style={{ marginLeft: 12 }}>{name} ({Object.keys(answers).length} answered)</span></div>
+        <div style={{ display: "flex", gap: 12 }}>{isTimed && <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 22, fontWeight: 700, color: timerColor }}>⏱ {fmtTime(timeLeft)}</div>}<button onClick={() => setSidebarOpen(o => !o)} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>📋 {sidebarOpen ? "Hide" : "Show"}</button></div>
       </div>
       <div style={{ display: "flex", minHeight: "calc(100vh - 64px)" }}>
         {sidebarOpen && (
           <div style={{ width: 260, borderRight: `1px solid ${C.border}`, padding: 16, overflowY: "auto" }}>
             <div style={{ marginBottom: 16 }}>{Object.keys(answers).length}/{safeQuestions.length} ({progress}%)</div>
-            <div style={{ height: 4, background: C.border, borderRadius: 2, marginBottom: 20 }}>
-              <div style={{ width: `${progress}%`, height: 4, background: `linear-gradient(90deg,${C.acc},${C.acc2})`, borderRadius: 2 }} />
-            </div>
+            <div style={{ height: 4, background: C.border, borderRadius: 2, marginBottom: 20 }}><div style={{ width: `${progress}%`, height: 4, background: `linear-gradient(90deg,${C.acc},${C.acc2})`, borderRadius: 2 }} /></div>
             <div>
               {safeQuestions.map((qItem, idx) => {
                 const dot = statusDot(qItem);
                 return (
                   <div key={qItem.id} onClick={() => setCur(idx)} style={{ padding: "8px 12px", borderRadius: 12, background: cur === idx ? `${C.acc}15` : "transparent", border: `1px solid ${cur === idx ? C.acc + "40" : "transparent"}`, cursor: "pointer", display: "flex", gap: 10, marginBottom: 6 }}>
                     <div className={dot.pulse ? "pu" : ""} style={{ width: 24, height: 24, borderRadius: 6, background: dot.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "white" }}>{idx + 1}</div>
-                    <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text.substring(0, 40)}…</div>
+                    <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text ? qItem.text.substring(0, 40) : "No text"}…</div>
                     {marked[qItem.id] && <span style={{ color: "#FBBF24" }}>★</span>}
                   </div>
                 );
@@ -609,7 +542,7 @@ function ActiveSession({ config, onEnd, dark }) {
             <span style={{ background: `${diffC(q.difficulty)}20`, padding: "2px 10px", borderRadius: 20, color: diffC(q.difficulty) }}>{q.difficulty}</span>
             <button onClick={() => setMarked(m => ({ ...m, [q.id]: !m[q.id] }))} style={{ marginLeft: "auto", padding: "6px 12px", borderRadius: 20, border: `1px solid ${marked[q.id] ? "#FBBF24" : C.border}`, background: marked[q.id] ? "#FBBF2410" : C.inp }}>{marked[q.id] ? "★ Marked" : "☆ Mark"}</button>
           </div>
-          <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, marginBottom: 24, fontSize: 16 }} dangerouslySetInnerHTML={{ __html: hlStem(q.text) }} />
+          <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, marginBottom: 24, fontSize: 16 }} dangerouslySetInnerHTML={{ __html: hlStem(q.text || "") }} />
           <div style={{ marginBottom: 24 }}>
             {q.options.map((opt, idx) => {
               const letter = String.fromCharCode(65 + idx);
@@ -619,117 +552,92 @@ function ActiveSession({ config, onEnd, dark }) {
               if (submitted && isCorrect) variant = "correct";
               else if (submitted && isSelected && !isCorrect) variant = "wrong";
               else if (isSelected) variant = "selected";
-              const style = {
-                borderColor: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border,
-                background: variant === "correct" ? "#10B98110" : variant === "wrong" ? "#EF444410" : variant === "selected" ? `${C.acc}10` : C.sub,
-                padding: "12px 18px", borderRadius: 16, border: "1.5px solid", display: "flex", gap: 14, alignItems: "center",
-                cursor: submitted ? "default" : "pointer", marginBottom: 10
-              };
-              return (
-                <div key={opt} onClick={() => handleSelect(opt)} style={style}>
-                  <div style={{ width: 28, height: 28, borderRadius: 14, background: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "white" }}>{letter}</div>
-                  <div style={{ flex: 1 }}>{opt}</div>
-                  {submitted && isCorrect && <span>✓</span>}
-                  {submitted && isSelected && !isCorrect && <span>✗</span>}
-                </div>
-              );
+              const style = { borderColor: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border, background: variant === "correct" ? "#10B98110" : variant === "wrong" ? "#EF444410" : variant === "selected" ? `${C.acc}10` : C.sub, padding: "12px 18px", borderRadius: 16, border: "1.5px solid", display: "flex", gap: 14, alignItems: "center", cursor: submitted ? "default" : "pointer", marginBottom: 10 };
+              return (<div key={opt} onClick={() => handleSelect(opt)} style={style}><div style={{ width: 28, height: 28, borderRadius: 14, background: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "white" }}>{letter}</div><div style={{ flex: 1 }}>{opt}</div>{submitted && isCorrect && <span>✓</span>}{submitted && isSelected && !isCorrect && <span>✗</span>}</div>);
             })}
           </div>
-          <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
-            <div>
-              <button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0} style={{ padding: "8px 18px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: cur === 0 ? 0.4 : 1 }}>← Previous</button>
-              {!submitted ? (
-                <button onClick={handleSubmit} disabled={!selected} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: selected ? `linear-gradient(135deg,${C.acc},${C.acc2})` : "rgba(0,212,170,0.3)", color: "white" }}>Submit</button>
-              ) : (
-                <button onClick={handleNext} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white" }}>{cur === safeQuestions.length - 1 ? "Finish →" : "Next →"}</button>
-              )}
-            </div>
-            <div>{submitted && <span>{answers[q.id]?.correct ? "✓ Correct" : "✗ Incorrect"}</span>}</div>
-          </div>
-          {submitted && isStudy && q.explanation && (
-            <div style={{ background: C.sub2, borderRadius: 20, padding: 20, marginTop: 20 }}>
-              <div style={{ fontWeight: 700, color: C.acc, marginBottom: 8 }}>🔍 EXPLANATION</div>
-              <div>{q.explanation}</div>
-              {q.educationalObjective && <div style={{ marginTop: 8, fontSize: 12, color: C.muted }}>🎯 {q.educationalObjective}</div>}
-              <textarea placeholder="Notes" value={notes[q.id] || ""} onChange={e => setNotes(n => ({ ...n, [q.id]: e.target.value }))} style={{ width: "100%", marginTop: 12, padding: "8px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} rows={2} />
-            </div>
-          )}
+          <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}><div><button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0} style={{ padding: "8px 18px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: cur === 0 ? 0.4 : 1 }}>← Previous</button>{!submitted ? <button onClick={handleSubmit} disabled={!selected} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: selected ? `linear-gradient(135deg,${C.acc},${C.acc2})` : "rgba(0,212,170,0.3)", color: "white" }}>Submit</button> : <button onClick={handleNext} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white" }}>{cur === safeQuestions.length - 1 ? "Finish →" : "Next →"}</button>}</div><div>{submitted && <span>{answers[q.id]?.correct ? "✓ Correct" : "✗ Incorrect"}</span>}</div></div>
+          {submitted && isStudy && q.explanation && (<div style={{ background: C.sub2, borderRadius: 20, padding: 20, marginTop: 20 }}><div style={{ fontWeight: 700, color: C.acc, marginBottom: 8 }}>🔍 EXPLANATION</div><div>{q.explanation}</div>{q.educationalObjective && <div style={{ marginTop: 8, fontSize: 12, color: C.muted }}>🎯 {q.educationalObjective}</div>}<textarea placeholder="Notes" value={notes[q.id] || ""} onChange={e => setNotes(n => ({ ...n, [q.id]: e.target.value }))} style={{ width: "100%", marginTop: 12, padding: "8px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} rows={2} /></div>)}
         </div>
       </div>
     </div>
   );
 }
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SESSION REVIEW
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function SessionReview({result, onExit, onRetry, dark}) {
-  const C=TH(dark);
-  const {questions,answers,marked,notes,name,mode,elapsed}=result;
-  const [expanded,setExpanded]=useState(null);
-  const correct=Object.values(answers).filter(a=>a.correct).length;
-  const score=Math.round((correct/questions.length)*100);
-  const scoreColor=gc(score);
+function SessionReview({ result, onExit, onRetry, dark }) {
+  const C = TH(dark);
+  const { questions, answers, marked, notes, name, mode, elapsed } = result;
+  const safeQuestions = Array.isArray(questions) ? questions.filter(q => q && q.text) : [];
+  const [expanded, setExpanded] = useState(null);
+  const correct = Object.values(answers).filter(a => a && a.correct).length;
+  const score = safeQuestions.length ? Math.round((correct / safeQuestions.length) * 100) : 0;
+  const scoreColor = gc(score);
+
   return (
-    <div className="fade-up" style={{padding:28,maxWidth:900,margin:"0 auto",background:C.bg,color:C.text,minHeight:"100dvh"}}>
-      <div style={{display:"flex",justifyContent:"space-between",marginBottom:28}}><div><h2 style={{fontFamily:"'Bebas Neue'",fontSize:36,color:C.acc}}>Session Complete</h2><div>{name} · {mode} mode · {fmtTime(elapsed||0)}</div></div><div><button onClick={onRetry} style={{padding:"8px 20px",borderRadius:40,border:`1px solid ${C.acc}`,background:"transparent",color:C.acc}}>↻ Retry</button><button onClick={onExit} style={{marginLeft:8,padding:"8px 20px",borderRadius:40,border:`1px solid ${C.border}`,background:C.inp}}>← Library</button></div></div>
-      <div style={{background:C.card,borderRadius:24,border:`1px solid ${C.border}`,padding:24,textAlign:"center",marginBottom:24}}><div style={{width:100,height:100,borderRadius:"50%",border:`4px solid ${scoreColor}`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px"}}><div style={{fontSize:40,fontFamily:"'Bebas Neue'",color:scoreColor}}>{score}%</div></div><div style={{fontSize:18,fontWeight:700,color:scoreColor}}>{classify(score)?.label}</div><div style={{display:"flex",justifyContent:"center",gap:24,marginTop:20}}><div><div style={{fontSize:28,fontWeight:700,color:"#10B981"}}>{correct}</div><div>Correct</div></div><div><div style={{fontSize:28,fontWeight:700,color:"#EF4444"}}>{questions.length-correct}</div><div>Incorrect/Skipped</div></div><div><div style={{fontSize:28,fontWeight:700,color:"#FBBF24"}}>{Object.values(marked).filter(v=>v).length}</div><div>Marked</div></div></div></div>
-      <div><h3 style={{marginBottom:16}}>Detailed Review</h3>{questions.map((q,idx)=>{const a=answers[q.id];const isExpanded=expanded===idx;return(<div key={q.id} style={{background:C.sub,borderRadius:16,marginBottom:10,overflow:"hidden",border:`1px solid ${C.border}`}}><div onClick={()=>setExpanded(isExpanded?null:idx)} style={{padding:"14px 18px",display:"flex",gap:12,cursor:"pointer"}}><span>{a?.correct?"✅":a?"❌":"⏺"}</span><div style={{flex:1}}>Q{idx+1}. {q.text.substring(0,100)}…</div><span>{isExpanded?"▲":"▼"}</span></div>{isExpanded&&<div style={{padding:"12px 18px",borderTop:`1px solid ${C.border}`,background:C.card}}><div><strong>Your answer:</strong> {a?.selected||"Not answered"}</div><div><strong>Correct:</strong> {q.correctAnswer}</div>{q.explanation&&<div style={{marginTop:8,padding:10,background:C.sub,borderRadius:12}}>{q.explanation}</div>}{notes[q.id]&&<div style={{marginTop:8,fontSize:12,color:C.acc}}>📝 {notes[q.id]}</div>}</div>}</div>);})}</div>
+    <div className="fade-up" style={{ padding: 28, maxWidth: 900, margin: "0 auto", background: C.bg, color: C.text, minHeight: "100dvh" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 28 }}><div><h2 style={{ fontFamily: "'Bebas Neue'", fontSize: 36, color: C.acc }}>Session Complete</h2><div>{name} · {mode} mode · {fmtTime(elapsed || 0)}</div></div><div><button onClick={onRetry} style={{ padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.acc}`, background: "transparent", color: C.acc }}>↻ Retry</button><button onClick={onExit} style={{ marginLeft: 8, padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp }}>← Library</button></div></div>
+      <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, textAlign: "center", marginBottom: 24 }}><div style={{ width: 100, height: 100, borderRadius: "50%", border: `4px solid ${scoreColor}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}><div style={{ fontSize: 40, fontFamily: "'Bebas Neue'", color: scoreColor }}>{score}%</div></div><div style={{ fontSize: 18, fontWeight: 700, color: scoreColor }}>{classify(score)?.label}</div><div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 20 }}><div><div style={{ fontSize: 28, fontWeight: 700, color: "#10B981" }}>{correct}</div><div>Correct</div></div><div><div style={{ fontSize: 28, fontWeight: 700, color: "#EF4444" }}>{safeQuestions.length - correct}</div><div>Incorrect/Skipped</div></div><div><div style={{ fontSize: 28, fontWeight: 700, color: "#FBBF24" }}>{Object.values(marked).filter(v => v).length}</div><div>Marked</div></div></div></div>
+      <div><h3 style={{ marginBottom: 16 }}>Detailed Review</h3>{safeQuestions.map((q, idx) => { const a = answers[q.id]; const isExpanded = expanded === idx; return (<div key={q.id} style={{ background: C.sub, borderRadius: 16, marginBottom: 10, overflow: "hidden", border: `1px solid ${C.border}` }}><div onClick={() => setExpanded(isExpanded ? null : idx)} style={{ padding: "14px 18px", display: "flex", gap: 12, cursor: "pointer" }}><span>{a?.correct ? "✅" : a ? "❌" : "⏺"}</span><div style={{ flex: 1 }}>Q{idx + 1}. {q.text ? q.text.substring(0, 100) : "No text"}…</div><span>{isExpanded ? "▲" : "▼"}</span></div>{isExpanded && <div style={{ padding: "12px 18px", borderTop: `1px solid ${C.border}`, background: C.card }}><div><strong>Your answer:</strong> {a?.selected || "Not answered"}</div><div><strong>Correct:</strong> {q.correctAnswer}</div>{q.explanation && <div style={{ marginTop: 8, padding: 10, background: C.sub, borderRadius: 12 }}>{q.explanation}</div>}{notes[q.id] && <div style={{ marginTop: 8, fontSize: 12, color: C.acc }}>📝 {notes[q.id]}</div>}</div>}</div>);})}</div>
     </div>
   );
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// QBANK APP (تحميل الأسئلة من public/data/)
+// QBANK APP (تحميل أسئلة آمن)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function QbankApp({dark}) {
-  const [view,setView]=useState("library");
-  const [allQuestions,setAllQuestions]=useState([]);
-  const [bankQuestions,setBankQuestions]=useState([]);
-  const [prevExams,setPrevExams]=useState([]);
-  const [loading,setLoading]=useState(true);
-  const [sessionConfig,setSessionConfig]=useState(null);
-  const [sessionResult,setSessionResult]=useState(null);
+function QbankApp({ dark }) {
+  const [view, setView] = useState("library");
+  const [allQuestions, setAllQuestions] = useState([]);
+  const [bankQuestions, setBankQuestions] = useState([]);
+  const [prevExams, setPrevExams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [sessionConfig, setSessionConfig] = useState(null);
+  const [sessionResult, setSessionResult] = useState(null);
 
-  useEffect(()=>{
-    const load=async()=>{
-      const systemFiles=["questions","previous-exams","cardiology","gastroenterology","nephrology","hepatology","pulmonology","endocrinology","rheumatology","neurology","infectious"];
-      const bankQs=[];
-      let prevQs=[];
+  const sanitize = (arr) => Array.isArray(arr) ? arr.filter(q => q && typeof q === 'object' && q.text && q.options && q.correctAnswer) : [];
 
-      for(const file of systemFiles){
-        try{
-          const res=await fetch(`/data/${file}.json`);
-          if(res.ok){
-            const data=await res.json();
-            if(Array.isArray(data)) bankQs.push(...data);
-          }else{ console.warn(`${file}.json not found`); }
-        }catch(e){ console.error(`Error loading ${file}.json`,e); }
+  useEffect(() => {
+    const load = async () => {
+      const systemFiles = ["cardiology", "gastroenterology", "nephrology", "hepatology", "pulmonology", "endocrinology", "rheumatology", "neurology", "infectious"];
+      let bankQs = [];
+      let prevQs = [];
+      for (const file of systemFiles) {
+        try {
+          const res = await fetch(`/data/${file}.json`);
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) bankQs.push(...data);
+          }
+        } catch (e) { /* ignore */ }
       }
-
-      try{
-        const prevRes=await fetch("/data/previous-exams.json");
-        if(prevRes.ok){
-          const data=await prevRes.json();
-          if(Array.isArray(data)) prevQs=data;
-        }else{ console.warn("previous-exams.json not found"); }
-      }catch(e){ console.error("Error loading previous-exams.json",e); }
-
-      setBankQuestions(bankQs);
-      setPrevExams(prevQs);
-      setAllQuestions([...bankQs,...prevQs]);
+      try {
+        const prevRes = await fetch("/data/previous-exams.json");
+        if (prevRes.ok) {
+          const data = await prevRes.json();
+          if (Array.isArray(data)) prevQs = data;
+        }
+      } catch (e) { /* ignore */ }
+      const safeBank = sanitize(bankQs);
+      const safePrev = sanitize(prevQs);
+      setBankQuestions(safeBank);
+      setPrevExams(safePrev);
+      setAllQuestions([...safeBank, ...safePrev]);
       setLoading(false);
     };
     load();
-  },[]);
+  }, []);
 
-  if(loading) return <div style={{minHeight:"100dvh",display:"flex",alignItems:"center",justifyContent:"center",color:TH(dark).text}}>Loading questions...</div>;
+  if (loading) return <div style={{ minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", color: TH(dark).text }}>Loading questions...</div>;
 
   return (
     <>
-      {view==="library" && <Library questions={allQuestions} bankQuestionsList={bankQuestions} previousExamsList={prevExams} onStart={()=>setView("config")} dark={dark}/>}
-      {view==="config" && <SessionConfig questions={allQuestions} onStart={cfg=>{setSessionConfig(cfg); setView("session");}} onBack={()=>setView("library")} dark={dark}/>}
-      {view==="session" && sessionConfig && <ActiveSession config={sessionConfig} onEnd={res=>{setSessionResult(res); setView("review");}} dark={dark}/>}
-      {view==="review" && sessionResult && <SessionReview result={sessionResult} onExit={()=>setView("library")} onRetry={()=>setView("config")} dark={dark}/>}
+      {view === "library" && <Library questions={allQuestions} bankQuestionsList={bankQuestions} previousExamsList={prevExams} onStart={() => setView("config")} dark={dark} />}
+      {view === "config" && <SessionConfig questions={allQuestions} onStart={cfg => { setSessionConfig(cfg); setView("session"); }} onBack={() => setView("library")} dark={dark} />}
+      {view === "session" && sessionConfig && <ActiveSession config={sessionConfig} onEnd={res => { setSessionResult(res); setView("review"); }} dark={dark} />}
+      {view === "review" && sessionResult && <SessionReview result={sessionResult} onExit={() => setView("library")} onRetry={() => setView("config")} dark={dark} />}
     </>
   );
 }
