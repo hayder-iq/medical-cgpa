@@ -368,91 +368,297 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SESSION CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function SessionConfig({questions, onStart, onBack, dark}) {
-  const C=TH(dark);
-  const allSystems=[...new Set(questions.map(q=>q.system||"General"))].sort();
-  const allDiffs=["Easy","Medium","Hard"];
-  const [name,setName]=useState("Custom Session");
-  const [mode,setMode]=useState("study");
-  const [systems,setSystems]=useState(new Set(allSystems));
-  const [diffs,setDiffs]=useState(new Set(allDiffs));
-  const [count,setCount]=useState(Math.min(10,questions.length));
-  const [randomize,setRandomize]=useState(true);
-  const [timeLimit,setTimeLimit]=useState(60);
-  const available=questions.filter(q=>systems.has(q.system||"General")&&diffs.has(q.difficulty||"Medium"));
-  const finalCount=Math.min(count,available.length);
-  const toggleSet=(set,setFn,val)=>setFn(prev=>{const n=new Set(prev);n.has(val)?n.delete(val):n.add(val);return n;});
-  const handleStart=()=>{
-    let qs=available.slice();
-    if(randomize)qs=shuffle(qs);
-    qs=qs.slice(0,finalCount);
-    if(!qs.length) alert("No questions match your filters.");
-    else onStart({name,mode,timeLimit:timeLimit*60,questions:qs,startTime:Date.now()});
+function SessionConfig({ questions, onStart, onBack, dark }) {
+  const C = TH(dark);
+  // التأكد من أن questions مصفوفة ولها طول
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions : [];
+  const allSystems = [...new Set(safeQuestions.map(q => q.system || "General"))].sort();
+  const allDiffs = ["Easy", "Medium", "Hard"];
+  const [name, setName] = useState("Custom Session");
+  const [mode, setMode] = useState("study");
+  const [systems, setSystems] = useState(new Set(allSystems));
+  const [diffs, setDiffs] = useState(new Set(allDiffs));
+  const [count, setCount] = useState(Math.min(10, safeQuestions.length));
+  const [randomize, setRandomize] = useState(true);
+  const [timeLimit, setTimeLimit] = useState(60);
+
+  const available = safeQuestions.filter(q => systems.has(q.system || "General") && diffs.has(q.difficulty || "Medium"));
+  const finalCount = Math.min(count, available.length);
+
+  const toggleSet = (set, setFn, val) => setFn(prev => { const n = new Set(prev); n.has(val) ? n.delete(val) : n.add(val); return n; });
+
+  const handleStart = () => {
+    if (!available.length) {
+      alert("No questions match your filters.");
+      return;
+    }
+    let qs = available.slice();
+    if (randomize) qs = shuffle(qs);
+    qs = qs.slice(0, finalCount);
+    if (!qs.length) {
+      alert("No questions selected.");
+      return;
+    }
+    onStart({ name, mode, timeLimit: timeLimit * 60, questions: qs, startTime: Date.now() });
   };
+
+  if (safeQuestions.length === 0) {
+    return (
+      <div className="fade-up" style={{ padding: "32px 24px", maxWidth: 800, margin: "0 auto", background: C.bg, color: C.text, textAlign: "center" }}>
+        <button onClick={onBack} className="btn" style={{ padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>← Back</button>
+        <p style={{ marginTop: 24 }}>No questions available. Please upload questions or use sample data.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="fade-up" style={{padding:"32px 24px",maxWidth:800,margin:"0 auto",background:C.bg,color:C.text,minHeight:"100dvh"}}>
-      <div style={{display:"flex",gap:16,marginBottom:28}}><button onClick={onBack} className="btn" style={{padding:"8px 16px",borderRadius:12,border:`1px solid ${C.border}`,background:C.inp}}>← Library</button><h2 style={{fontFamily:"'Bebas Neue'",fontSize:32,color:C.acc}}>SESSION SETUP</h2></div>
-      <div style={{background:C.card,borderRadius:24,border:`1px solid ${C.border}`,padding:24,display:"flex",flexDirection:"column",gap:24}}>
-        <div><label style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.muted}}>SESSION NAME</label><input value={name} onChange={e=>setName(e.target.value)} style={{width:"100%",marginTop:6,padding:"10px 14px",borderRadius:12,border:`1px solid ${C.border}`,background:C.inp}}/></div>
-        <div><label>MODE</label><div style={{display:"flex",gap:8,marginTop:6}}>{["study","timed","review"].map(m=><button key={m} onClick={()=>setMode(m)} style={{flex:1,padding:"10px",borderRadius:12,border:`1.5px solid ${mode===m?C.acc:C.border}`,background:mode===m?`${C.acc}10`:C.inp,color:mode===m?C.acc:C.text,fontWeight:600}}>{m==="study"?"📖 Study":m==="timed"?"⏱ Timed":"📋 Review"}</button>)}</div></div>
-        {mode==="timed"&&<div><label>Time (min)</label><div style={{display:"flex",gap:6}}>{[15,30,45,60,90].map(t=><button key={t} onClick={()=>setTimeLimit(t)} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${timeLimit===t?C.acc:C.border}`,background:timeLimit===t?`${C.acc}10`:C.inp}}>{t}m</button>)}</div></div>}
-        <div><label>Systems</label><div style={{display:"flex",flexWrap:"wrap",gap:6}}><button onClick={()=>setSystems(new Set(allSystems))} style={{padding:"4px 10px",borderRadius:20,border:`1px solid ${C.acc}`}}>All</button>{allSystems.map(s=><button key={s} onClick={()=>toggleSet(systems,setSystems,s)} style={{padding:"4px 10px",borderRadius:20,border:`1px solid ${systems.has(s)?C.acc:C.border}`,background:systems.has(s)?`${C.acc}20`:C.inp}}>{s}</button>)}</div></div>
-        <div><label>Difficulty</label><div style={{display:"flex",gap:6}}>{allDiffs.map(d=><button key={d} onClick={()=>toggleSet(diffs,setDiffs,d)} style={{flex:1,padding:"6px",borderRadius:12,border:`1.5px solid ${diffs.has(d)?diffC(d):C.border}`,background:diffs.has(d)?`${diffC(d)}15`:C.inp,color:diffs.has(d)?diffC(d):C.text}}>{d}</button>)}</div></div>
-        <div><label>Questions ({finalCount}/{available.length})</label><input type="range" min={1} max={available.length||1} value={count} onChange={e=>setCount(Number(e.target.value))} style={{width:"100%",accentColor:C.acc}}/></div>
-        <div style={{display:"flex",gap:8}}><button onClick={()=>setRandomize(r=>!r)} style={{width:36,height:20,borderRadius:20,background:randomize?C.acc:C.border,position:"relative"}}><div style={{width:16,height:16,borderRadius:"50%",background:"white",position:"absolute",top:2,left:randomize?18:2,transition:"left 0.2s"}}/></button><span>Randomize order</span></div>
-        <button onClick={handleStart} style={{padding:"14px",borderRadius:40,background:`linear-gradient(135deg,${C.acc},${C.acc2})`,color:"white",fontWeight:700}}>BEGIN SESSION</button>
+    <div className="fade-up" style={{ padding: "32px 24px", maxWidth: 800, margin: "0 auto", background: C.bg, color: C.text, minHeight: "100dvh" }}>
+      <div style={{ display: "flex", gap: 16, marginBottom: 28 }}>
+        <button onClick={onBack} className="btn" style={{ padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>← Library</button>
+        <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: 32, color: C.acc }}>SESSION SETUP</h2>
+      </div>
+      <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div>
+          <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: C.muted }}>SESSION NAME</label>
+          <input value={name} onChange={e => setName(e.target.value)} style={{ width: "100%", marginTop: 6, padding: "10px 14px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} />
+        </div>
+        <div>
+          <label>MODE</label>
+          <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
+            {["study", "timed", "review"].map(m => (
+              <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: "10px", borderRadius: 12, border: `1.5px solid ${mode === m ? C.acc : C.border}`, background: mode === m ? `${C.acc}10` : C.inp, color: mode === m ? C.acc : C.text, fontWeight: 600 }}>
+                {m === "study" ? "📖 Study" : m === "timed" ? "⏱ Timed" : "📋 Review"}
+              </button>
+            ))}
+          </div>
+        </div>
+        {mode === "timed" && (
+          <div>
+            <label>Time (min)</label>
+            <div style={{ display: "flex", gap: 6 }}>
+              {[15, 30, 45, 60, 90].map(t => (
+                <button key={t} onClick={() => setTimeLimit(t)} style={{ padding: "6px 12px", borderRadius: 20, border: `1px solid ${timeLimit === t ? C.acc : C.border}`, background: timeLimit === t ? `${C.acc}10` : C.inp }}>{t}m</button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div>
+          <label>Systems</label>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+            <button onClick={() => setSystems(new Set(allSystems))} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${C.acc}` }}>All</button>
+            {allSystems.map(s => (
+              <button key={s} onClick={() => toggleSet(systems, setSystems, s)} style={{ padding: "4px 10px", borderRadius: 20, border: `1px solid ${systems.has(s) ? C.acc : C.border}`, background: systems.has(s) ? `${C.acc}20` : C.inp }}>{s}</button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label>Difficulty</label>
+          <div style={{ display: "flex", gap: 6 }}>
+            {allDiffs.map(d => (
+              <button key={d} onClick={() => toggleSet(diffs, setDiffs, d)} style={{ flex: 1, padding: "6px", borderRadius: 12, border: `1.5px solid ${diffs.has(d) ? diffC(d) : C.border}`, background: diffs.has(d) ? `${diffC(d)}15` : C.inp, color: diffs.has(d) ? diffC(d) : C.text }}>{d}</button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label>Questions ({finalCount}/{available.length})</label>
+          <input type="range" min={1} max={available.length || 1} value={count} onChange={e => setCount(Number(e.target.value))} style={{ width: "100%", accentColor: C.acc }} />
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button onClick={() => setRandomize(r => !r)} style={{ width: 36, height: 20, borderRadius: 20, background: randomize ? C.acc : C.border, position: "relative" }}>
+            <div style={{ width: 16, height: 16, borderRadius: "50%", background: "white", position: "absolute", top: 2, left: randomize ? 18 : 2, transition: "left 0.2s" }} />
+          </button>
+          <span>Randomize order</span>
+        </div>
+        <button onClick={handleStart} style={{ padding: "14px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white", fontWeight: 700 }}>BEGIN SESSION</button>
       </div>
     </div>
   );
 }
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ACTIVE SESSION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function ActiveSession({config, onEnd, dark}) {
-  const C=TH(dark);
-  const {questions,mode,timeLimit,name}=config;
-  const [cur,setCur]=useState(0);
-  const [answers,setAnswers]=useState({});
-  const [marked,setMarked]=useState({});
-  const [notes,setNotes]=useState({});
-  const [selected,setSelected]=useState(null);
-  const [submitted,setSubmitted]=useState(false);
-  const [timeLeft,setTimeLeft]=useState(timeLimit||3600);
-  const [sidebarOpen,setSidebarOpen]=useState(true);
-  const q=questions[cur];
-  const isStudy=mode==="study";
-  const isTimed=mode==="timed";
+function ActiveSession({ config, onEnd, dark }) {
+  const C = TH(dark);
+  const { questions, mode, timeLimit, name } = config;
+  // التأكد من وجود أسئلة
+  const safeQuestions = Array.isArray(questions) && questions.length ? questions : [];
+  const [cur, setCur] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [marked, setMarked] = useState({});
+  const [notes, setNotes] = useState({});
+  const [selected, setSelected] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(timeLimit || 3600);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  useEffect(()=>{const prev=answers[q?.id]; setSelected(prev?.selected||null); setSubmitted(!!prev);},[cur,q?.id]);
-  useEffect(()=>{if(!isTimed||timeLeft<=0)return;const t=setInterval(()=>setTimeLeft(p=>{if(p<=1){clearInterval(t);onEnd({...config,answers,marked,notes,elapsed:timeLimit});return 0;}return p-1;}),1000);return()=>clearInterval(t);},[isTimed,timeLeft]);
+  if (safeQuestions.length === 0) {
+    return (
+      <div style={{ minHeight: "100dvh", background: C.bg, color: C.text, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+        <p>No questions in this session. Please go back and select different filters.</p>
+        <button onClick={() => onEnd({ ...config, answers, marked, notes, elapsed: 0 })} style={{ marginTop: 16, padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>Exit Session</button>
+      </div>
+    );
+  }
 
-  const handleSelect=(opt)=>{if(!submitted) setSelected(opt);};
-  const handleSubmit=()=>{if(!selected)return;setAnswers(a=>({...a,[q.id]:{selected,correct:selected===q.correctAnswer}}));setSubmitted(true);};
-  const handleNext=()=>{if(cur+1<questions.length)setCur(c=>c+1);else onEnd({...config,answers,marked,notes,elapsed:timeLimit-timeLeft});};
-  const progress=Math.round((Object.keys(answers).length/questions.length)*100);
-  const timerColor=timeLeft<60?"#EF4444":timeLeft<300?"#FBBF24":C.acc;
+  const q = safeQuestions[cur];
+  const isStudy = mode === "study";
+  const isTimed = mode === "timed";
+
+  useEffect(() => {
+    const prev = answers[q?.id];
+    setSelected(prev?.selected || null);
+    setSubmitted(!!prev);
+  }, [cur, q?.id]);
+
+  useEffect(() => {
+    if (!isTimed || timeLeft <= 0) return;
+    const t = setInterval(() => {
+      setTimeLeft(p => {
+        if (p <= 1) {
+          clearInterval(t);
+          onEnd({ ...config, answers, marked, notes, elapsed: timeLimit });
+          return 0;
+        }
+        return p - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [isTimed, timeLeft]);
+
+  const handleSelect = (opt) => {
+    if (submitted) return;
+    setSelected(opt);
+  };
+
+  const handleSubmit = () => {
+    if (!selected) return;
+    const correct = selected === q.correctAnswer;
+    setAnswers(a => ({ ...a, [q.id]: { selected, correct } }));
+    setSubmitted(true);
+  };
+
+  const handleNext = () => {
+    if (cur + 1 < safeQuestions.length) {
+      setCur(c => c + 1);
+    } else {
+      onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft });
+    }
+  };
+
+  const progress = Math.round((Object.keys(answers).length / safeQuestions.length) * 100);
+  const timerColor = timeLeft < 60 ? "#EF4444" : timeLeft < 300 ? "#FBBF24" : C.acc;
+
+  const statusDot = (qItem) => {
+    const a = answers[qItem.id];
+    if (qItem.id === q?.id) return { bg: C.acc, pulse: true };
+    if (a) return { bg: a.correct ? "#10B981" : "#EF4444", pulse: false };
+    if (marked[qItem.id]) return { bg: "#FBBF24", pulse: false };
+    return { bg: C.border, pulse: false };
+  };
+
+  const optStyle = (opt) => {
+    const base = {
+      display: "flex", alignItems: "flex-start", gap: 12, padding: "13px 16px", borderRadius: 12, border: "1.5px solid", marginBottom: 8,
+      transition: "all .15s", cursor: submitted ? "default" : "pointer"
+    };
+    if (!submitted && selected === opt) return { ...base, borderColor: C.acc, background: "rgba(0,212,170,.08)", color: C.text };
+    if (!submitted) return { ...base, borderColor: C.border, background: C.sub, color: C.text };
+    if (opt === q.correctAnswer) return { ...base, borderColor: "#10B981", background: "rgba(16,185,129,.1)", color: C.text };
+    if (opt === selected && opt !== q.correctAnswer) return { ...base, borderColor: "#EF4444", background: "rgba(239,68,68,.1)", color: C.text };
+    return { ...base, borderColor: C.border, background: C.sub, color: C.muted };
+  };
 
   return (
-    <div style={{minHeight:"100dvh",background:C.bg,color:C.text}}>
-      <div style={{position:"sticky",top:0,zIndex:20,background:C.hdr,backdropFilter:"blur(16px)",borderBottom:`1px solid ${C.border}`,padding:"12px 20px",display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
-        <div><button onClick={()=>onEnd({...config,answers,marked,notes,elapsed:timeLimit-timeLeft})} style={{padding:"6px 12px",borderRadius:10,border:`1px solid ${C.border}`,background:C.inp}}>← Exit</button><span style={{marginLeft:12}}>{name} ({Object.keys(answers).length} answered)</span></div>
-        <div style={{display:"flex",gap:12}}>{isTimed&&<div style={{fontFamily:"'JetBrains Mono'",fontSize:22,fontWeight:700,color:timerColor}}>⏱ {fmtTime(timeLeft)}</div>}<button onClick={()=>setSidebarOpen(o=>!o)} style={{padding:"6px 12px",borderRadius:10,border:`1px solid ${C.border}`,background:C.inp}}>📋 {sidebarOpen?"Hide":"Show"}</button></div>
+    <div style={{ minHeight: "100dvh", background: C.bg, color: C.text }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 20, background: C.hdr, backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}`, padding: "12px 20px", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+        <div>
+          <button onClick={() => onEnd({ ...config, answers, marked, notes, elapsed: timeLimit - timeLeft })} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>← Exit</button>
+          <span style={{ marginLeft: 12 }}>{name} ({Object.keys(answers).length} answered)</span>
+        </div>
+        <div style={{ display: "flex", gap: 12 }}>
+          {isTimed && <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 22, fontWeight: 700, color: timerColor }}>⏱ {fmtTime(timeLeft)}</div>}
+          <button onClick={() => setSidebarOpen(o => !o)} style={{ padding: "6px 12px", borderRadius: 10, border: `1px solid ${C.border}`, background: C.inp }}>📋 {sidebarOpen ? "Hide" : "Show"}</button>
+        </div>
       </div>
-      <div style={{display:"flex",minHeight:"calc(100vh - 64px)"}}>
-        {sidebarOpen&&<div style={{width:260,borderRight:`1px solid ${C.border}`,padding:16,overflowY:"auto"}}><div style={{marginBottom:16}}>{Object.keys(answers).length}/{questions.length} ({progress}%)</div><div style={{height:4,background:C.border,borderRadius:2,marginBottom:20}}><div style={{width:`${progress}%`,height:4,background:`linear-gradient(90deg,${C.acc},${C.acc2})`,borderRadius:2}}/></div><div>{questions.map((qItem,idx)=>{let status="";if(idx===cur)status="active";else if(answers[qItem.id])status=answers[qItem.id].correct?"correct":"wrong";else if(marked[qItem.id])status="marked";return(<div key={qItem.id} onClick={()=>setCur(idx)} style={{padding:"8px 12px",borderRadius:12,background:idx===cur?`${C.acc}15`:"transparent",border:`1px solid ${idx===cur?C.acc+"40":"transparent"}`,cursor:"pointer",display:"flex",gap:10,marginBottom:6}}><div style={{width:24,height:24,borderRadius:6,background:status==="correct"?"#10B981":status==="wrong"?"#EF4444":status==="marked"?"#FBBF24":C.border,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:"white"}}>{idx+1}</div><div style={{flex:1,fontSize:12,overflow:"hidden",whiteSpace:"nowrap"}}>{qItem.text.substring(0,40)}…</div></div>);})}</div></div>}
-        <div className="fade-up" style={{flex:1,padding:24,maxWidth:800,margin:"0 auto"}}>
-          <div style={{display:"flex",gap:10,marginBottom:20,flexWrap:"wrap"}}><span style={{fontFamily:"'JetBrains Mono'",fontSize:14,fontWeight:700,color:C.acc}}>Q{cur+1}/{questions.length}</span><span style={{background:`${C.acc}20`,padding:"2px 10px",borderRadius:20,fontSize:12}}>{q.system}</span><span style={{background:`${C.acc2}20`,padding:"2px 10px",borderRadius:20}}>{q.subject}</span><span style={{background:`${diffC(q.difficulty)}20`,padding:"2px 10px",borderRadius:20,color:diffC(q.difficulty)}}>{q.difficulty}</span><button onClick={()=>setMarked(m=>({...m,[q.id]:!m[q.id]}))} style={{marginLeft:"auto",padding:"6px 12px",borderRadius:20,border:`1px solid ${marked[q.id]?"#FBBF24":C.border}`,background:marked[q.id]?"#FBBF2410":C.inp}}>{marked[q.id]?"★ Marked":"☆ Mark"}</button></div>
-          <div style={{background:C.card,borderRadius:24,border:`1px solid ${C.border}`,padding:24,marginBottom:24,fontSize:16}} dangerouslySetInnerHTML={{__html:hlStem(q.text)}}/>
-          <div style={{marginBottom:24}}>{q.options.map((opt,idx)=>{const letter=String.fromCharCode(65+idx);const isSelected=selected===opt;const isCorrect=opt===q.correctAnswer;let variant="default";if(submitted&&isCorrect)variant="correct";else if(submitted&&isSelected&&!isCorrect)variant="wrong";else if(isSelected)variant="selected";const style={borderColor:variant==="correct"?"#10B981":variant==="wrong"?"#EF4444":variant==="selected"?C.acc:C.border,background:variant==="correct"?"#10B98110":variant==="wrong"?"#EF444410":variant==="selected"?`${C.acc}10`:C.sub,padding:"12px 18px",borderRadius:16,border:"1.5px solid",display:"flex",gap:14,alignItems:"center",cursor:submitted?"default":"pointer",marginBottom:10};return(<div key={opt} onClick={()=>handleSelect(opt)} style={style}><div style={{width:28,height:28,borderRadius:14,background:variant==="correct"?"#10B981":variant==="wrong"?"#EF4444":variant==="selected"?C.acc:C.border,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:"white"}}>{letter}</div><div style={{flex:1}}>{opt}</div>{submitted&&isCorrect&&<span>✓</span>}{submitted&&isSelected&&!isCorrect&&<span>✗</span>}</div>);})}</div>
-          <div style={{display:"flex",gap:12,justifyContent:"space-between"}}><div><button onClick={()=>setCur(c=>Math.max(0,c-1))} disabled={cur===0} style={{padding:"8px 18px",borderRadius:40,border:`1px solid ${C.border}`,background:C.inp,opacity:cur===0?0.4:1}}>← Previous</button>{!submitted?<button onClick={handleSubmit} disabled={!selected} style={{marginLeft:8,padding:"8px 24px",borderRadius:40,background:selected?`linear-gradient(135deg,${C.acc},${C.acc2})`:"rgba(0,212,170,0.3)",color:"white"}}>Submit</button>:<button onClick={handleNext} style={{marginLeft:8,padding:"8px 24px",borderRadius:40,background:`linear-gradient(135deg,${C.acc},${C.acc2})`,color:"white"}}>{cur===questions.length-1?"Finish →":"Next →"}</button>}</div><div>{submitted&&<span>{answers[q.id]?.correct?"✓ Correct":"✗ Incorrect"}</span>}</div></div>
-          {submitted&&isStudy&&q.explanation&&<div style={{background:C.sub2,borderRadius:20,padding:20,marginTop:20}}><div style={{fontWeight:700,color:C.acc,marginBottom:8}}>🔍 EXPLANATION</div><div>{q.explanation}</div>{q.educationalObjective&&<div style={{marginTop:8,fontSize:12,color:C.muted}}>🎯 {q.educationalObjective}</div>}<textarea placeholder="Notes" value={notes[q.id]||""} onChange={e=>setNotes(n=>({...n,[q.id]:e.target.value}))} style={{width:"100%",marginTop:12,padding:"8px",borderRadius:12,border:`1px solid ${C.border}`,background:C.inp}} rows={2}/></div>}
+      <div style={{ display: "flex", minHeight: "calc(100vh - 64px)" }}>
+        {sidebarOpen && (
+          <div style={{ width: 260, borderRight: `1px solid ${C.border}`, padding: 16, overflowY: "auto" }}>
+            <div style={{ marginBottom: 16 }}>{Object.keys(answers).length}/{safeQuestions.length} ({progress}%)</div>
+            <div style={{ height: 4, background: C.border, borderRadius: 2, marginBottom: 20 }}>
+              <div style={{ width: `${progress}%`, height: 4, background: `linear-gradient(90deg,${C.acc},${C.acc2})`, borderRadius: 2 }} />
+            </div>
+            <div>
+              {safeQuestions.map((qItem, idx) => {
+                const dot = statusDot(qItem);
+                return (
+                  <div key={qItem.id} onClick={() => setCur(idx)} style={{ padding: "8px 12px", borderRadius: 12, background: cur === idx ? `${C.acc}15` : "transparent", border: `1px solid ${cur === idx ? C.acc + "40" : "transparent"}`, cursor: "pointer", display: "flex", gap: 10, marginBottom: 6 }}>
+                    <div className={dot.pulse ? "pu" : ""} style={{ width: 24, height: 24, borderRadius: 6, background: dot.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "white" }}>{idx + 1}</div>
+                    <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text.substring(0, 40)}…</div>
+                    {marked[qItem.id] && <span style={{ color: "#FBBF24" }}>★</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        <div className="fade-up" style={{ flex: 1, padding: 24, maxWidth: 800, margin: "0 auto" }}>
+          <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
+            <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 14, fontWeight: 700, color: C.acc }}>Q{cur + 1}/{safeQuestions.length}</span>
+            <span style={{ background: `${C.acc}20`, padding: "2px 10px", borderRadius: 20, fontSize: 12 }}>{q.system}</span>
+            <span style={{ background: `${C.acc2}20`, padding: "2px 10px", borderRadius: 20 }}>{q.subject}</span>
+            <span style={{ background: `${diffC(q.difficulty)}20`, padding: "2px 10px", borderRadius: 20, color: diffC(q.difficulty) }}>{q.difficulty}</span>
+            <button onClick={() => setMarked(m => ({ ...m, [q.id]: !m[q.id] }))} style={{ marginLeft: "auto", padding: "6px 12px", borderRadius: 20, border: `1px solid ${marked[q.id] ? "#FBBF24" : C.border}`, background: marked[q.id] ? "#FBBF2410" : C.inp }}>{marked[q.id] ? "★ Marked" : "☆ Mark"}</button>
+          </div>
+          <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, marginBottom: 24, fontSize: 16 }} dangerouslySetInnerHTML={{ __html: hlStem(q.text) }} />
+          <div style={{ marginBottom: 24 }}>
+            {q.options.map((opt, idx) => {
+              const letter = String.fromCharCode(65 + idx);
+              const isSelected = selected === opt;
+              const isCorrect = opt === q.correctAnswer;
+              let variant = "default";
+              if (submitted && isCorrect) variant = "correct";
+              else if (submitted && isSelected && !isCorrect) variant = "wrong";
+              else if (isSelected) variant = "selected";
+              const style = {
+                borderColor: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border,
+                background: variant === "correct" ? "#10B98110" : variant === "wrong" ? "#EF444410" : variant === "selected" ? `${C.acc}10` : C.sub,
+                padding: "12px 18px", borderRadius: 16, border: "1.5px solid", display: "flex", gap: 14, alignItems: "center",
+                cursor: submitted ? "default" : "pointer", marginBottom: 10
+              };
+              return (
+                <div key={opt} onClick={() => handleSelect(opt)} style={style}>
+                  <div style={{ width: 28, height: 28, borderRadius: 14, background: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "white" }}>{letter}</div>
+                  <div style={{ flex: 1 }}>{opt}</div>
+                  {submitted && isCorrect && <span>✓</span>}
+                  {submitted && isSelected && !isCorrect && <span>✗</span>}
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
+            <div>
+              <button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0} style={{ padding: "8px 18px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: cur === 0 ? 0.4 : 1 }}>← Previous</button>
+              {!submitted ? (
+                <button onClick={handleSubmit} disabled={!selected} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: selected ? `linear-gradient(135deg,${C.acc},${C.acc2})` : "rgba(0,212,170,0.3)", color: "white" }}>Submit</button>
+              ) : (
+                <button onClick={handleNext} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white" }}>{cur === safeQuestions.length - 1 ? "Finish →" : "Next →"}</button>
+              )}
+            </div>
+            <div>{submitted && <span>{answers[q.id]?.correct ? "✓ Correct" : "✗ Incorrect"}</span>}</div>
+          </div>
+          {submitted && isStudy && q.explanation && (
+            <div style={{ background: C.sub2, borderRadius: 20, padding: 20, marginTop: 20 }}>
+              <div style={{ fontWeight: 700, color: C.acc, marginBottom: 8 }}>🔍 EXPLANATION</div>
+              <div>{q.explanation}</div>
+              {q.educationalObjective && <div style={{ marginTop: 8, fontSize: 12, color: C.muted }}>🎯 {q.educationalObjective}</div>}
+              <textarea placeholder="Notes" value={notes[q.id] || ""} onChange={e => setNotes(n => ({ ...n, [q.id]: e.target.value }))} style={{ width: "100%", marginTop: 12, padding: "8px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} rows={2} />
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SESSION REVIEW
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
