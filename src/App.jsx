@@ -461,7 +461,10 @@ export default function App() {
       <div style={{ position: "sticky", top: 0, zIndex: 100, background: C.hdr, backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.border}`, padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg,#00D4AA,#3B82F6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontFamily: "'Bebas Neue'", color: "white" }}>M</div>
-          <div><div style={{ fontFamily: "'Bebas Neue'", fontSize: 18, letterSpacing: 2 }}>MedIQ Pro</div><div style={{ fontSize: 9, color: C.muted, fontFamily: "'JetBrains Mono'" }}>WARITH AL-ANBIYAA · HAIDER EMAD</div></div>
+	<div onClick={()=>window.open("https://t.me/ddxo2","_blank","noopener,noreferrer")} 	style={{cursor:"pointer",userSelect:"none"}}>
+  	<div style={{fontFamily:"'Bebas Neue'",fontSize:18,letterSpacing:2}}>MedIQ Pro</div>
+  	<div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>WARITH AL-ANBIYAA · HAIDER EMAD</div>
+	</div>
         </div>
         <div style={{ display: "flex", gap: 6 }}>
           <button onClick={() => setTab("cgpa")} style={{ padding: "6px 16px", borderRadius: 20, background: tab === "cgpa" ? (dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)") : "transparent", color: tab === "cgpa" ? C.text : C.muted, fontWeight: 600 }}>📊 CGPA</button>
