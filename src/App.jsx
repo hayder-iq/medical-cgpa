@@ -466,11 +466,60 @@ export default function App() {
   	<div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>WARITH AL-ANBIYAA · HAIDER EMAD</div>
 	</div>
         </div>
-        <div style={{ display: "flex", gap: 6 }}>
-          <button onClick={() => setTab("cgpa")} style={{ padding: "6px 16px", borderRadius: 20, background: tab === "cgpa" ? (dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)") : "transparent", color: tab === "cgpa" ? C.text : C.muted, fontWeight: 600 }}>📊 CGPA</button>
-          <button onClick={() => setTab("qbank")} style={{ padding: "6px 16px", borderRadius: 20, background: tab === "qbank" ? (dark ? "rgba(255,255,255,.1)" : "rgba(0,0,0,.08)") : "transparent", color: tab === "qbank" ? C.text : C.muted, fontWeight: 600 }}>📚 Qbank</button>
-          <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12 }}>{dark ? "☀️ Light" : "🌙 Dark"}</button>
-        </div>
+<div style={{ display: "flex", gap: 12, background: "transparent", borderRadius: 40, padding: "4px", backdropFilter: "blur(4px)" }}>
+  <button
+    onClick={() => setTab("cgpa")}
+    className="tab-button"
+    style={{
+      padding: "8px 24px",
+      borderRadius: 40,
+      border: "none",
+      fontWeight: 700,
+      fontSize: "15px",
+      letterSpacing: "0.5px",
+      cursor: "pointer",
+      transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)",
+      background: tab === "cgpa" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent",
+      color: tab === "cgpa" ? "white" : C.text,
+      boxShadow: tab === "cgpa" ? "0 4px 12px rgba(0,212,170,0.3)" : "none",
+      transform: tab === "cgpa" ? "scale(1.02)" : "scale(1)",
+    }}
+    onMouseEnter={(e) => {
+      if (tab !== "cgpa") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+    }}
+    onMouseLeave={(e) => {
+      if (tab !== "cgpa") e.currentTarget.style.background = "transparent";
+    }}
+  >
+    📊 CGPA
+  </button>
+  <button
+    onClick={() => setTab("qbank")}
+    className="tab-button"
+    style={{
+      padding: "8px 24px",
+      borderRadius: 40,
+      border: "none",
+      fontWeight: 700,
+      fontSize: "15px",
+      letterSpacing: "0.5px",
+      cursor: "pointer",
+      transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)",
+      background: tab === "qbank" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent",
+      color: tab === "qbank" ? "white" : C.text,
+      boxShadow: tab === "qbank" ? "0 4px 12px rgba(0,212,170,0.3)" : "none",
+      transform: tab === "qbank" ? "scale(1.02)" : "scale(1)",
+    }}
+    onMouseEnter={(e) => {
+      if (tab !== "qbank") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+    }}
+    onMouseLeave={(e) => {
+      if (tab !== "qbank") e.currentTarget.style.background = "transparent";
+    }}
+  >
+    📚 Qbank
+  </button>
+</div>
       </div>
       {tab === "cgpa" ? <CGPAView dark={dark} /> : <QbankApp dark={dark} />}
     </div>
