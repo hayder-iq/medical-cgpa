@@ -1,0 +1,2287 @@
+[
+  {
+    "id": "wizari_1",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 54-year-old man with hypertension presents with sudden severe pain, redness, and swelling of the right first metatarsophalangeal joint for 2 days. Examination shows a warm, erythematous, exquisitely tender big toe. His serum uric acid is elevated. Which antihypertensive medication is most likely contributing to this presentation?",
+    "options": [
+      "A. Lisinopril",
+      "B. Telmisartan",
+      "C. Amlodipine",
+      "D. Nebivolol",
+      "E. Hydrochlorothiazide"
+    ],
+    "correctAnswer": "E. Hydrochlorothiazide",
+    "explanation": "Thiazide diuretics (like hydrochlorothiazide) decrease the Nephrology excretion of uric acid, leading to hyperuricemia and precipitating acute gout attacks. Other options like Telmisartan actually have mild uricosuric properties.",
+    "educationalObjective": "Recognize thiazide-induced hyperuricemia and gout.",
+    "tags": [
+      "Gout",
+      "Hypertension",
+      "Thiazides"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_2",
+    "system": "Nephrology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 45-year-old man presents with a 2-week history of progressive bilateral leg swelling and frothy urine. He has no prior medical history. On examination, BP is 148/90 mmHg, with pitting edema up to the knees. Investigations: Serum albumin 22 g/L, total cholesterol 8.5 mmol/L. Urinalysis shows 4+ protein, no blood or casts. A 24-hour urine collection shows 6.5 g of protein. Nephrology biopsy was done and the result is pending. What is the single most appropriate next step in management?",
+    "options": [
+      "A. Prescribe a high-protein diet to correct hypoalbuminemia",
+      "B. Administer intravenous methylprednisolone for presumed minimal change disease",
+      "C. Initiate an angiotensin-converting enzyme (ACE) inhibitor and a statin",
+      "D. Initiate amlodipine for control of hypertension",
+      "E. Start cyclophosphamide therapy"
+    ],
+    "correctAnswer": "C. Initiate an angiotensin-converting enzyme (ACE) inhibitor and a statin",
+    "explanation": "The patient has nephrotic syndrome. While awaiting biopsy to determine the specific etiology, conservative management to reduce proteinuria and cardiovascular risk includes an ACE inhibitor (or ARB) and a statin.",
+    "educationalObjective": "Manage nephrotic syndrome conservatively pending biopsy.",
+    "tags": [
+      "Nephrotic syndrome",
+      "ACE inhibitor",
+      "Statin"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_3",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 32-year-old non-smoking teacher presents with a 6-month history of episodic cough and chest tightness. Symptoms typically occur at night and are triggered by cold air and exercise. During a clinic visit, she has no Pulmonology distress and has normal cardiovascular and Pulmonology examination. Her initial spirometry shows an FEV1/FVC ratio of 68%. Fifteen minutes after inhaling 400μg of salbutamol, her FEV1 improves from 2.1 L to 2.6 L. What is the most likely diagnosis?",
+    "options": [
+      "A. Chronic obstructive pulmonary disease (COPD)",
+      "B. Bronchiectasis",
+      "C. Bronchial asthma",
+      "D. Congestive heart failure",
+      "E. Vocal cord dysfunction"
+    ],
+    "correctAnswer": "C. Bronchial asthma",
+    "explanation": "The significant reversibility in airflow obstruction (FEV1 improvement >12% and >200 mL) following a bronchodilator confirms the diagnosis of bronchial asthma.",
+    "educationalObjective": "Interpret reversibility testing in asthma.",
+    "tags": [
+      "Asthma",
+      "Spirometry",
+      "Reversibility"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_4",
+    "system": "Electrolytes",
+    "subject": "Emergency Medicine",
+    "difficulty": "Medium",
+    "text": "A 34-year-old man is brought to the emergency department after a motor vehicle accident with extensive lower limb crush injuries. He is hypotensive (BP 85/50 mmHg) and tachycardia despite initial fluid resuscitation. Over the next 6 hours, his urine output drops to 15 mL/hour. Blood tests: serum creatinine 220 μmol/L, potassium 6.8 mmol/L. What is the most appropriate immediate next step in management?",
+    "options": [
+      "A. Intravenous furosemide 80 mg to improve urine output",
+      "B. Intravenous insulin and dextrose",
+      "C. Emergent haemodialysis",
+      "D. Intravenous dopamine infusion at Nephrology dose",
+      "E. Intravenous mannitol to prevent Nephrology oedema"
+    ],
+    "correctAnswer": "B. Intravenous insulin and dextrose",
+    "explanation": "This patient has severe, life-threatening hyperkalemia (6.8 mmol/L) secondary to rhabdomyolysis and AKI. Intravenous insulin and dextrose act rapidly (within minutes) to shift potassium intracellularly, stabilizing the myocardium while definitive measures are prepared.",
+    "educationalObjective": "Emergency management of hyperkalemia.",
+    "tags": [
+      "Hyperkalemia",
+      "AKI",
+      "Rhabdomyolysis"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_5",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man with a 40-pack-year smoking history presents with progressive exertional dyspnoea and dry cough for 18 months. Examination reveals finger clubbing and bilateral fine end-inspiratory crackles at the lung bases. Chest X-ray shows basal and peripheral reticular shadowing. There is no history of exposure to birds, moulds, or occupational antigens. Which investigation is most likely to confirm the diagnosis without requiring surgical lung biopsy?",
+    "options": [
+      "A. Bronchoalveolar lavage showing neutrophilia",
+      "B. Serum autoantibody screen",
+      "C. High-resolution CT showing usual interstitial pneumonia (UIP) pattern",
+      "D. Transbronchial biopsy showing granulomas",
+      "E. Sputum cytology"
+    ],
+    "correctAnswer": "C. High-resolution CT showing usual interstitial pneumonia (UIP) pattern",
+    "explanation": "In a patient with suspected Idiopathic Pulmonary Fibrosis (IPF), a High-Resolution Computed Tomography (HRCT) scan demonstrating a definitive Usual Interstitial Pneumonia (UIP) pattern is diagnostic and typically spares the patient from a surgical lung biopsy.",
+    "educationalObjective": "Diagnose IPF with HRCT.",
+    "tags": [
+      "IPF",
+      "HRCT",
+      "UIP pattern"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_6",
+    "system": "Endocrinology ",
+    "subject": "Internal Medicine",
+    "difficulty": "Hard",
+    "text": "A 42-year-old woman presents with progressive central obesity, facial rounding, easy bruising, and proximal myopathy. She has hypertension and random blood glucose of 8.5 mmol/L. An overnight 1 mg dexamethasone suppression test shows serum cortisol at 8 AM of 280 nmol/L. ACTH level is low at < 5 pg/mL. What is the most likely diagnosis and next appropriate investigation?",
+    "options": [
+      "A. Pituitary Cushing's disease; proceed to pituitary MRI",
+      "B. AdNephrology adenoma; proceed to CT abdomen",
+      "C. Ectopic ACTH secretion; proceed to chest CT",
+      "D. Pseudo-Cushing's syndrome; repeat testing after alcohol cessation",
+      "E. AdNephrology carcinoma; proceed to PET-CT"
+    ],
+    "correctAnswer": "B. AdNephrology adenoma; proceed to CT abdomen",
+    "explanation": "Cushing's syndrome with a suppressed ACTH level indicates an ACTH-independent cause, most commonly an adNephrology adenoma. A CT scan of the abdomen is the appropriate next step to visualize the adNephrology glands.",
+    "educationalObjective": "Localize ACTH-independent Cushing syndrome.",
+    "tags": [
+      "Cushing syndrome",
+      "ACTH suppression",
+      "AdNephrology adenoma"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_7",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 67-year-old man with a 50-pack-year smoking history presents with a 3-month history of worsening right shoulder pain and unilateral ptosis. Examination reveals right-sided ptosis, miosis, and anhidrosis, along with weakness of hand grip on the right. A chest radiograph shows a right apical mass with erosion of the first and second ribs. Which of the following is the most likely histological diagnosis?",
+    "options": [
+      "A. Squamous cell carcinoma",
+      "B. Adenocarcinoma",
+      "C. Small cell lung cancer (SCLC)",
+      "D. Large cell neuroEndocrinology  carcinoma",
+      "E. Bronchial carcinoid tumor"
+    ],
+    "correctAnswer": "A. Squamous cell carcinoma",
+    "explanation": "The patient has a Pancoast tumor causing Horner's syndrome and brachial plexus involvement. The most common histological subtypes for apical lung tumors are squamous cell carcinoma and adenocarcinoma.",
+    "educationalObjective": "Recognize Pancoast tumor and associated histology.",
+    "tags": [
+      "Pancoast tumor",
+      "Squamous cell carcinoma",
+      "Horner syndrome"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_8",
+    "system": "Endocrinology ",
+    "subject": "Internal Medicine",
+    "difficulty": "Easy",
+    "text": "A 74-year-old woman presents with gradual-onset back pain over several months. She has lost 4 inches in height and has developed a thoracic kyphosis. She has a history of early menopause at age 44 and a previous Colles' fracture after a fall 8 years ago. DEXA scan shows a T-score of -3.5 at the lumbar spine and -2.8 at the femoral neck. What is the most appropriate first-line pharmacological treatment for this patient?",
+    "options": [
+      "A. Raloxifene 60 mg daily",
+      "B. Alendronate 70 mg once weekly",
+      "C. Teriparatide (PTH) 20 mcg daily subcutaneously",
+      "D. Denosumab 60 mg subcutaneously every 6 months",
+      "E. Hormone replacement therapy (HRT)"
+    ],
+    "correctAnswer": "B. Alendronate 70 mg once weekly",
+    "explanation": "Oral bisphosphonates like Alendronate are standard first-line therapies for postmenopausal osteoporosis to increase bone mineral density and reduce the incidence of vertebral and non-vertebral fractures.",
+    "educationalObjective": "First-line therapy for postmenopausal osteoporosis.",
+    "tags": [
+      "Osteoporosis",
+      "Bisphosphonates",
+      "Alendronate"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_9",
+    "system": "Nephrology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 68-year-old man with a known benign prostatic hyperplasia presents with a 3-day history of dysuria, increased frequency, and suprapubic discomfort. He has no fever or loin pain. Urine dipstick is positive for leucocyte esterase and nitrites. What is the most appropriate next step in management?",
+    "options": [
+      "A. Prescribe a 3-day course of trimethoprim",
+      "B. Prescribe a 7-day course of nitrofurantoin",
+      "C. Send urine for culture and sensitivity before prescribing antibiotics",
+      "D. Prescribe a 14-day course of ciprofloxacin",
+      "E. Admit for transurethral resection of the prostate"
+    ],
+    "correctAnswer": "C. Send urine for culture and sensitivity before prescribing antibiotics",
+    "explanation": "Urinary tract infections in men are generally considered 'complicated,' particularly with underlying BPH. A urine sample must be sent for culture and sensitivity prior to initiating empirical antibiotic therapy.",
+    "educationalObjective": "Diagnostic approach to complicated UTI in men.",
+    "tags": [
+      "UTI",
+      "Complicated UTI",
+      "BPH"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_10",
+    "system": "Electrolytes",
+    "subject": "Internal Medicine",
+    "difficulty": "Hard",
+    "text": "A 58-year-old woman with multiple myeloma presents with confusion, polyuria, constipation, and bone pain. Serum calcium is 14.2 mg/dL (corrected for albumin), creatinine 1.1 mg/dL, and phosphate 2.0 mg/dL. PTH-related peptide (PTHrP) is normal. Which of the following is the most appropriate initial treatment?",
+    "options": [
+      "A. Intravenous normal saline and zoledronic acid",
+      "B. Oral prednisolone and furosemide",
+      "C. Intravenous pamidronate and oral calcium supplements",
+      "D. Subcutaneous calcitonin alone",
+      "E. Hemodialysis with low-calcium dialysate"
+    ],
+    "correctAnswer": "A. Intravenous normal saline and zoledronic acid",
+    "explanation": "Severe hypercalcemia of malignancy requires immediate volume expansion with intravenous isotonic saline followed by an IV bisphosphonate (such as zoledronic acid or pamidronate) to block bone resorption.",
+    "educationalObjective": "Emergency management of severe hypercalcemia.",
+    "tags": [
+      "Hypercalcemia",
+      "Multiple myeloma",
+      "Bisphosphonates"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_11",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man is found to have paroxysmal atrial fibrillation on ambulatory ECG monitoring. His past medical history includes hypertension and type 2 diabetes mellitus. He has no prior stroke, transient ischaemic attack, mechanical heart valve, or moderate-to-severe mitral stenosis. What is the most appropriate management to reduce his stroke risk?",
+    "options": [
+      "A. Aspirin 75 mg daily",
+      "B. No antithrombotic therapy",
+      "C. Direct oral anticoagulant (e.g., apixaban)",
+      "D. Rate control only without anticoagulation",
+      "E. Left atrial appendage occlusion device"
+    ],
+    "correctAnswer": "C. Direct oral anticoagulant (e.g., apixaban)",
+    "explanation": "The patient's CHA2DS2-VASc score is at least 2 (HTN, DM). According to guidelines, patients with non-valvular AF and a score >= 2 should be anticoagulated, preferentially with a Direct Oral Anticoagulant (DOAC).",
+    "educationalObjective": "Indications for anticoagulation in atrial fibrillation.",
+    "tags": [
+      "Atrial fibrillation",
+      "DOAC",
+      "Stroke prevention"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_12",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Hard",
+    "text": "A 68-year-old man with end-stage kidney disease (eGFR 12 mL/min/1.73 m2) is being evaluated for Nephrology replacement therapy. He has a history of ischaemic heart disease with a left ventricular ejection fraction of 35%. His blood pressure is 100/60 mmHg supine with symptomatic postural drop to 85/50 mmHg. He expresses a preference for a dialysis modality that minimizes hospital visits. Which of the following is the most appropriate initial modality of Nephrology replacement therapy for this patient?",
+    "options": [
+      "A. Intermittent haemodialysis via an arteriovenous fistula three times weekly",
+      "B. Haemodialysis via a tunnelled central venous catheter",
+      "C. Continuous ambulatory peritoneal dialysis (CAPD)",
+      "D. Intermittent haemodialysis with routine intradialytic hypotension prevention protocols",
+      "E. Conservative kidney management without dialysis"
+    ],
+    "correctAnswer": "C. Continuous ambulatory peritoneal dialysis (CAPD)",
+    "explanation": "CAPD is ideal because it avoids the rapid fluid and hemodynamic shifts of hemodialysis (crucial for a patient with HFrEF and hypotension) and is performed at home, fulfilling his request to minimize hospital visits.",
+    "educationalObjective": "Select dialysis modality for hemodynamically unstable patient.",
+    "tags": [
+      "Peritoneal dialysis",
+      "ESKD",
+      "Heart failure"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_13",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 48-year-old man develops jaundice 3 months after starting isoniazid for latent tuberculosis. He reports fatigue, anorexia, and dark urine. His laboratory values show: ALT 850 U/L, ALP 140 U/L, total bilirubin 3.8 mg/dL. He has no evidence of viral hepatitis or biliary obstruction. What is the most appropriate next step in managing this patient?",
+    "options": [
+      "A. Continue isoniazid but add ursodeoxycholic acid",
+      "B. Discontinue isoniazid and monitor Hepatology function tests",
+      "C. Add N-acetylcysteine as a hepatoprotective agent",
+      "D. Perform urgent Hepatology biopsy to rule out autoimmune hepatitis",
+      "E. Start prednisolone 40 mg daily"
+    ],
+    "correctAnswer": "B. Discontinue isoniazid and monitor Hepatology function tests",
+    "explanation": "The patient has developed severe isoniazid-induced hepatotoxicity (ALT > 3-5x upper limit of normal with symptoms). The offending agent must be discontinued immediately.",
+    "educationalObjective": "Management of drug-induced Hepatology injury.",
+    "tags": [
+      "INH",
+      "Hepatotoxicity",
+      "Drug-induced Hepatology injury"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_14",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 55-year-old woman with type 2 diabetes and hypertension, admitted for NSTEMI, suddenly becomes unresponsive and pulseless on day 2. CPR is started. The monitor shows an organized wide-complex rhythm at 40 bpm without a palpable pulse, and bedside ultrasound shows no ventricular contraction. What is the most appropriate immediate intervention?",
+    "options": [
+      "A. Lidocaine 1.5 mg/kg slow IV bolus",
+      "B. Transcutaneous pacing",
+      "C. Epinephrine 1 mg IV push",
+      "D. Amiodarone 300 mg IV push",
+      "E. Calcium chloride 10% 10 mL IV push"
+    ],
+    "correctAnswer": "C. Epinephrine 1 mg IV push",
+    "explanation": "The patient is in Pulseless Electrical Activity (PEA), a non-shockable rhythm. The ACLS algorithm dictates high-quality CPR and the administration of Epinephrine 1 mg IV every 3-5 minutes.",
+    "educationalObjective": "ACLS management of PEA.",
+    "tags": [
+      "PEA",
+      "ACLS",
+      "Epinephrine"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_15",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 19-year-old asymptomatic athlete undergoes pre-participation cardiovascular screening. He has a family history of sudden cardiac death in a maternal uncle at age 24. ECG demonstrates marked left ventricular hypertrophy by voltage criteria, deep T-wave inversions in lateral leads, and deep narrow Q waves in leads I, aVL, V5, and V6. What is the most likely diagnosis?",
+    "options": [
+      "A. Dilated cardiomyopathy",
+      "B. Arrhythmogenic right ventricular cardiomyopathy",
+      "C. Hypertrophic cardiomyopathy",
+      "D. Athlete's heart",
+      "E. Myocarditis"
+    ],
+    "correctAnswer": "C. Hypertrophic cardiomyopathy",
+    "explanation": "The family history of sudden cardiac death combined with ECG findings of severe LVH and deep, narrow 'dagger-like' Q waves (septal depolarization) strongly suggest Hypertrophic Cardiomyopathy.",
+    "educationalObjective": "ECG findings in hypertrophic cardiomyopathy.",
+    "tags": [
+      "HCM",
+      "Sudden cardiac death",
+      "ECG"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_16",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 50-year-old man with a history of epilepsy presents with fever, cough, and purulent sputum for 10 days. Chest X-ray reveals a 4 cm cavitary lesion with an air-fluid level in the superior segment of the right lower lobe. He is started on intravenous ampicillin-sulbactam. After 7 days, he remains febrile with no clinical or radiological improvement. What is the most appropriate next step in management?",
+    "options": [
+      "A. Switch to oral antibiotics and discharge home",
+      "B. Add intravenous vancomycin for MRSA coverage",
+      "C. Perform bronchoscopy to exclude endobronchial obstruction",
+      "D. Add systemic corticosteroids to reduce inflammation",
+      "E. Arrange for percutaneous catheter drainage"
+    ],
+    "correctAnswer": "C. Perform bronchoscopy to exclude endobronchial obstruction",
+    "explanation": "When a lung abscess fails to respond to broad-spectrum antibiotics within 7-10 days, one must investigate for underlying causes, particularly an endobronchial obstruction (like a tumor or foreign body), using bronchoscopy.",
+    "educationalObjective": "Failure of lung abscess to resolve: look for obstruction.",
+    "tags": [
+      "Lung abscess",
+      "Bronchoscopy",
+      "Endobronchial obstruction"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_17",
+    "system": "Pulmonology",
+    "subject": "Critical Care",
+    "difficulty": "Hard",
+    "text": "A 45-year-old man is mechanically ventilated in ICU 48 hours after emergency laparotomy for bowel perforation with sepsis. Despite FiO2 0.8, PaO2 is 60 mmHg. Chest X-ray shows bilateral diffuse alveolar infiltrates. Pulmonary capillary wedge pressure is 8 mmHg. What is the most likely diagnosis?",
+    "options": [
+      "A. Cardiogenic pulmonary edema",
+      "B. Ventilator-associated pneumonia",
+      "C. Acute Pulmonology distress syndrome (ARDS)",
+      "D. Pulmonary embolism",
+      "E. Postoperative atelectasis"
+    ],
+    "correctAnswer": "C. Acute Pulmonology distress syndrome (ARDS)",
+    "explanation": "The presentation of acute hypoxemia (PaO2/FiO2 < 300), bilateral infiltrates, a known clinical trigger (sepsis), and a low PCWP (< 18 mmHg ruling out cardiogenic edema) defines ARDS.",
+    "educationalObjective": "Diagnose ARDS using Berlin criteria.",
+    "tags": [
+      "ARDS",
+      "Sepsis",
+      "Mechanical ventilation"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_18",
+    "system": "Electrolytes",
+    "subject": "Emergency Medicine",
+    "difficulty": "Hard",
+    "text": "A 50-year-old woman is admitted with confusion and generalized tonic-clonic seizures. Her serum sodium is 118 mmol/L, and symptoms developed over the previous 24 hours. What is the most appropriate immediate management?",
+    "options": [
+      "A. Fluid restriction to 1000 mL/day",
+      "B. Oral urea therapy",
+      "C. Bolus infusion of 3% hypertonic saline",
+      "D. Administration of tolvaptan",
+      "E. Intravenous 0.9% sodium chloride"
+    ],
+    "correctAnswer": "C. Bolus infusion of 3% hypertonic saline",
+    "explanation": "Symptomatic severe acute hyponatremia with neurological compromise (seizures) is a medical emergency requiring rapid, partial correction with hypertonic (3%) saline to prevent brain herniation.",
+    "educationalObjective": "Emergency treatment of symptomatic hyponatremia.",
+    "tags": [
+      "Hyponatremia",
+      "Hypertonic saline",
+      "Seizures"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_19",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Easy",
+    "text": "A 58-year-old man with type 2 diabetes and hypertension for 15 years is found to have an eGFR of 48 ml/min/1.73m2 on routine screening. His urine albumin-to-creatinine ratio (UACR) is 25 mg/mmol. According to the CKD staging system, which of the following best describes his current stage of chronic kidney disease?",
+    "options": [
+      "A. Stage 1 CKD",
+      "B. Stage 2 CKD",
+      "C. Stage 3a CKD",
+      "D. Stage 3b CKD",
+      "E. Stage 4 CKD"
+    ],
+    "correctAnswer": "C. Stage 3a CKD",
+    "explanation": "Chronic Kidney Disease Stage 3a is categorized by an eGFR ranging between 45 and 59 mL/min/1.73m2.",
+    "educationalObjective": "CKD staging by eGFR.",
+    "tags": [
+      "CKD",
+      "eGFR",
+      "Staging"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_20",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 35-year-old female presents to her primary care physician with complaints of recurrent epigastric pain, bloating, and occasional nausea. She reports that the symptoms worsen when she skips meals or consumes spicy foods. Given the suspicion of H. pylori infection, which of the following diagnostic tests is the most appropriate initial investigation?",
+    "options": [
+      "A. Serologic testing for H. pylori antibodies",
+      "B. Urea breath test (UBT)",
+      "C. Upper gastrointestinal endoscopy with culture of gastric biopsy",
+      "D. Upper gastrointestinal endoscopy with histopathological examination",
+      "E. Rapid urease test (RUT) on gastric biopsy sample"
+    ],
+    "correctAnswer": "B. Urea breath test (UBT)",
+    "explanation": "In young patients without alarm features (e.g., weight loss, bleeding), a non-invasive 'test-and-treat' strategy using the highly sensitive and specific Urea Breath Test (UBT) or stool antigen test is the initial standard.",
+    "educationalObjective": "Non-invasive testing for H. pylori.",
+    "tags": [
+      "H. pylori",
+      "Urea breath test",
+      "Dyspepsia"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_21",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 55-year-old man with compensated cirrhosis (Child-Pugh A, MELD 8) is found to have small esophageal varices on screening endoscopy without red wale signs or other high-risk features. He has no history of gastrointestinal bleeding. What is the most appropriate management to prevent first variceal hemorrhage?",
+    "options": [
+      "A. Endoscopic variceal ligation every 2-4 weeks",
+      "B. Oral nadolol or propranolol titrated to heart rate of 50-55 bpm",
+      "C. Oral lisinopril to lower systemic blood pressure",
+      "D. Transjugular intrahepatic portosystemic shunt placement",
+      "E. Oral simvastatin 20 mg daily"
+    ],
+    "correctAnswer": "B. Oral nadolol or propranolol titrated to heart rate of 50-55 bpm",
+    "explanation": "Non-selective beta-blockers (NSBBs) such as nadolol or propranolol are the standard of care for primary prophylaxis to reduce portal pressures and prevent bleeding in patients with small but significant varices.",
+    "educationalObjective": "Primary prophylaxis of variceal bleeding.",
+    "tags": [
+      "Cirrhosis",
+      "Varices",
+      "Beta-blockers"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_22",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 74-year-old woman with type 2 diabetes mellitus is brought to the emergency department. She has been increasingly confused and lethargic for 3 days. On examination, she is dehydrated, blood pressure 90/60 mmHg, pulse 110 bpm. Blood glucose is 42 mmol/L (756 mg/dL), venous pH 7.35, bicarbonate 22 mmol/L, and no ketones in urine or blood. What is the most important initial step in managing this patient?",
+    "options": [
+      "A. Intravenous regular insulin bolus",
+      "B. Intravenous 0.9% normal saline",
+      "C. Intravenous bicarbonate to correct mild acidosis",
+      "D. Subcutaneous rapid-acting insulin analogues",
+      "E. Intravenous 5% dextrose"
+    ],
+    "correctAnswer": "B. Intravenous 0.9% normal saline",
+    "explanation": "This patient has Hyperosmolar Hyperglycemic State (HHS), characterized by profound fluid deficit. The most critical initial intervention is aggressive volume resuscitation with isotonic normal saline to restore perfusion.",
+    "educationalObjective": "Initial management of HHS.",
+    "tags": [
+      "HHS",
+      "Hyperglycemia",
+      "Fluid resuscitation"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_23",
+    "system": "Cardiology",
+    "subject": "Critical Care",
+    "difficulty": "Hard",
+    "text": "A 66-year-old man presents with septic shock from a urinary source. His blood pressure is 75/40 mmHg, heart rate 130 bpm, and lactate 6 mmol/L. He has received 2 liters of IV crystalloid. What is the most appropriate next step within the first hour?",
+    "options": [
+      "A. Give broad-spectrum antibiotics and temporarily hold fluid resuscitation",
+      "B. Complete fluid resuscitation (30 mL/kg) and administer antibiotics within 1 hour",
+      "C. Start vasopressin and hydrocortisone",
+      "D. Transfer to ICU before giving antibiotics",
+      "E. Wait for blood cultures to return before giving antibiotics"
+    ],
+    "correctAnswer": "B. Complete fluid resuscitation (30 mL/kg) and administer antibiotics within 1 hour",
+    "explanation": "The Surviving Sepsis Campaign bundle requires immediate broad-spectrum antibiotics (within 1 hour) alongside completing rapid fluid resuscitation (30 mL/kg crystalloid) for sepsis-induced hypoperfusion/shock.",
+    "educationalObjective": "Sepsis resuscitation and antibiotic timing.",
+    "tags": [
+      "Sepsis",
+      "Septic shock",
+      "Surviving Sepsis Campaign"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_24",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 26-year-old woman presents with unwanted facial and chest hair that has progressively worsened over 2 years. She reports oligomenorrhea and acne. Her BMI is 31 kg/m². Testosterone is mildly elevated. Transvaginal ultrasound shows a 'string of pearls' pattern bilaterally. What is the most appropriate first-line pharmacological treatment for the hirsutism in this patient?",
+    "options": [
+      "A. Eflornithine cream 13.9% twice daily",
+      "B. Metformin 500 mg three times daily",
+      "C. Combined oral contraceptive pill (COCP)",
+      "D. Finasteride 5 mg daily",
+      "E. Clomiphene citrate"
+    ],
+    "correctAnswer": "C. Combined oral contraceptive pill (COCP)",
+    "explanation": "The patient has Polycystic Ovary Syndrome (PCOS). Combined oral contraceptive pills are the first-line pharmacological therapy for managing hyperandrogenism (hirsutism/acne) and regulating menstrual cycles.",
+    "educationalObjective": "PCOS management: first-line for hirsutism.",
+    "tags": [
+      "PCOS",
+      "Hirsutism",
+      "COCP"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_25",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old woman with Celiac Disease diagnosed 8 years ago presents with recurrent diarrhea and 5kg weight loss over 4 months, despite reporting strict adherence to a gluten-free diet. Her TG-IgA remains persistently positive. What is the most appropriate initial management step?",
+    "options": [
+      "A. Perform capsule endoscopy to look for small bowel lymphoma",
+      "B. Start empiric corticosteroids for Refractory Celiac Disease",
+      "C. Refer to a specialized dietitian for evaluation of hidden gluten sources",
+      "D. Repeat upper endoscopy with duodenal biopsies",
+      "E. Check fecal elastase for pancreatic insufficiency"
+    ],
+    "correctAnswer": "C. Refer to a specialized dietitian for evaluation of hidden gluten sources",
+    "explanation": "The most common cause of non-responsive celiac disease with persistently elevated antibodies is inadvertent gluten exposure. A thorough review by a specialized dietitian is the mandatory first step before invasive testing.",
+    "educationalObjective": "Non-responsive celiac disease: first step.",
+    "tags": [
+      "Celiac disease",
+      "Gluten-free diet",
+      "Dietitian"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_26",
+    "system": "Electrolytes",
+    "subject": "Endocrinology",
+    "difficulty": "Hard",
+    "text": "A 48-year-old woman presents to the emergency department with numbness and tingling around her mouth and in her fingertips. She underwent total thyroidectomy for multinodular goiter 3 days ago. On examination, Chvostek's sign and Trousseau's sign are positive. ECG shows a prolonged QT interval. What is the most appropriate immediate management?",
+    "options": [
+      "A. Oral calcium carbonate 1500 mg three times daily",
+      "B. Oral calcitriol 0.5 mcg twice daily",
+      "C. Intravenous calcium gluconate 10 mL of 10% solution",
+      "D. Intravenous magnesium sulfate",
+      "E. Oral vitamin D3 50,000 units weekly"
+    ],
+    "correctAnswer": "C. Intravenous calcium gluconate 10 mL of 10% solution",
+    "explanation": "The patient has acute, symptomatic hypocalcemia secondary to iatrogenic hypoparathyroidism. This is a medical emergency requiring rapid correction with intravenous calcium gluconate to prevent arrhythmias and seizures.",
+    "educationalObjective": "Emergency treatment of hypocalcemia.",
+    "tags": [
+      "Hypocalcemia",
+      "Post-thyroidectomy",
+      "Calcium gluconate"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_27",
+    "system": "Hepatology",
+    "subject": "Hepatology",
+    "difficulty": "Hard",
+    "text": "A 22-year-old woman is brought to the ICU 72 hours after a massive paracetamol overdose. She is now in Grade III hepatic encephalopathy. Her arterial blood gas shows pH 7.25, INR is 8.5, and serum creatinine is 350 μmol/L (3.9 mg/dL). What is the most appropriate next step in management?",
+    "options": [
+      "A. Continue N-acetylcysteine infusion and observe",
+      "B. Start intravenous mannitol for presumed cerebral edema",
+      "C. Refer the patient for emergency Hepatology transplantation",
+      "D. Start continuous veno-venous hemofiltration (CVVH)",
+      "E. Administer activated charcoal every 4 hours"
+    ],
+    "correctAnswer": "C. Refer the patient for emergency Hepatology transplantation",
+    "explanation": "The patient meets the King's College Criteria for emergency Hepatology transplantation in acetaminophen-induced fulminant hepatic failure (arterial pH < 7.30 alone, or the triad of Grade III/IV encephalopathy, severe coagulopathy, and Nephrology failure).",
+    "educationalObjective": "King's College Criteria for Hepatology transplant in paracetamol toxicity.",
+    "tags": [
+      "Paracetamol overdose",
+      "Acute Hepatology failure",
+      "Hepatology transplant"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_28",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Easy",
+    "text": "A 62-year-old man collapses suddenly in the emergency department waiting area. He is unresponsive, not breathing normally, and has no pulse. The cardiac monitor shows a shockable rhythm. One defibrillation attempt with 200 J biphasic is deHepatologyed. What is the most appropriate immediate next action?",
+    "options": [
+      "A. Immediately check for a rhythm change for up to 10 seconds",
+      "B. DeHepatology a second shock immediately without chest compressions",
+      "C. Resume cardiopulmonary resuscitation (CPR) immediately for 2 minutes",
+      "D. Administer 1 mg of adNephrologyine (epinephrine) IV before resuming compressions",
+      "E. Perform 2 minutes of ventilations before reassessing pulse"
+    ],
+    "correctAnswer": "C. Resume cardiopulmonary resuscitation (CPR) immediately for 2 minutes",
+    "explanation": "Immediately following defibrillation, chest compressions (CPR) must be resumed for 2 minutes without pausing for rhythm checks or pulse checks to ensure continuous coronary and cerebral perfusion.",
+    "educationalObjective": "Post-defibrillation CPR priority.",
+    "tags": [
+      "Cardiac arrest",
+      "CPR",
+      "Defibrillation"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_29",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man presents to the emergency department 45 minutes after the sudden onset of severe central chest pain radiating to his left arm. ECG shows 3mm of ST-segment elevation in leads V1-V4. He is given aspirin, ticagrelor, and IV morphine. A PCI-capable catheterization lab is available on site. What is the most appropriate next step in management?",
+    "options": [
+      "A. Intravenous fibrinolysis (e.g., tenecteplate)",
+      "B. Intravenous nitroglycerin infusion",
+      "C. Subcutaneous low-molecular weight heparin",
+      "D. Immediate coronary angiography with primary percutaneous coronary intervention (PCI)",
+      "E. Transfer to the cardiac intensive care unit for observation"
+    ],
+    "correctAnswer": "D. Immediate coronary angiography with primary percutaneous coronary intervention (PCI)",
+    "explanation": "For an acute ST-elevation myocardial infarction (STEMI) presenting within the appropriate timeframe at a PCI-capable center, primary PCI is the gold standard reperfusion strategy.",
+    "educationalObjective": "Reperfusion strategy for STEMI.",
+    "tags": [
+      "STEMI",
+      "PCI",
+      "Reperfusion"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_30",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man presents with hematemesis and hypotension (BP 85/50 mmHg, HR 120/min). After initial resuscitation with IV fluids and blood transfusion, nasogastric lavage returns bright red blood. When should endoscopy be performed in this patient?",
+    "options": [
+      "A. Within 12-24 hours of presentation",
+      "B. After 48 hours of medical stabilization",
+      "C. Only if rebleeding occurs after PPI therapy",
+      "D. After H. pylori testing is confirmed positive",
+      "E. Immediately in the emergency room without stabilizing"
+    ],
+    "correctAnswer": "A. Within 12-24 hours of presentation",
+    "explanation": "In cases of acute, severe upper gastrointestinal bleeding, upper endoscopy should be performed within 24 hours (and often within 12 hours) following appropriate hemodynamic resuscitation to identify and treat the source.",
+    "educationalObjective": "Timing of endoscopy in upper GI bleeding.",
+    "tags": [
+      "Upper GI bleeding",
+      "Endoscopy",
+      "Hematemesis"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_31",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 48-year-old man with type 2 diabetes mellitus is diagnosed with chronic coronary syndrome due to angiographically confirmed coronary artery disease. LDL cholesterol is 2.8 mmol/L (108 mg/dL). Which of the following is an appropriate secondary prevention strategy for ASCVD in this patient?",
+    "options": [
+      "A. Regular aerobic exercise alone without pharmacologic therapy",
+      "B. Initiation of antihypertensive therapy if systolic blood pressure consistently exceeds 160 mmHg",
+      "C. Folic acid and vitamin B12 supplementation",
+      "D. Initiation of high-intensity statin therapy (e.g., Atorvastatin 40-80 mg daily)",
+      "E. First-line use of a fibrate"
+    ],
+    "correctAnswer": "D. Initiation of high-intensity statin therapy (e.g., Atorvastatin 40-80 mg daily)",
+    "explanation": "Patients with established Atherosclerotic Cardiovascular Disease (ASCVD) require secondary prevention with high-intensity statin therapy to lower LDL and stabilize plaques.",
+    "educationalObjective": "Secondary prevention with statins in ASCVD.",
+    "tags": [
+      "Statin",
+      "Secondary prevention",
+      "ASCVD"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_32",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 66-year-old man with newly diagnosed non-ischaemic dilated cardiomyopathy (LVEF 30%) presents for follow-up. He is currently asymptomatic. His blood pressure is 125/75 mmHg, heart rate 78 bpm. What is the most appropriate pharmacological regimen to reduce mortality?",
+    "options": [
+      "A. Furosemide + digoxin",
+      "B. Spironolactone + hydralazine/isosorbide dinitrate",
+      "C. Lisinopril + amlodipine",
+      "D. Sacubitril/valsartan (ARNI) + beta-blocker",
+      "E. Digoxin + diltiazem"
+    ],
+    "correctAnswer": "D. Sacubitril/valsartan (ARNI) + beta-blocker",
+    "explanation": "Guideline-directed medical therapy for Heart Failure with reduced Ejection Fraction (HFrEF) mandates neurohormonal blockade to reduce mortality, classically achieved with an ARNI/ACEi, a Beta-blocker, an MRA, and an SGLT2 inhibitor.",
+    "educationalObjective": "Guideline-directed medical therapy for HFrEF.",
+    "tags": [
+      "Heart failure",
+      "HFrEF",
+      "ARNI",
+      "Beta-blocker"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_33",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 32-year-old woman with recently diagnosed SLE presents for routine follow-up. Urinalysis reveals proteinuria (+++) and active urinary sediment with 15-20 dysmorphic red blood cells and 5-10 red cell casts per high-power field. Her serum creatinine is 1.1 mg/dL. Which one of the following is the most appropriate next step?",
+    "options": [
+      "A. Start oral prednisolone 1 mg/kg/day without Nephrology biopsy",
+      "B. Perform a percutaneous Nephrology biopsy",
+      "C. Start hydroxychloroquine alone and repeat urinalysis in 6 months",
+      "D. Start intravenous cyclophosphamide immediately",
+      "E. Prescribe an ACE inhibitor and observe"
+    ],
+    "correctAnswer": "B. Perform a percutaneous Nephrology biopsy",
+    "explanation": "Active urinary sediment with red cell casts in a lupus patient indicates active Lupus Nephritis. A percutaneous Nephrology biopsy is required to classify the disease histologically, which directly dictates the immunosuppressive regimen.",
+    "educationalObjective": "Indications for Nephrology biopsy in SLE.",
+    "tags": [
+      "Lupus nephritis",
+      "Nephrology biopsy",
+      "SLE"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_34",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 38-year-old woman with BMI 38 kg/m², hypertension, and prediabetes has failed lifestyle modification. She is seeking pharmacological therapy for obesity. Which medication is most appropriate for initiation given its superior efficacy and cardiometabolic benefits?",
+    "options": [
+      "A. Orlistat",
+      "B. Phentermine",
+      "C. Liraglutide (or Semaglutide)",
+      "D. Metformin",
+      "E. Levothyroxine"
+    ],
+    "correctAnswer": "C. Liraglutide (or Semaglutide)",
+    "explanation": "GLP-1 receptor agonists (like Liraglutide or Semaglutide) offer significant weight loss efficacy and provide marked cardiometabolic benefits, making them the preferred pharmacotherapy for obesity in this context.",
+    "educationalObjective": "Pharmacotherapy for obesity with cardiometabolic disease.",
+    "tags": [
+      "Obesity",
+      "GLP-1 agonists",
+      "Weight loss"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_35",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 30-year-old woman presents with abdominal pain that is relieved by defecation. Her stools alternate from hard to loose and watery. She reports abdominal distention occurring at least 3 times a week. Nocturnal symptoms occur frequently. Which of her symptoms suggests a diagnosis other than irritable bowel syndrome (IBS)?",
+    "options": [
+      "A. Increased incidence of straining with incomplete evacuation",
+      "B. Abdominal pain relieved by defecation",
+      "C. Frequent nocturnal symptoms",
+      "D. Abdominal distention",
+      "E. Stools alternate from hard to loose and watery"
+    ],
+    "correctAnswer": "C. Frequent nocturnal symptoms",
+    "explanation": "Frequent nocturnal symptoms (waking up at night to defecate or experiencing pain that interrupts sleep) are considered 'red flag' or alarm symptoms that point away from functional disorders like IBS and towards organic disease.",
+    "educationalObjective": "Red flags distinguishing IBS from organic disease.",
+    "tags": [
+      "IBS",
+      "Red flags",
+      "Nocturnal symptoms"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_36",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 52-year-old woman with obesity (BMI 34 kg/m²) and type 2 diabetes presents with fatigue. Hepatology function tests show elevated transaminases. Ultrasound reveals bright Hepatology echotexture. Which one of the following is the most appropriate next step in her management?",
+    "options": [
+      "A. Start low-dose prednisolone for presumed autoimmune hepatitis",
+      "B. Perform a percutaneous Hepatology biopsy to stage fibrosis",
+      "C. Recommend gradual weight loss of 7-10% and increased physical activity",
+      "D. Prescribe vitamin E 800 IU daily as first-line pharmacotherapy",
+      "E. Refer for bariatric surgery immediately"
+    ],
+    "correctAnswer": "C. Recommend gradual weight loss of 7-10% and increased physical activity",
+    "explanation": "The patient has Non-Alcoholic Fatty Hepatology Disease (NAFLD). The cornerstone of initial management is lifestyle modification, primarily achieving a 7-10% body weight reduction, which improves both steatosis and fibrosis.",
+    "educationalObjective": "First-line management of NAFLD.",
+    "tags": [
+      "NAFLD",
+      "Lifestyle modification",
+      "Weight loss"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_37",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 65-year-old man with known ischaemic cardiomyopathy presents to the emergency department with sudden severe breathlessness. He is sitting upright and struggling to speak. BP is 170/95 mmHg. Lung auscultation reveals coarse crackles. Despite high-flow oxygen, oxygen saturation remains 88%. What is the most appropriate next immediate intervention?",
+    "options": [
+      "A. Intravenous dobutamine infusion",
+      "B. Subcutaneous enoxaparin",
+      "C. Intravenous morphine 2.5 mg",
+      "D. Non-invasive positive pressure ventilation (CPAP/BiPAP)",
+      "E. Intravenous amiodarone"
+    ],
+    "correctAnswer": "D. Non-invasive positive pressure ventilation (CPAP/BiPAP)",
+    "explanation": "In acute cardiogenic pulmonary edema failing to respond to standard oxygen therapy, non-invasive ventilation (CPAP) rapidly reduces work of breathing and improves oxygenation by reducing preload and afterload.",
+    "educationalObjective": "Role of NIPPV in acute cardiogenic pulmonary edema.",
+    "tags": [
+      "Pulmonary edema",
+      "NIPPV",
+      "CPAP"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_38",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 65-year-old woman with known bronchiectasis presents with increasing shortness of breath, cough, and purulent sputum. She is afebrile with oxygen saturation 94% on room air. Sputum culture from a previous exacerbation grew Haemophilus influenzae. What is the most appropriate antibiotic strategy for this patient?",
+    "options": [
+      "A. Oral amoxicillin 500mg three times daily for 5 days",
+      "B. Intravenous meropenem 1 g three times daily",
+      "C. Oral doxycycline 100mg twice daily for 14 days",
+      "D. Antibiotic choice based on previous sputum culture and sensitivity",
+      "E. Wait for new sputum culture before treating"
+    ],
+    "correctAnswer": "D. Antibiotic choice based on previous sputum culture and sensitivity",
+    "explanation": "In acute exacerbations of bronchiectasis, empirical antibiotic therapy should be tailored to the results of previous sputum cultures (in this case, targeted against Haemophilus influenzae).",
+    "educationalObjective": "Antibiotic selection in bronchiectasis exacerbation.",
+    "tags": [
+      "Bronchiectasis",
+      "Haemophilus influenzae",
+      "Exacerbation"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_39",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man with a 20-year history of rheumatoid arthritis presents with progressive bilateral leg swelling. Urinalysis shows 4+ protein. Serum albumin is 21 g/L. What is the most likely underlying Nephrology diagnosis?",
+    "options": [
+      "A. Membranous nephropathy secondary to methotrexate",
+      "B. Minimal change disease",
+      "C. AA (secondary) amyloidosis",
+      "D. Focal segmental glomerulosclerosis (FSGS)",
+      "E. Analgesic nephropathy"
+    ],
+    "correctAnswer": "C. AA (secondary) amyloidosis",
+    "explanation": "Long-standing, chronic inflammatory conditions like rheumatoid arthritis can lead to the systemic deposition of acute-phase reactant proteins, resulting in secondary (AA) amyloidosis, which frequently manifests as nephrotic syndrome.",
+    "educationalObjective": "AA amyloidosis in chronic inflammatory diseases.",
+    "tags": [
+      "Amyloidosis",
+      "Rheumatoid arthritis",
+      "Nephrotic syndrome"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_40",
+    "system": "Gastroenterology",
+    "subject": "Infectious Diseases",
+    "difficulty": "Medium",
+    "text": "A 45-year-old man presents with 10 days of bloody diarrhoea, tenesmus, and lower abdominal pain. Stool microscopy shows red blood cells and Charcot-Leyden crystals. Colonoscopy shows multiple flask-shaped ulcers. What is the most appropriate treatment?",
+    "options": [
+      "A. Tinidazole monotherapy",
+      "B. Ciprofloxacin and loperamide",
+      "C. Oral vancomycin",
+      "D. Metronidazole (followed by a luminal agent like paromomycin)",
+      "E. Corticosteroids"
+    ],
+    "correctAnswer": "D. Metronidazole (followed by a luminal agent like paromomycin)",
+    "explanation": "Flask-shaped ulcers on colonoscopy with bloody diarrhea are pathognomonic for intestinal amebiasis (Entamoeba histolytica). Treatment requires a tissue amebicide (Metronidazole) followed by a luminal agent to eradicate cysts.",
+    "educationalObjective": "Treatment of Entamoeba histolytica infection.",
+    "tags": [
+      "Amebiasis",
+      "Metronidazole",
+      "Flask-shaped ulcers"
+    ],
+    "hint": "",
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_41",
+    "system": "Cardiology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 54-year-old man with hypertension presents with sudden severe pain, redness, and swelling of the right first metatarsophalangeal joint for 2 days. Examination shows a warm, erythematous, exquisitely tender big toe. His serum uric acid is elevated. Which antihypertensive medication is most likely contributing to this presentation?",
+    "options": [
+      "A. Lisinopril",
+      "B. Telmisartan",
+      "C. Amlodipine",
+      "D. Nebivolol",
+      "E. Hydrochlorothiazide"
+    ],
+    "correctAnswer": "E. Hydrochlorothiazide",
+    "explanation": "Thiazide diuretics (like hydrochlorothiazide) decrease the Nephrology excretion of uric acid, leading to hyperuricemia and precipitating acute gout attacks. Other options like Telmisartan actually have mild uricosuric properties.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_42",
+    "system": "Nephrology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 45-year-old man presents with a 2-week history of progressive bilateral leg swelling and frothy urine. He has no prior medical history. On examination, BP is 148/90 mmHg, with pitting edema up to the knees. Investigations: Serum albumin 22 g/L, total cholesterol 8.5 mmol/L. Urinalysis shows 4+ protein, no blood or casts. A 24-hour urine collection shows 6.5 g of protein. Nephrology biopsy was done and the result is pending. What is the single most appropriate next step in management?",
+    "options": [
+      "A. Prescribe a high-protein diet to correct hypoalbuminemia",
+      "B. Administer intravenous methylprednisolone for presumed minimal change disease",
+      "C. Initiate an angiotensin-converting enzyme (ACE) inhibitor and a statin",
+      "D. Initiate amlodipine for control of hypertension",
+      "E. Start cyclophosphamide therapy"
+    ],
+    "correctAnswer": "C. Initiate an angiotensin-converting enzyme (ACE) inhibitor and a statin",
+    "explanation": "The patient has nephrotic syndrome. While awaiting biopsy to determine the specific etiology, conservative management to reduce proteinuria and cardiovascular risk includes an ACE inhibitor (or ARB) and a statin.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_43",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 32-year-old non-smoking teacher presents with a 6-month history of episodic cough and chest tightness. Symptoms typically occur at night and are triggered by cold air and exercise. During a clinic visit, she has no Pulmonology distress and has normal cardiovascular and Pulmonology examination. Her initial spirometry shows an FEV1/FVC ratio of 68%. Fifteen minutes after inhaling 400μg of salbutamol, her FEV1 improves from 2.1 L to 2.6 L. What is the most likely diagnosis?",
+    "options": [
+      "A. Chronic obstructive pulmonary disease (COPD)",
+      "B. Bronchiectasis",
+      "C. Bronchial asthma",
+      "D. Congestive heart failure",
+      "E. Vocal cord dysfunction"
+    ],
+    "correctAnswer": "C. Bronchial asthma",
+    "explanation": "The significant reversibility in airflow obstruction (FEV1 improvement >12% and >200 mL) following a bronchodilator confirms the diagnosis of bronchial asthma.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_44",
+    "system": "Electrolytes",
+    "subject": "Emergency Medicine",
+    "difficulty": "Medium",
+    "text": "A 34-year-old man is brought to the emergency department after a motor vehicle accident with extensive lower limb crush injuries. He is hypotensive (BP 85/50 mmHg) and tachycardia despite initial fluid resuscitation. Over the next 6 hours, his urine output drops to 15 mL/hour. Blood tests: serum creatinine 220 μmol/L, potassium 6.8 mmol/L. What is the most appropriate immediate next step in management?",
+    "options": [
+      "A. Intravenous furosemide 80 mg to improve urine output",
+      "B. Intravenous insulin and dextrose",
+      "C. Emergent haemodialysis",
+      "D. Intravenous dopamine infusion at Nephrology dose",
+      "E. Intravenous mannitol to prevent Nephrology oedema"
+    ],
+    "correctAnswer": "B. Intravenous insulin and dextrose",
+    "explanation": "This patient has severe, life-threatening hyperkalemia (6.8 mmol/L) secondary to rhabdomyolysis and AKI. Intravenous insulin and dextrose act rapidly (within minutes) to shift potassium intracellularly, stabilizing the myocardium while definitive measures are prepared.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_45",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man with a 40-pack-year smoking history presents with progressive exertional dyspnoea and dry cough for 18 months. Examination reveals finger clubbing and bilateral fine end-inspiratory crackles at the lung bases. Chest X-ray shows basal and peripheral reticular shadowing. There is no history of exposure to birds, moulds, or occupational antigens. Which investigation is most likely to confirm the diagnosis without requiring surgical lung biopsy?",
+    "options": [
+      "A. Bronchoalveolar lavage showing neutrophilia",
+      "B. Serum autoantibody screen",
+      "C. High-resolution CT showing usual interstitial pneumonia (UIP) pattern",
+      "D. Transbronchial biopsy showing granulomas",
+      "E. Sputum cytology"
+    ],
+    "correctAnswer": "C. High-resolution CT showing usual interstitial pneumonia (UIP) pattern",
+    "explanation": "In a patient with suspected Idiopathic Pulmonary Fibrosis (IPF), a High-Resolution Computed Tomography (HRCT) scan demonstrating a definitive Usual Interstitial Pneumonia (UIP) pattern is diagnostic and typically spares the patient from a surgical lung biopsy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_46",
+    "system": "Endocrinology ",
+    "subject": "Internal Medicine",
+    "difficulty": "Hard",
+    "text": "A 42-year-old woman presents with progressive central obesity, facial rounding, easy bruising, and proximal myopathy. She has hypertension and random blood glucose of 8.5 mmol/L. An overnight 1 mg dexamethasone suppression test shows serum cortisol at 8 AM of 280 nmol/L. ACTH level is low at < 5 pg/mL. What is the most likely diagnosis and next appropriate investigation?",
+    "options": [
+      "A. Pituitary Cushing's disease; proceed to pituitary MRI",
+      "B. AdNephrology adenoma; proceed to CT abdomen",
+      "C. Ectopic ACTH secretion; proceed to chest CT",
+      "D. Pseudo-Cushing's syndrome; repeat testing after alcohol cessation",
+      "E. AdNephrology carcinoma; proceed to PET-CT"
+    ],
+    "correctAnswer": "B. AdNephrology adenoma; proceed to CT abdomen",
+    "explanation": "Cushing's syndrome with a suppressed ACTH level indicates an ACTH-independent cause, most commonly an adNephrology adenoma. A CT scan of the abdomen is the appropriate next step to visualize the adNephrology glands.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_47",
+    "system": "Pulmonology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 67-year-old man with a 50-pack-year smoking history presents with a 3-month history of worsening right shoulder pain and unilateral ptosis. Examination reveals right-sided ptosis, miosis, and anhidrosis, along with weakness of hand grip on the right. A chest radiograph shows a right apical mass with erosion of the first and second ribs. Which of the following is the most likely histological diagnosis?",
+    "options": [
+      "A. Squamous cell carcinoma",
+      "B. Adenocarcinoma",
+      "C. Small cell lung cancer (SCLC)",
+      "D. Large cell neuroEndocrinology  carcinoma",
+      "E. Bronchial carcinoid tumor"
+    ],
+    "correctAnswer": "A. Squamous cell carcinoma",
+    "explanation": "The patient has a Pancoast tumor causing Horner's syndrome and brachial plexus involvement. The most common histological subtypes for apical lung tumors are squamous cell carcinoma and adenocarcinoma.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_48",
+    "system": "Endocrinology ",
+    "subject": "Internal Medicine",
+    "difficulty": "Easy",
+    "text": "A 74-year-old woman presents with gradual-onset back pain over several months. She has lost 4 inches in height and has developed a thoracic kyphosis. She has a history of early menopause at age 44 and a previous Colles' fracture after a fall 8 years ago. DEXA scan shows a T-score of -3.5 at the lumbar spine and -2.8 at the femoral neck. What is the most appropriate first-line pharmacological treatment for this patient?",
+    "options": [
+      "A. Raloxifene 60 mg daily",
+      "B. Alendronate 70 mg once weekly",
+      "C. Teriparatide (PTH) 20 mcg daily subcutaneously",
+      "D. Denosumab 60 mg subcutaneously every 6 months",
+      "E. Hormone replacement therapy (HRT)"
+    ],
+    "correctAnswer": "B. Alendronate 70 mg once weekly",
+    "explanation": "Oral bisphosphonates like Alendronate are standard first-line therapies for postmenopausal osteoporosis to increase bone mineral density and reduce the incidence of vertebral and non-vertebral fractures.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_49",
+    "system": "Nephrology",
+    "subject": "Internal Medicine",
+    "difficulty": "Medium",
+    "text": "A 68-year-old man with a known benign prostatic hyperplasia presents with a 3-day history of dysuria, increased frequency, and suprapubic discomfort. He has no fever or loin pain. Urine dipstick is positive for leucocyte esterase and nitrites. What is the most appropriate next step in management?",
+    "options": [
+      "A. Prescribe a 3-day course of trimethoprim",
+      "B. Prescribe a 7-day course of nitrofurantoin",
+      "C. Send urine for culture and sensitivity before prescribing antibiotics",
+      "D. Prescribe a 14-day course of ciprofloxacin",
+      "E. Admit for transurethral resection of the prostate"
+    ],
+    "correctAnswer": "C. Send urine for culture and sensitivity before prescribing antibiotics",
+    "explanation": "Urinary tract infections in men are generally considered 'complicated,' particularly with underlying BPH. A urine sample must be sent for culture and sensitivity prior to initiating empirical antibiotic therapy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_50",
+    "system": "Electrolytes",
+    "subject": "Internal Medicine",
+    "difficulty": "Hard",
+    "text": "A 58-year-old woman with multiple myeloma presents with confusion, polyuria, constipation, and bone pain. Serum calcium is 14.2 mg/dL (corrected for albumin), creatinine 1.1 mg/dL, and phosphate 2.0 mg/dL. PTH-related peptide (PTHrP) is normal. Which of the following is the most appropriate initial treatment?",
+    "options": [
+      "A. Intravenous normal saline and zoledronic acid",
+      "B. Oral prednisolone and furosemide",
+      "C. Intravenous pamidronate and oral calcium supplements",
+      "D. Subcutaneous calcitonin alone",
+      "E. Hemodialysis with low-calcium dialysate"
+    ],
+    "correctAnswer": "A. Intravenous normal saline and zoledronic acid",
+    "explanation": "Severe hypercalcemia of malignancy requires immediate volume expansion with intravenous isotonic saline followed by an IV bisphosphonate (such as zoledronic acid or pamidronate) to block bone resorption.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_51",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man is found to have paroxysmal atrial fibrillation on ambulatory ECG monitoring. His past medical history includes hypertension and type 2 diabetes mellitus. He has no prior stroke, transient ischaemic attack, mechanical heart valve, or moderate-to-severe mitral stenosis. What is the most appropriate management to reduce his stroke risk?",
+    "options": [
+      "A. Aspirin 75 mg daily",
+      "B. No antithrombotic therapy",
+      "C. Direct oral anticoagulant (e.g., apixaban)",
+      "D. Rate control only without anticoagulation",
+      "E. Left atrial appendage occlusion device"
+    ],
+    "correctAnswer": "C. Direct oral anticoagulant (e.g., apixaban)",
+    "explanation": "The patient's CHA2DS2-VASc score is at least 2 (HTN, DM). According to guidelines, patients with non-valvular AF and a score >= 2 should be anticoagulated, preferentially with a Direct Oral Anticoagulant (DOAC).",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_52",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Hard",
+    "text": "A 68-year-old man with end-stage kidney disease (eGFR 12 mL/min/1.73 m2) is being evaluated for Nephrology replacement therapy. He has a history of ischaemic heart disease with a left ventricular ejection fraction of 35%. His blood pressure is 100/60 mmHg supine with symptomatic postural drop to 85/50 mmHg. He expresses a preference for a dialysis modality that minimizes hospital visits. Which of the following is the most appropriate initial modality of Nephrology replacement therapy for this patient?",
+    "options": [
+      "A. Intermittent haemodialysis via an arteriovenous fistula three times weekly",
+      "B. Haemodialysis via a tunnelled central venous catheter",
+      "C. Continuous ambulatory peritoneal dialysis (CAPD)",
+      "D. Intermittent haemodialysis with routine intradialytic hypotension prevention protocols",
+      "E. Conservative kidney management without dialysis"
+    ],
+    "correctAnswer": "C. Continuous ambulatory peritoneal dialysis (CAPD)",
+    "explanation": "CAPD is ideal because it avoids the rapid fluid and hemodynamic shifts of hemodialysis (crucial for a patient with HFrEF and hypotension) and is performed at home, fulfilling his request to minimize hospital visits.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_53",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 48-year-old man develops jaundice 3 months after starting isoniazid for latent tuberculosis. He reports fatigue, anorexia, and dark urine. His laboratory values show: ALT 850 U/L, ALP 140 U/L, total bilirubin 3.8 mg/dL. He has no evidence of viral hepatitis or biliary obstruction. What is the most appropriate next step in managing this patient?",
+    "options": [
+      "A. Continue isoniazid but add ursodeoxycholic acid",
+      "B. Discontinue isoniazid and monitor Hepatology function tests",
+      "C. Add N-acetylcysteine as a hepatoprotective agent",
+      "D. Perform urgent Hepatology biopsy to rule out autoimmune hepatitis",
+      "E. Start prednisolone 40 mg daily"
+    ],
+    "correctAnswer": "B. Discontinue isoniazid and monitor Hepatology function tests",
+    "explanation": "The patient has developed severe isoniazid-induced hepatotoxicity (ALT > 3-5x upper limit of normal with symptoms). The offending agent must be discontinued immediately.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_54",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 55-year-old woman with type 2 diabetes and hypertension, admitted for NSTEMI, suddenly becomes unresponsive and pulseless on day 2. CPR is started. The monitor shows an organized wide-complex rhythm at 40 bpm without a palpable pulse, and bedside ultrasound shows no ventricular contraction. What is the most appropriate immediate intervention?",
+    "options": [
+      "A. Lidocaine 1.5 mg/kg slow IV bolus",
+      "B. Transcutaneous pacing",
+      "C. Epinephrine 1 mg IV push",
+      "D. Amiodarone 300 mg IV push",
+      "E. Calcium chloride 10% 10 mL IV push"
+    ],
+    "correctAnswer": "C. Epinephrine 1 mg IV push",
+    "explanation": "The patient is in Pulseless Electrical Activity (PEA), a non-shockable rhythm. The ACLS algorithm dictates high-quality CPR and the administration of Epinephrine 1 mg IV every 3-5 minutes.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_55",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 19-year-old asymptomatic athlete undergoes pre-participation cardiovascular screening. He has a family history of sudden cardiac death in a maternal uncle at age 24. ECG demonstrates marked left ventricular hypertrophy by voltage criteria, deep T-wave inversions in lateral leads, and deep narrow Q waves in leads I, aVL, V5, and V6. What is the most likely diagnosis?",
+    "options": [
+      "A. Dilated cardiomyopathy",
+      "B. Arrhythmogenic right ventricular cardiomyopathy",
+      "C. Hypertrophic cardiomyopathy",
+      "D. Athlete's heart",
+      "E. Myocarditis"
+    ],
+    "correctAnswer": "C. Hypertrophic cardiomyopathy",
+    "explanation": "The family history of sudden cardiac death combined with ECG findings of severe LVH and deep, narrow 'dagger-like' Q waves (septal depolarization) strongly suggest Hypertrophic Cardiomyopathy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_56",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 50-year-old man with a history of epilepsy presents with fever, cough, and purulent sputum for 10 days. Chest X-ray reveals a 4 cm cavitary lesion with an air-fluid level in the superior segment of the right lower lobe. He is started on intravenous ampicillin-sulbactam. After 7 days, he remains febrile with no clinical or radiological improvement. What is the most appropriate next step in management?",
+    "options": [
+      "A. Switch to oral antibiotics and discharge home",
+      "B. Add intravenous vancomycin for MRSA coverage",
+      "C. Perform bronchoscopy to exclude endobronchial obstruction",
+      "D. Add systemic corticosteroids to reduce inflammation",
+      "E. Arrange for percutaneous catheter drainage"
+    ],
+    "correctAnswer": "C. Perform bronchoscopy to exclude endobronchial obstruction",
+    "explanation": "When a lung abscess fails to respond to broad-spectrum antibiotics within 7-10 days, one must investigate for underlying causes, particularly an endobronchial obstruction (like a tumor or foreign body), using bronchoscopy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_57",
+    "system": "Pulmonology",
+    "subject": "Critical Care",
+    "difficulty": "Hard",
+    "text": "A 45-year-old man is mechanically ventilated in ICU 48 hours after emergency laparotomy for bowel perforation with sepsis. Despite FiO2 0.8, PaO2 is 60 mmHg. Chest X-ray shows bilateral diffuse alveolar infiltrates. Pulmonary capillary wedge pressure is 8 mmHg. What is the most likely diagnosis?",
+    "options": [
+      "A. Cardiogenic pulmonary edema",
+      "B. Ventilator-associated pneumonia",
+      "C. Acute Pulmonology distress syndrome (ARDS)",
+      "D. Pulmonary embolism",
+      "E. Postoperative atelectasis"
+    ],
+    "correctAnswer": "C. Acute Pulmonology distress syndrome (ARDS)",
+    "explanation": "The presentation of acute hypoxemia (PaO2/FiO2 < 300), bilateral infiltrates, a known clinical trigger (sepsis), and a low PCWP (< 18 mmHg ruling out cardiogenic edema) defines ARDS.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_58",
+    "system": "Electrolytes",
+    "subject": "Emergency Medicine",
+    "difficulty": "Hard",
+    "text": "A 50-year-old woman is admitted with confusion and generalized tonic-clonic seizures. Her serum sodium is 118 mmol/L, and symptoms developed over the previous 24 hours. What is the most appropriate immediate management?",
+    "options": [
+      "A. Fluid restriction to 1000 mL/day",
+      "B. Oral urea therapy",
+      "C. Bolus infusion of 3% hypertonic saline",
+      "D. Administration of tolvaptan",
+      "E. Intravenous 0.9% sodium chloride"
+    ],
+    "correctAnswer": "C. Bolus infusion of 3% hypertonic saline",
+    "explanation": "Symptomatic severe acute hyponatremia with neurological compromise (seizures) is a medical emergency requiring rapid, partial correction with hypertonic (3%) saline to prevent brain herniation.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_59",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Easy",
+    "text": "A 58-year-old man with type 2 diabetes and hypertension for 15 years is found to have an eGFR of 48 ml/min/1.73m2 on routine screening. His urine albumin-to-creatinine ratio (UACR) is 25 mg/mmol. According to the CKD staging system, which of the following best describes his current stage of chronic kidney disease?",
+    "options": [
+      "A. Stage 1 CKD",
+      "B. Stage 2 CKD",
+      "C. Stage 3a CKD",
+      "D. Stage 3b CKD",
+      "E. Stage 4 CKD"
+    ],
+    "correctAnswer": "C. Stage 3a CKD",
+    "explanation": "Chronic Kidney Disease Stage 3a is categorized by an eGFR ranging between 45 and 59 mL/min/1.73m2.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_60",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 35-year-old female presents to her primary care physician with complaints of recurrent epigastric pain, bloating, and occasional nausea. She reports that the symptoms worsen when she skips meals or consumes spicy foods. Given the suspicion of H. pylori infection, which of the following diagnostic tests is the most appropriate initial investigation?",
+    "options": [
+      "A. Serologic testing for H. pylori antibodies",
+      "B. Urea breath test (UBT)",
+      "C. Upper gastrointestinal endoscopy with culture of gastric biopsy",
+      "D. Upper gastrointestinal endoscopy with histopathological examination",
+      "E. Rapid urease test (RUT) on gastric biopsy sample"
+    ],
+    "correctAnswer": "B. Urea breath test (UBT)",
+    "explanation": "In young patients without alarm features (e.g., weight loss, bleeding), a non-invasive 'test-and-treat' strategy using the highly sensitive and specific Urea Breath Test (UBT) or stool antigen test is the initial standard.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_61",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 55-year-old man with compensated cirrhosis (Child-Pugh A, MELD 8) is found to have small esophageal varices on screening endoscopy without red wale signs or other high-risk features. He has no history of gastrointestinal bleeding. What is the most appropriate management to prevent first variceal hemorrhage?",
+    "options": [
+      "A. Endoscopic variceal ligation every 2-4 weeks",
+      "B. Oral nadolol or propranolol titrated to heart rate of 50-55 bpm",
+      "C. Oral lisinopril to lower systemic blood pressure",
+      "D. Transjugular intrahepatic portosystemic shunt placement",
+      "E. Oral simvastatin 20 mg daily"
+    ],
+    "correctAnswer": "B. Oral nadolol or propranolol titrated to heart rate of 50-55 bpm",
+    "explanation": "Non-selective beta-blockers (NSBBs) such as nadolol or propranolol are the standard of care for primary prophylaxis to reduce portal pressures and prevent bleeding in patients with small but significant varices.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_62",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 74-year-old woman with type 2 diabetes mellitus is brought to the emergency department. She has been increasingly confused and lethargic for 3 days. On examination, she is dehydrated, blood pressure 90/60 mmHg, pulse 110 bpm. Blood glucose is 42 mmol/L (756 mg/dL), venous pH 7.35, bicarbonate 22 mmol/L, and no ketones in urine or blood. What is the most important initial step in managing this patient?",
+    "options": [
+      "A. Intravenous regular insulin bolus",
+      "B. Intravenous 0.9% normal saline",
+      "C. Intravenous bicarbonate to correct mild acidosis",
+      "D. Subcutaneous rapid-acting insulin analogues",
+      "E. Intravenous 5% dextrose"
+    ],
+    "correctAnswer": "B. Intravenous 0.9% normal saline",
+    "explanation": "This patient has Hyperosmolar Hyperglycemic State (HHS), characterized by profound fluid deficit. The most critical initial intervention is aggressive volume resuscitation with isotonic normal saline to restore perfusion.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_63",
+    "system": "Cardiology",
+    "subject": "Critical Care",
+    "difficulty": "Hard",
+    "text": "A 66-year-old man presents with septic shock from a urinary source. His blood pressure is 75/40 mmHg, heart rate 130 bpm, and lactate 6 mmol/L. He has received 2 liters of IV crystalloid. What is the most appropriate next step within the first hour?",
+    "options": [
+      "A. Give broad-spectrum antibiotics and temporarily hold fluid resuscitation",
+      "B. Complete fluid resuscitation (30 mL/kg) and administer antibiotics within 1 hour",
+      "C. Start vasopressin and hydrocortisone",
+      "D. Transfer to ICU before giving antibiotics",
+      "E. Wait for blood cultures to return before giving antibiotics"
+    ],
+    "correctAnswer": "B. Complete fluid resuscitation (30 mL/kg) and administer antibiotics within 1 hour",
+    "explanation": "The Surviving Sepsis Campaign bundle requires immediate broad-spectrum antibiotics (within 1 hour) alongside completing rapid fluid resuscitation (30 mL/kg crystalloid) for sepsis-induced hypoperfusion/shock.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_64",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 26-year-old woman presents with unwanted facial and chest hair that has progressively worsened over 2 years. She reports oligomenorrhea and acne. Her BMI is 31 kg/m². Testosterone is mildly elevated. Transvaginal ultrasound shows a 'string of pearls' pattern bilaterally. What is the most appropriate first-line pharmacological treatment for the hirsutism in this patient?",
+    "options": [
+      "A. Eflornithine cream 13.9% twice daily",
+      "B. Metformin 500 mg three times daily",
+      "C. Combined oral contraceptive pill (COCP)",
+      "D. Finasteride 5 mg daily",
+      "E. Clomiphene citrate"
+    ],
+    "correctAnswer": "C. Combined oral contraceptive pill (COCP)",
+    "explanation": "The patient has Polycystic Ovary Syndrome (PCOS). Combined oral contraceptive pills are the first-line pharmacological therapy for managing hyperandrogenism (hirsutism/acne) and regulating menstrual cycles.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_65",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old woman with Celiac Disease diagnosed 8 years ago presents with recurrent diarrhea and 5kg weight loss over 4 months, despite reporting strict adherence to a gluten-free diet. Her TG-IgA remains persistently positive. What is the most appropriate initial management step?",
+    "options": [
+      "A. Perform capsule endoscopy to look for small bowel lymphoma",
+      "B. Start empiric corticosteroids for Refractory Celiac Disease",
+      "C. Refer to a specialized dietitian for evaluation of hidden gluten sources",
+      "D. Repeat upper endoscopy with duodenal biopsies",
+      "E. Check fecal elastase for pancreatic insufficiency"
+    ],
+    "correctAnswer": "C. Refer to a specialized dietitian for evaluation of hidden gluten sources",
+    "explanation": "The most common cause of non-responsive celiac disease with persistently elevated antibodies is inadvertent gluten exposure. A thorough review by a specialized dietitian is the mandatory first step before invasive testing.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_66",
+    "system": "Electrolytes",
+    "subject": "Endocrinology",
+    "difficulty": "Hard",
+    "text": "A 48-year-old woman presents to the emergency department with numbness and tingling around her mouth and in her fingertips. She underwent total thyroidectomy for multinodular goiter 3 days ago. On examination, Chvostek's sign and Trousseau's sign are positive. ECG shows a prolonged QT interval. What is the most appropriate immediate management?",
+    "options": [
+      "A. Oral calcium carbonate 1500 mg three times daily",
+      "B. Oral calcitriol 0.5 mcg twice daily",
+      "C. Intravenous calcium gluconate 10 mL of 10% solution",
+      "D. Intravenous magnesium sulfate",
+      "E. Oral vitamin D3 50,000 units weekly"
+    ],
+    "correctAnswer": "C. Intravenous calcium gluconate 10 mL of 10% solution",
+    "explanation": "The patient has acute, symptomatic hypocalcemia secondary to iatrogenic hypoparathyroidism. This is a medical emergency requiring rapid correction with intravenous calcium gluconate to prevent arrhythmias and seizures.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_67",
+    "system": "Hepatology",
+    "subject": "Hepatology",
+    "difficulty": "Hard",
+    "text": "A 22-year-old woman is brought to the ICU 72 hours after a massive paracetamol overdose. She is now in Grade III hepatic encephalopathy. Her arterial blood gas shows pH 7.25, INR is 8.5, and serum creatinine is 350 μmol/L (3.9 mg/dL). What is the most appropriate next step in management?",
+    "options": [
+      "A. Continue N-acetylcysteine infusion and observe",
+      "B. Start intravenous mannitol for presumed cerebral edema",
+      "C. Refer the patient for emergency Hepatology transplantation",
+      "D. Start continuous veno-venous hemofiltration (CVVH)",
+      "E. Administer activated charcoal every 4 hours"
+    ],
+    "correctAnswer": "C. Refer the patient for emergency Hepatology transplantation",
+    "explanation": "The patient meets the King's College Criteria for emergency Hepatology transplantation in acetaminophen-induced fulminant hepatic failure (arterial pH < 7.30 alone, or the triad of Grade III/IV encephalopathy, severe coagulopathy, and Nephrology failure).",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_68",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Easy",
+    "text": "A 62-year-old man collapses suddenly in the emergency department waiting area. He is unresponsive, not breathing normally, and has no pulse. The cardiac monitor shows a shockable rhythm. One defibrillation attempt with 200 J biphasic is deHepatologyed. What is the most appropriate immediate next action?",
+    "options": [
+      "A. Immediately check for a rhythm change for up to 10 seconds",
+      "B. DeHepatology a second shock immediately without chest compressions",
+      "C. Resume cardiopulmonary resuscitation (CPR) immediately for 2 minutes",
+      "D. Administer 1 mg of adNephrologyine (epinephrine) IV before resuming compressions",
+      "E. Perform 2 minutes of ventilations before reassessing pulse"
+    ],
+    "correctAnswer": "C. Resume cardiopulmonary resuscitation (CPR) immediately for 2 minutes",
+    "explanation": "Immediately following defibrillation, chest compressions (CPR) must be resumed for 2 minutes without pausing for rhythm checks or pulse checks to ensure continuous coronary and cerebral perfusion.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_69",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man presents to the emergency department 45 minutes after the sudden onset of severe central chest pain radiating to his left arm. ECG shows 3mm of ST-segment elevation in leads V1-V4. He is given aspirin, ticagrelor, and IV morphine. A PCI-capable catheterization lab is available on site. What is the most appropriate next step in management?",
+    "options": [
+      "A. Intravenous fibrinolysis (e.g., tenecteplate)",
+      "B. Intravenous nitroglycerin infusion",
+      "C. Subcutaneous low-molecular weight heparin",
+      "D. Immediate coronary angiography with primary percutaneous coronary intervention (PCI)",
+      "E. Transfer to the cardiac intensive care unit for observation"
+    ],
+    "correctAnswer": "D. Immediate coronary angiography with primary percutaneous coronary intervention (PCI)",
+    "explanation": "For an acute ST-elevation myocardial infarction (STEMI) presenting within the appropriate timeframe at a PCI-capable center, primary PCI is the gold standard reperfusion strategy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_70",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man presents with hematemesis and hypotension (BP 85/50 mmHg, HR 120/min). After initial resuscitation with IV fluids and blood transfusion, nasogastric lavage returns bright red blood. When should endoscopy be performed in this patient?",
+    "options": [
+      "A. Within 12-24 hours of presentation",
+      "B. After 48 hours of medical stabilization",
+      "C. Only if rebleeding occurs after PPI therapy",
+      "D. After H. pylori testing is confirmed positive",
+      "E. Immediately in the emergency room without stabilizing"
+    ],
+    "correctAnswer": "A. Within 12-24 hours of presentation",
+    "explanation": "In cases of acute, severe upper gastrointestinal bleeding, upper endoscopy should be performed within 24 hours (and often within 12 hours) following appropriate hemodynamic resuscitation to identify and treat the source.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_71",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 48-year-old man with type 2 diabetes mellitus is diagnosed with chronic coronary syndrome due to angiographically confirmed coronary artery disease. LDL cholesterol is 2.8 mmol/L (108 mg/dL). Which of the following is an appropriate secondary prevention strategy for ASCVD in this patient?",
+    "options": [
+      "A. Regular aerobic exercise alone without pharmacologic therapy",
+      "B. Initiation of antihypertensive therapy if systolic blood pressure consistently exceeds 160 mmHg",
+      "C. Folic acid and vitamin B12 supplementation",
+      "D. Initiation of high-intensity statin therapy (e.g., Atorvastatin 40-80 mg daily)",
+      "E. First-line use of a fibrate"
+    ],
+    "correctAnswer": "D. Initiation of high-intensity statin therapy (e.g., Atorvastatin 40-80 mg daily)",
+    "explanation": "Patients with established Atherosclerotic Cardiovascular Disease (ASCVD) require secondary prevention with high-intensity statin therapy to lower LDL and stabilize plaques.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_72",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 66-year-old man with newly diagnosed non-ischaemic dilated cardiomyopathy (LVEF 30%) presents for follow-up. He is currently asymptomatic. His blood pressure is 125/75 mmHg, heart rate 78 bpm. What is the most appropriate pharmacological regimen to reduce mortality?",
+    "options": [
+      "A. Furosemide + digoxin",
+      "B. Spironolactone + hydralazine/isosorbide dinitrate",
+      "C. Lisinopril + amlodipine",
+      "D. Sacubitril/valsartan (ARNI) + beta-blocker",
+      "E. Digoxin + diltiazem"
+    ],
+    "correctAnswer": "D. Sacubitril/valsartan (ARNI) + beta-blocker",
+    "explanation": "Guideline-directed medical therapy for Heart Failure with reduced Ejection Fraction (HFrEF) mandates neurohormonal blockade to reduce mortality, classically achieved with an ARNI/ACEi, a Beta-blocker, an MRA, and an SGLT2 inhibitor.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_73",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 32-year-old woman with recently diagnosed SLE presents for routine follow-up. Urinalysis reveals proteinuria (+++) and active urinary sediment with 15-20 dysmorphic red blood cells and 5-10 red cell casts per high-power field. Her serum creatinine is 1.1 mg/dL. Which one of the following is the most appropriate next step?",
+    "options": [
+      "A. Start oral prednisolone 1 mg/kg/day without Nephrology biopsy",
+      "B. Perform a percutaneous Nephrology biopsy",
+      "C. Start hydroxychloroquine alone and repeat urinalysis in 6 months",
+      "D. Start intravenous cyclophosphamide immediately",
+      "E. Prescribe an ACE inhibitor and observe"
+    ],
+    "correctAnswer": "B. Perform a percutaneous Nephrology biopsy",
+    "explanation": "Active urinary sediment with red cell casts in a lupus patient indicates active Lupus Nephritis. A percutaneous Nephrology biopsy is required to classify the disease histologically, which directly dictates the immunosuppressive regimen.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_74",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 38-year-old woman with BMI 38 kg/m², hypertension, and prediabetes has failed lifestyle modification. She is seeking pharmacological therapy for obesity. Which medication is most appropriate for initiation given its superior efficacy and cardiometabolic benefits?",
+    "options": [
+      "A. Orlistat",
+      "B. Phentermine",
+      "C. Liraglutide (or Semaglutide)",
+      "D. Metformin",
+      "E. Levothyroxine"
+    ],
+    "correctAnswer": "C. Liraglutide (or Semaglutide)",
+    "explanation": "GLP-1 receptor agonists (like Liraglutide or Semaglutide) offer significant weight loss efficacy and provide marked cardiometabolic benefits, making them the preferred pharmacotherapy for obesity in this context.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_75",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 30-year-old woman presents with abdominal pain that is relieved by defecation. Her stools alternate from hard to loose and watery. She reports abdominal distention occurring at least 3 times a week. Nocturnal symptoms occur frequently. Which of her symptoms suggests a diagnosis other than irritable bowel syndrome (IBS)?",
+    "options": [
+      "A. Increased incidence of straining with incomplete evacuation",
+      "B. Abdominal pain relieved by defecation",
+      "C. Frequent nocturnal symptoms",
+      "D. Abdominal distention",
+      "E. Stools alternate from hard to loose and watery"
+    ],
+    "correctAnswer": "C. Frequent nocturnal symptoms",
+    "explanation": "Frequent nocturnal symptoms (waking up at night to defecate or experiencing pain that interrupts sleep) are considered 'red flag' or alarm symptoms that point away from functional disorders like IBS and towards organic disease.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_76",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Easy",
+    "text": "A 52-year-old woman with obesity (BMI 34 kg/m²) and type 2 diabetes presents with fatigue. Hepatology function tests show elevated transaminases. Ultrasound reveals bright Hepatology echotexture. Which one of the following is the most appropriate next step in her management?",
+    "options": [
+      "A. Start low-dose prednisolone for presumed autoimmune hepatitis",
+      "B. Perform a percutaneous Hepatology biopsy to stage fibrosis",
+      "C. Recommend gradual weight loss of 7-10% and increased physical activity",
+      "D. Prescribe vitamin E 800 IU daily as first-line pharmacotherapy",
+      "E. Refer for bariatric surgery immediately"
+    ],
+    "correctAnswer": "C. Recommend gradual weight loss of 7-10% and increased physical activity",
+    "explanation": "The patient has Non-Alcoholic Fatty Hepatology Disease (NAFLD). The cornerstone of initial management is lifestyle modification, primarily achieving a 7-10% body weight reduction, which improves both steatosis and fibrosis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_77",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 65-year-old man with known ischaemic cardiomyopathy presents to the emergency department with sudden severe breathlessness. He is sitting upright and struggling to speak. BP is 170/95 mmHg. Lung auscultation reveals coarse crackles. Despite high-flow oxygen, oxygen saturation remains 88%. What is the most appropriate next immediate intervention?",
+    "options": [
+      "A. Intravenous dobutamine infusion",
+      "B. Subcutaneous enoxaparin",
+      "C. Intravenous morphine 2.5 mg",
+      "D. Non-invasive positive pressure ventilation (CPAP/BiPAP)",
+      "E. Intravenous amiodarone"
+    ],
+    "correctAnswer": "D. Non-invasive positive pressure ventilation (CPAP/BiPAP)",
+    "explanation": "In acute cardiogenic pulmonary edema failing to respond to standard oxygen therapy, non-invasive ventilation (CPAP) rapidly reduces work of breathing and improves oxygenation by reducing preload and afterload.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_78",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 65-year-old woman with known bronchiectasis presents with increasing shortness of breath, cough, and purulent sputum. She is afebrile with oxygen saturation 94% on room air. Sputum culture from a previous exacerbation grew Haemophilus influenzae. What is the most appropriate antibiotic strategy for this patient?",
+    "options": [
+      "A. Oral amoxicillin 500mg three times daily for 5 days",
+      "B. Intravenous meropenem 1 g three times daily",
+      "C. Oral doxycycline 100mg twice daily for 14 days",
+      "D. Antibiotic choice based on previous sputum culture and sensitivity",
+      "E. Wait for new sputum culture before treating"
+    ],
+    "correctAnswer": "D. Antibiotic choice based on previous sputum culture and sensitivity",
+    "explanation": "In acute exacerbations of bronchiectasis, empirical antibiotic therapy should be tailored to the results of previous sputum cultures (in this case, targeted against Haemophilus influenzae).",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_79",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man with a 20-year history of rheumatoid arthritis presents with progressive bilateral leg swelling. Urinalysis shows 4+ protein. Serum albumin is 21 g/L. What is the most likely underlying Nephrology diagnosis?",
+    "options": [
+      "A. Membranous nephropathy secondary to methotrexate",
+      "B. Minimal change disease",
+      "C. AA (secondary) amyloidosis",
+      "D. Focal segmental glomerulosclerosis (FSGS)",
+      "E. Analgesic nephropathy"
+    ],
+    "correctAnswer": "C. AA (secondary) amyloidosis",
+    "explanation": "Long-standing, chronic inflammatory conditions like rheumatoid arthritis can lead to the systemic deposition of acute-phase reactant proteins, resulting in secondary (AA) amyloidosis, which frequently manifests as nephrotic syndrome.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_80",
+    "system": "Gastroenterology",
+    "subject": "Infectious Diseases",
+    "difficulty": "Medium",
+    "text": "A 45-year-old man presents with 10 days of bloody diarrhoea, tenesmus, and lower abdominal pain. Stool microscopy shows red blood cells and Charcot-Leyden crystals. Colonoscopy shows multiple flask-shaped ulcers. What is the most appropriate treatment?",
+    "options": [
+      "A. Tinidazole monotherapy",
+      "B. Ciprofloxacin and loperamide",
+      "C. Oral vancomycin",
+      "D. Metronidazole (followed by a luminal agent like paromomycin)",
+      "E. Corticosteroids"
+    ],
+    "correctAnswer": "D. Metronidazole (followed by a luminal agent like paromomycin)",
+    "explanation": "Flask-shaped ulcers on colonoscopy with bloody diarrhea are pathognomonic for intestinal amebiasis (Entamoeba histolytica). Treatment requires a tissue amebicide (Metronidazole) followed by a luminal agent to eradicate cysts.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_81",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 72-year-old man presents with sudden severe dyspnoea and presyncope. He is hypotensive (BP 85/50 mmHg), tachycardia, and hypoxic. Bedside echocardiography shows a dilated hypokinetic right ventricle with septal bowing. He has no contraindications to thrombolysis. What is the most appropriate immediate management?",
+    "options": [
+      "A. Therapeutic low molecular weight heparin and observation",
+      "B. CT pulmonary angiography before treatment",
+      "C. Immediate systemic thrombolysis",
+      "D. Intravenous unfractionated heparin and V/Q scan",
+      "E. Surgical embolectomy as first-line treatment"
+    ],
+    "correctAnswer": "C. Immediate systemic thrombolysis",
+    "explanation": "The patient has a massive (high-risk) pulmonary embolism presenting with cardiogenic shock (hypotension, RV strain). In the absence of contraindications, immediate systemic thrombolytic therapy is life-saving.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_82",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 25-year-old woman with known bronchial asthma presents with acute shortness of breath, wheezing, and chest tightness. Pulmonology rate 28/min, accessory muscle use, oxygen saturation 94% on room air, PEFR is 50% of predicted. What is the most appropriate next step?",
+    "options": [
+      "A. Short-acting beta-agonist (SABA) via nebulizer or spacer + oral corticosteroids",
+      "B. Long-acting beta agonist (LABA) inhaler and inhaled corticosteroids (ICS)",
+      "C. Oral leukotriene receptor antagonist (LTRA) therapy",
+      "D. Long-acting oral theophylline therapy",
+      "E. Intravenous magnesium sulfate immediately"
+    ],
+    "correctAnswer": "A. Short-acting beta-agonist (SABA) via nebulizer or spacer + oral corticosteroids",
+    "explanation": "For an acute, moderate-to-severe asthma exacerbation, immediate relief with a Short-Acting Beta Agonist (Salbutamol) and the early administration of systemic corticosteroids to reduce inflammation are the mainstays of treatment.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_83",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 32-year-old woman presents with sudden onset of palpitations, dizziness, and mild breathlessness. BP 110/70 mmHg, HR 190 bpm. An ECG shows a narrow-complex tachycardia with no visible P waves. Vagal manoeuvres were attempted and were unsuccessful. What is the most appropriate next step?",
+    "options": [
+      "A. Immediate electrical cardioversion",
+      "B. Intravenous adenosine 6 mg rapid push",
+      "C. Intravenous verapamil 5 mg",
+      "D. Intravenous amiodarone",
+      "E. Oral beta-blocker"
+    ],
+    "correctAnswer": "B. Intravenous adenosine 6 mg rapid push",
+    "explanation": "In a hemodynamically stable patient with Supraventricular Tachycardia (SVT) unresponsive to vagal maneuvers, rapid intravenous injection of Adenosine is the first-line pharmacologic therapy to block AV node conduction.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_84",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old man with COPD presents with 3 days of fever, productive cough, and confusion. BP 100/70 mmHg, oxygen saturation 88%. Chest X-ray shows right lower lobe consolidation. CURB-65 score is 3. What is the most appropriate initial diagnostic test to guide antibiotic therapy?",
+    "options": [
+      "A. Sputum Gram stain and culture",
+      "B. Urinary antigen test for Legionella",
+      "C. Blood cultures (two sets) before antibiotics",
+      "D. Nasopharyngeal swab for Pulmonology viral panel",
+      "E. Bronchoscopy with bronchoalveolar lavage"
+    ],
+    "correctAnswer": "C. Blood cultures (two sets) before antibiotics",
+    "explanation": "In severe community-acquired pneumonia (CURB-65 >= 3) requiring hospitalization, obtaining blood cultures prior to the administration of antibiotics is critical for identifying bacteremia and tailoring therapy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_85",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 45-year-old woman with metastatic breast cancer presents with progressive dyspnoea and chest pressure. BP 95/70 mmHg, HR 120 bpm, inspiratory systolic drop to 80 mmHg (pulsus paradoxus), raised JVP, muffled heart sounds. Echocardiogram shows right ventricular diastolic collapse. What is the most appropriate next step in management?",
+    "options": [
+      "A. Intravenous furosemide",
+      "B. Oral colchicine",
+      "C. Immediate pericardiocentesis",
+      "D. Serial echocardiographic monitoring",
+      "E. Non-steroidal anti-inflammatory drugs (NSAIDs)"
+    ],
+    "correctAnswer": "C. Immediate pericardiocentesis",
+    "explanation": "The patient has Beck's triad and echocardiographic evidence of cardiac tamponade. This represents an obstructive shock emergency that must be immediately decompressed via pericardiocentesis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_86",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 32-year-old woman presents with a 3-month history of a fine tremor, heat intolerance, and a 5 kg weight loss. She has a smooth, diffuse goiter with a palpable thrill and audible bruit. She has proptosis and periorbital edema. What is the most likely diagnosis?",
+    "options": [
+      "A. Toxic adenoma",
+      "B. Toxic multinodular goiter (Plummer disease)",
+      "C. Subacute (de Quervain's) thyroiditis",
+      "D. Graves' disease",
+      "E. TSH-secreting pituitary adenoma"
+    ],
+    "correctAnswer": "D. Graves' disease",
+    "explanation": "The combination of hyperthyroidism, a diffuse vascular goiter (bruit/thrill), and specific extrathyroidal manifestations like exophthalmos (proptosis) and periorbital edema is pathognomonic for Graves' disease.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_87",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Medium",
+    "text": "A 62-year-old man, 6 months after kidney transplantation, presents with progressive dyspnoea, dry cough, and fever. He recently discontinued trimethoprim-sulfamethoxazole prophylaxis. Oxygen saturation is 88%. Chest X-ray shows diffuse bilateral interstitial infiltrates. What is the single most likely causative organism?",
+    "options": [
+      "A. Streptococcus pneumoniae",
+      "B. Staphylococcus aureus",
+      "C. Pneumocystis jirovecii",
+      "D. Aspergillus fumigatus",
+      "E. Mycobacterium tuberculosis"
+    ],
+    "correctAnswer": "C. Pneumocystis jirovecii",
+    "explanation": "The classic presentation of bilateral interstitial infiltrates, hypoxia, and dry cough in an immunosuppressed transplant patient who stopped prophylaxis strongly indicates Pneumocystis pneumonia (PCP) caused by P. jirovecii.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_88",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 42-year-old man presents with a 5-day history of palpable purpura on his lower legs and buttocks, associated with arthralgia of both knees and ankles, colicky abdominal pain, and nausea. Urinalysis shows proteinuria and microscopic hematuria. Platelet count is normal. What is the most likely diagnosis?",
+    "options": [
+      "A. Immune thrombocytopenia purpura (ITP)",
+      "B. Meningococcal septicemia",
+      "C. Polyarteritis nodosa",
+      "D. Henoch-Schonlein purpura (IgA Vasculitis)",
+      "E. Granulomatosis with polyangiitis (GPA)"
+    ],
+    "correctAnswer": "D. Henoch-Schonlein purpura (IgA Vasculitis)",
+    "explanation": "The tetrad of palpable purpura (with normal platelets), arthralgia, abdominal pain, and Nephrology disease (IgA nephropathy) is the classic presentation of Henoch-Schonlein Purpura.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_89",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 62-year-old man with a 15-year history of type 2 diabetes mellitus presents for routine follow-up. UACR is 45 mg/mmol. His eGFR is 52 mL/min/1.73m². He is on lisinopril and metformin. What is the most appropriate next step in managing this patient?",
+    "options": [
+      "A. Start a sodium-glucose cotransporter 2 (SGLT2) inhibitor",
+      "B. Start a beta-blocker for cardiovascular protection",
+      "C. Add a thiazide diuretic for blood pressure control",
+      "D. Refer for Nephrology biopsy to confirm diabetic nephropathy",
+      "E. Switch metformin to a sulfonylurea"
+    ],
+    "correctAnswer": "A. Start a sodium-glucose cotransporter 2 (SGLT2) inhibitor",
+    "explanation": "For diabetic patients demonstrating chronic kidney disease (eGFR 30-60 and/or albuminuria), adding an SGLT2 inhibitor is guideline-directed to significantly slow the progression of diabetic nephropathy and reduce cardiovascular events.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_90",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 58-year-old woman with a history of rheumatic fever presents with progressive dyspnea on exertion and palpitations. ECG shows atrial fibrillation. On auscultation, there is a loud S1, an opening snap followed by a low-pitched rumbling diastolic murmur best heard at the apex. Which valvular lesion is most likely responsible?",
+    "options": [
+      "A. Chronic aortic regurGastroenterologyation",
+      "B. Mitral valve prolapse",
+      "C. Mitral stenosis",
+      "D. Tricuspid stenosis",
+      "E. Aortic stenosis"
+    ],
+    "correctAnswer": "C. Mitral stenosis",
+    "explanation": "A loud S1, an opening snap, and a mid-diastolic rumbling murmur at the apex are the classic auscultatory hallmarks of mitral stenosis, a common sequela of rheumatic heart disease.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_91",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 55-year-old man with a past history of hypertension reports episodes of chest tightness. The episodes have become more frequent, now occurring at rest, lasting 5-8 minutes. His ECG at rest is normal. High-sensitivity troponin I is normal. What is the most appropriate initial management (in addition to aspirin and monitoring)?",
+    "options": [
+      "A. Immediate coronary angiography",
+      "B. Intravenous unfractionated heparin",
+      "C. Subcutaneous low-molecular weight heparin plus clopidogrel (or ticagrelor)",
+      "D. Intravenous nitroglycerin infusion",
+      "E. Discharge home with an outpatient stress test"
+    ],
+    "correctAnswer": "C. Subcutaneous low-molecular weight heparin plus clopidogrel (or ticagrelor)",
+    "explanation": "The patient presents with Unstable Angina. Dual antiplatelet therapy (Aspirin + a P2Y12 inhibitor) and systemic anticoagulation (like LMWH/Enoxaparin) form the foundation of acute medical management prior to an invasive strategy.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_92",
+    "system": "Endocrinology ",
+    "subject": "Endocrinology",
+    "difficulty": "Medium",
+    "text": "A 28-year-old woman presents with secondary amenorrhea, galactorrhea, and headaches. Serum prolactin is markedly elevated at 4500 mIU/L. MRI pituitary demonstrates a macroadenoma. What is the most appropriate initial management for this patient?",
+    "options": [
+      "A. Transsphenoidal surgical resection of the pituitary tumor",
+      "B. External beam radiotherapy",
+      "C. Cabergoline (Dopamine agonist) therapy",
+      "D. Octreotide therapy",
+      "E. Observation with serial prolactin measurements"
+    ],
+    "correctAnswer": "C. Cabergoline (Dopamine agonist) therapy",
+    "explanation": "Unlike most other pituitary tumors, prolactinomas are exquisitely sensitive to medical therapy. Dopamine agonists (like Cabergoline or Bromocriptine) are first-line, causing rapid tumor shrinkage and normalization of prolactin levels.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_93",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 30-year-old woman develops nausea, vomiting, and abdominal cramps 3 hours after eating a chicken salad left unrefrigerated. Several other attendees are similarly affected. She has no fever or bloody diarrhea. What is the most likely causative organism and appropriate management?",
+    "options": [
+      "A. Bacillus cereus - oral vancomycin",
+      "B. Staphylococcus aureus - supportive care only",
+      "C. Clostridium perfringens - metronidazole",
+      "D. Salmonella - ciprofloxacin",
+      "E. Norovirus - oral rehydration + ondansetron"
+    ],
+    "correctAnswer": "B. Staphylococcus aureus - supportive care only",
+    "explanation": "Rapid onset of emesis and cramps within 1-6 hours of consuming improperly stored foods (like mayonnaise-based salads) indicates pre-formed toxin ingestion, classically Staphylococcus aureus. Treatment is strictly supportive.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_94",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 62-year-old man with a history of hypertension presents with sudden-onset severe tearing chest pain radiating to his interscapular region. BP is 190/110 mmHg in the right arm and 150/80 mmHg in the left arm. Heart rate is 110 bpm. Examination reveals a diastolic decrescendo murmur. What is the single most appropriate next step in management?",
+    "options": [
+      "A. Immediate CT aortography",
+      "B. Intravenous beta-blocker (e.g., Esmolol or Labetalol) to lower HR and BP",
+      "C. Emergent bedside transthoracic echocardiogram",
+      "D. Intravenous sodium nitroprusside",
+      "E. Intravenous nitroglycerin infusion"
+    ],
+    "correctAnswer": "B. Intravenous beta-blocker (e.g., Esmolol or Labetalol) to lower HR and BP",
+    "explanation": "In acute aortic dissection, the primary goal before diagnostic imaging is anti-impulse therapy. Intravenous beta-blockers must be given first to reduce dP/dt (shear stress) and lower heart rate and blood pressure.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_95",
+    "system": "Gastroenterology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 45-year-old male presents to the emergency department with severe epigastric pain radiating to the back, nausea, and vomiting. Laboratory tests reveal elevated serum amylase and lipase levels. Which of the following is the most common etiology of this condition?",
+    "options": [
+      "A. Gallstones",
+      "B. Congenital anomalies",
+      "C. Hypertriglyceridemia",
+      "D. Medications",
+      "E. Viral infection"
+    ],
+    "correctAnswer": "A. Gallstones",
+    "explanation": "The patient is presenting with acute pancreatitis. Worldwide, the most common causes are gallstones (biliary pancreatitis) and excessive alcohol consumption.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_96",
+    "system": "Nephrology",
+    "subject": "Nephrology",
+    "difficulty": "Medium",
+    "text": "A 28-year-old woman presents with 2 days of haematuria, leg swelling, and hypertension 2 weeks after a sore throat. Investigations: urinalysis 3+ blood, 2+ protein; serum creatinine 140 μmol/L; low C3, elevated anti-streptolysin O (ASO) titer, and red blood cell casts. Which of the following is the most likely diagnosis?",
+    "options": [
+      "A. Post-streptococcal glomerulonephritis",
+      "B. Systemic lupus erythematosus",
+      "C. IgA nephropathy",
+      "D. Goodpasture syndrome",
+      "E. Henoch-Schönlein purpura"
+    ],
+    "correctAnswer": "A. Post-streptococcal glomerulonephritis",
+    "explanation": "Nephritic syndrome (hematuria, hypertension, edema, RBC casts) occurring 1-3 weeks post-pharynGastroenterologyis with low C3 and positive streptococcal serology firmly diagnoses Post-Streptococcal Glomerulonephritis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_97",
+    "system": "Hepatology",
+    "subject": "Gastroenterology",
+    "difficulty": "Medium",
+    "text": "A 34-year-old woman presents with fatigue, jaundice, and arthralgia. LFTs show ALT 320 U/L, AST 280 U/L, ALP 100 U/L, bilirubin 4.2 mg/dL. Viral hepatitis serologies are negative. Serum IgG is elevated at 24 g/L. ANA is positive at 1:320. Anti-smooth muscle antibody (SMA) is strongly positive. What is the most likely diagnosis?",
+    "options": [
+      "A. Wilson's disease",
+      "B. Autoimmune hepatitis",
+      "C. Primary hemochromatosis",
+      "D. Primary sclerosing cholanGastroenterologyis",
+      "E. Primary biliary cholanGastroenterologyis"
+    ],
+    "correctAnswer": "B. Autoimmune hepatitis",
+    "explanation": "Autoimmune hepatitis. The presence of elevated transaminases, hypergammaglobulinemia (high IgG), and positive autoantibodies (ANA and strongly positive Anti-SMA) in a young female without viral hepatitis is the classic presentation of type 1 autoimmune hepatitis.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_98",
+    "system": "Pulmonology",
+    "subject": "Pulmonology",
+    "difficulty": "Hard",
+    "text": "A 62-year-old woman with GOLD stage 3 chronic obstructive pulmonary disease has had two hospital admissions for infective exacerbations in the past year. Her resting SpO2 is 88% on room air but desaturates to 82% on a 6-minute walk test. Echocardiography shows right ventricular hypertrophy and mild tricuspid regurGastroenterologyation. Which of the following is the most important intervention to improve her survival?",
+    "options": [
+      "A. Intermittent oral prednisolone",
+      "B. Long-term domiciliary oxygen therapy",
+      "C. Annual influenza and pneumococcal vaccination",
+      "D. Pulmonary rehabilitation program",
+      "E. Roflumilast"
+    ],
+    "correctAnswer": "B. Long-term domiciliary oxygen therapy",
+    "explanation": "Long-term domiciliary oxygen therapy. In patients with severe COPD complicated by chronic resting hypoxemia (SpO2 ≤ 88% or PaO2 ≤ 55 mmHg) and cor pulmonale (right ventricular hypertrophy), long-term oxygen therapy (≥ 15 hours/day) is the only intervention that improves survival.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_99",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Hard",
+    "text": "A 45-year-old woman presents with Raynaud's phenomenon, sclerodactyly, and multiple telangiectasias. She has had heartburn for years and now complains of progressive shortness of breath on exertion. Echocardiography reveals an estimated pulmonary artery systolic pressure of 55 mmHg. She has no significant skin involvement on her trunk. Which one of the following autoantibodies is most likely to be positive in this patient?",
+    "options": [
+      "A. Anti-topoisomerase I (anti-Scl-70)",
+      "B. Anti-centromere antibody",
+      "C. Anti-dsDNA",
+      "D. Anti-Jo-1 antibody",
+      "E. Anti-neutrophil cytoplasmic antibody (c-ANCA)"
+    ],
+    "correctAnswer": "B. Anti-centromere antibody",
+    "explanation": "Anti-centromere antibody. The patient exhibits features of Limited Cutaneous Systemic Sclerosis (CREST syndrome: Calcinosis, Raynaud's, Esophageal dysmotility, Sclerodactyly, Telangiectasia) complicated by pulmonary arterial hypertension. This subtype is strongly associated with anti-centromere antibodies.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_100",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 30-year-old woman presents with fatigue and mild dyspnea on exertion. Physical examination reveals wide, fixed splitting of the second heart sound and a systolic flow murmur over the pulmonary area. Which of the following ECG changes is most commonly seen in this patient?",
+    "options": [
+      "A. Left bundle branch block",
+      "B. Right bundle branch block (RBBB)",
+      "C. Second degree heart block",
+      "D. ST-segment elevation",
+      "E. First-degree heart block"
+    ],
+    "correctAnswer": "B. Right bundle branch block (RBBB)",
+    "explanation": "Right bundle branch block (RBBB). The clinical findings of a wide, fixed split S2 and a pulmonary flow murmur indicate an Atrial Septal Defect (ASD). The chronic right ventricular volume overload in ASD frequently results in incomplete or complete RBBB on the ECG.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_101",
+    "system": "Cardiology",
+    "subject": "Cardiology",
+    "difficulty": "Medium",
+    "text": "A 66-year-old man presents to the outpatient clinic with a history of sudden-onset right arm weakness and slurred speech that lasted for about 15 minutes before resolving completely. He has a history of hypertension, type 2 diabetes mellitus, and smokes one pack of cigarettes daily. On examination, his neurological examination is normal. ECG shows normal sinus rhythm. What is the most appropriate next step in the management of this patient?",
+    "options": [
+      "A. Reassure the patient as symptoms have resolved",
+      "B. Start high-dose corticosteroids immediately",
+      "C. Arrange urgent brain imaging and carotid Doppler ultrasound",
+      "D. Delay investigations for one month unless symptoms recur",
+      "E. Start full-dose anticoagulation"
+    ],
+    "correctAnswer": "C. Arrange urgent brain imaging and carotid Doppler ultrasound",
+    "explanation": "The patient experienced a Transient Ischemic Attack (TIA), which represents a high short-term risk for a subsequent stroke. Urgent brain and vascular imaging is required to identify the etiology (e.g., carotid stenosis) and guide immediate secondary prevention.",
+    "educationalObjective": null,
+    "tags": [],
+    "hint": null,
+    "imageUrl": null,
+    "type": "single"
+  },
+  {
+    "id": "wizari_102",
+    "system": "Nephrology",
+    "subject":null}]

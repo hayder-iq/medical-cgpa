@@ -5,9 +5,6 @@ import {
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// GLOBAL STYLES
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const GCSS = `
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -22,16 +19,15 @@ mark{background:rgba(0,212,170,0.2);color:inherit;border-radius:3px;padding:0 2p
 ::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.3);border-radius:4px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scaleIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 .fade-up{animation:fadeUp .3s ease forwards}
 .scale-in{animation:scaleIn .22s ease forwards}
 .btn{transition:all .15s ease;cursor:pointer;border:none;outline:none}
 .btn:hover{opacity:.85;transform:translateY(-1px)}
 .btn:active{transform:translateY(1px)}
+.wizari-glow{animation:pulse 2s ease-in-out infinite}
 `;
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// THEME
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const TH = (d) => d ? {
   bg:"#07090F", card:"#0E1525", sub:"#111B2E", sub2:"#16223A",
   border:"rgba(255,255,255,0.07)", text:"#E2E8F0", muted:"rgba(226,232,240,0.38)",
@@ -42,9 +38,6 @@ const TH = (d) => d ? {
   acc:"#00A896", acc2:"#2563EB", hdr:"rgba(239,242,247,0.92)", inp:"rgba(0,0,0,0.04)"
 };
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA STAGE DATA
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const STAGES = [
   {id:0,label:"1st",full:"First Stage",arabic:"المرحلة الأولى",color:"#60A5FA",weight:5,subjects:[{en:"Anatomy",ar:"التشريح",u:8},{en:"Medical Biology",ar:"الاحياء الطبية",u:6},{en:"Medical Chemistry",ar:"الكيمياء الطبية",u:6},{en:"Medical Physics",ar:"الفيزياء الطبية",u:6},{en:"English Language",ar:"اللغة الانكليزية",u:4},{en:"Computer Science",ar:"الحاسبات",u:3},{en:"Medical Terminology",ar:"المصطلحات الطبية",u:2},{en:"Basics of Medicine",ar:"اساسيات الطب",u:2},{en:"Democracy & Human Rights",ar:"الديمقراطية وحقوق الانسان",u:2}]},
   {id:1,label:"2nd",full:"Second Stage",arabic:"المرحلة الثانية",color:"#A78BFA",weight:5,subjects:[{en:"Physiology",ar:"فسلجة",u:13},{en:"Anatomy",ar:"التشريح",u:10},{en:"Biochemistry",ar:"الكيمياء الحياتية",u:8},{en:"Histology",ar:"الانسجة",u:6},{en:"Embryology",ar:"الاجنة",u:2},{en:"Baath Party Crimes",ar:"جرائم حزب البعث",u:2}]},
@@ -55,9 +48,6 @@ const STAGES = [
 ];
 const TOTAL_UNITS = STAGES.reduce((a,s)=>a+s.subjects.reduce((b,x)=>b+x.u,0),0);
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// UTILITIES
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const classify=(g)=>{if(g==null||g===0)return null;if(g>=90)return{label:"Excellent",ar:"امتياز",color:"#10B981"};if(g>=80)return{label:"Very Good",ar:"جيد جداً",color:"#60A5FA"};if(g>=70)return{label:"Good",ar:"جيد",color:"#A78BFA"};if(g>=60)return{label:"Medium",ar:"متوسط",color:"#FBBF24"};if(g>=50)return{label:"Acceptable",ar:"مقبول",color:"#F97316"};return{label:"Fail",ar:"راسب",color:"#EF4444"};};
 const gc=(g)=>{if(g==null)return"#888";if(g>=90)return"#10B981";if(g>=80)return"#60A5FA";if(g>=70)return"#A78BFA";if(g>=60)return"#FBBF24";if(g>=50)return"#F97316";return"#EF4444";};
 const diffC=(d)=>({Easy:"#10B981",Medium:"#FBBF24",Hard:"#EF4444"}[d]||"#888");
@@ -66,19 +56,16 @@ const shuffle=(a)=>[...a].sort(()=>Math.random()-.5);
 const WD=(g,u,total,w)=>g==null||total===0?null:(g/100)*(u/total)*w;
 const hlStem=(t)=>t?.replace(/(most likely|next best step|most appropriate|best initial|diagnosis|which of the following|first-line|what is the)/gi,"<mark>$1</mark>")||t;
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// DEFAULT QUESTIONS (صالحة وآمنة)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const DEFAULT_QUESTIONS = [
-  { id: "def1", system: "Cardiology", subject: "Internal Medicine", difficulty: "Medium", text: "Which ECG finding is most specific for prior MI?", options: ["ST elevation", "ST depression", "T wave inversion", "Prolonged QT interval", "Pathological Q wave"], correctAnswer: "Pathological Q wave", explanation: "Pathological Q waves indicate transmural infarction.", educationalObjective: "Recognize ECG signs of prior MI.", tags: ["ECG", "MI"], hint: "Think about permanent changes.", imageUrl: null, type: "single" },
-  { id: "def2", system: "Respiratory", subject: "Internal Medicine", difficulty: "Medium", text: "A 60-year-old patient presents with pleuritic chest pain and a pericardial rub that has persisted for 4 weeks and fever following MI.", options: ["Recurrent MI", "Pulmonary embolism", "Ventricular aneurysm", "Infectious pericarditis", "Dressler's syndrome"], correctAnswer: "Dressler's syndrome", explanation: "Dressler's syndrome is post-MI pericarditis.", educationalObjective: "Differentiate early from late post-MI pericarditis.", tags: ["MI", "Pericarditis"], hint: "Timing is key.", imageUrl: null, type: "single" },
-  { id: "def3", system: "Nephrology", subject: "Internal Medicine", difficulty: "Medium", text: "A urinalysis reveals muddy brown granular casts. Most likely diagnosis?", options: ["Acute Tubular Necrosis (ATN)", "Renal tubular acidosis", "Glomerulonephritis", "Aspiration", "Obstruction"], correctAnswer: "Acute Tubular Necrosis (ATN)", explanation: "Muddy brown granular casts are characteristic of ATN.", educationalObjective: "Urine sediment in ATN.", tags: ["ATN", "Casts"], hint: "Ischemic or nephrotoxic injury.", imageUrl: null, type: "single" },
-  { id: "def4", system: "Gastroenterology", subject: "Internal Medicine", difficulty: "Medium", text: "Mr. Salam has recurrent bloody diarrhea over several weeks. Suspect ulcerative colitis. What advice would you give?", options: ["This is a relapsing-remitting disease", "He may require sigmoidoscopy followed by colonoscopy", "Definitive treatment would be given straightforward irrespective of colonic biopsy", "Biological medicines may be used", "Total colectomy may be required at a later stage"], correctAnswer: "This is a relapsing-remitting disease", explanation: "Ulcerative colitis typically has a relapsing-remitting course.", educationalObjective: "Understand the natural history of UC.", tags: ["UC", "IBD"], hint: "Chronicity.", imageUrl: null, type: "single" },
-  { id: "def5", system: "Endocrinology", subject: "Internal Medicine", difficulty: "Medium", text: "A 24-year-old male with tall stature, eunuchoid habitus, sparse pubic hair, small firm testes (1.5 cm). FSH & LH elevated, testosterone low. Next step?", options: ["Semen analysis", "Testosterone replacement therapy", "Karyotyping", "Testicular biopsy", "Pituitary MRI"], correctAnswer: "Karyotyping", explanation: "Elevated gonadotropins with hypogonadism suggests primary testicular failure; karyotyping for Klinefelter syndrome.", educationalObjective: "Evaluation of hypergonadotropic hypogonadism.", tags: ["Hypogonadism", "Klinefelter"], hint: "Small firm testes.", imageUrl: null, type: "single" }
+  { id: "def1", system: "Cardiology", subject: "Internal Medicine", difficulty: "Medium", text: "Which ECG finding is most specific for prior MI?", options: ["ST elevation", "ST depression", "T wave inversion", "Prolonged QT interval", "Pathological Q wave"], correctAnswer: "Pathological Q wave", explanation: "Pathological Q waves indicate transmural infarction.", educationalObjective: "Recognize ECG signs of prior MI.", tags: ["ECG", "MI"], hint: "", imageUrl: null, type: "single" },
+  { id: "def2", system: "Respiratory", subject: "Internal Medicine", difficulty: "Medium", text: "A 60-year-old patient presents with pleuritic chest pain and a pericardial rub that has persisted for 4 weeks and fever following MI.", options: ["Recurrent MI", "Pulmonary embolism", "Ventricular aneurysm", "Infectious pericarditis", "Dressler's syndrome"], correctAnswer: "Dressler's syndrome", explanation: "Dressler's syndrome is post-MI pericarditis.", educationalObjective: "Differentiate early from late post-MI pericarditis.", tags: ["MI", "Pericarditis"], hint: "", imageUrl: null, type: "single" },
+  { id: "def3", system: "Nephrology", subject: "Internal Medicine", difficulty: "Medium", text: "A urinalysis reveals muddy brown granular casts. Most likely diagnosis?", options: ["Acute Tubular Necrosis (ATN)", "Renal tubular acidosis", "Glomerulonephritis", "Aspiration", "Obstruction"], correctAnswer: "Acute Tubular Necrosis (ATN)", explanation: "Muddy brown granular casts are characteristic of ATN.", educationalObjective: "Urine sediment in ATN.", tags: ["ATN", "Casts"], hint: "", imageUrl: null, type: "single" },
+  { id: "def4", system: "Gastroenterology", subject: "Internal Medicine", difficulty: "Medium", text: "Mr. Salam has recurrent bloody diarrhea over several weeks. Suspect ulcerative colitis. What advice would you give?", options: ["This is a relapsing-remitting disease", "He may require sigmoidoscopy followed by colonoscopy", "Definitive treatment would be given straightforward irrespective of colonic biopsy", "Biological medicines may be used", "Total colectomy may be required at a later stage"], correctAnswer: "This is a relapsing-remitting disease", explanation: "Ulcerative colitis typically has a relapsing-remitting course.", educationalObjective: "Understand the natural history of UC.", tags: ["UC", "IBD"], hint: "", imageUrl: null, type: "single" },
+  { id: "def5", system: "Endocrinology", subject: "Internal Medicine", difficulty: "Medium", text: "A 24-year-old male with tall stature, eunuchoid habitus, sparse pubic hair, small firm testes (1.5 cm). FSH & LH elevated, testosterone low. Next step?", options: ["Semen analysis", "Testosterone replacement therapy", "Karyotyping", "Testicular biopsy", "Pituitary MRI"], correctAnswer: "Karyotyping", explanation: "Elevated gonadotropins with hypogonadism suggests primary testicular failure; karyotyping for Klinefelter syndrome.", educationalObjective: "Evaluation of hypergonadotropic hypogonadism.", tags: ["Hypogonadism", "Klinefelter"], hint: "", imageUrl: null, type: "single" }
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CGPA CALCULATOR (مع إصلاح جدول المواد)
+// CGPA CALCULATOR
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function CGPAView({dark}) {
   const C=TH(dark);
@@ -118,7 +105,6 @@ function CGPAView({dark}) {
 
   return(
     <div style={{minHeight:"100dvh",background:C.bg,color:C.text}}>
-      {/* Metrics strip */}
       <div style={{padding:"20px 28px",borderBottom:`1px solid ${C.border}`,display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:16}}>
         <div style={{background:`linear-gradient(135deg,rgba(0,212,170,.12),rgba(59,130,246,.06))`,border:"1px solid rgba(0,212,170,0.25)",borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:"#00D4AA",fontWeight:700,letterSpacing:2}}>STAGE DEGREE SUM</div><div style={{fontSize:56,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#00D4AA"}}>{metrics.completedWD.toFixed(2)}</div><div style={{fontSize:10,color:C.muted,fontFamily:"'JetBrains Mono'"}}>/100</div></div>
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>REMAINING WEIGHT</div><div style={{fontSize:48,lineHeight:1,fontFamily:"'Bebas Neue'",color:"#60A5FA"}}>{metrics.remainW.toFixed(0)}</div><div style={{fontSize:10,color:C.muted}}>to reach 100%</div></div>
@@ -127,22 +113,17 @@ function CGPAView({dark}) {
         <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 22px"}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>TARGET AVERAGE</div><input type="number" min={50} max={100} step={0.5} value={targetAvg} onChange={e=>setTargetAvg(parseFloat(e.target.value)||0)} style={{width:"100%",background:"transparent",border:"none",outline:"none",fontSize:32,fontFamily:"'Bebas Neue'",letterSpacing:2,color:C.text}}/>{metrics.needed!=null&&<div style={{fontSize:11,fontWeight:700,marginTop:4,color:metrics.needed<0?"#10B981":metrics.needed>100?"#EF4444":"#FBBF24"}}>{metrics.needed<0?"✓ Target achieved!":metrics.needed>100?"✗ Not achievable":`Need ${metrics.needed.toFixed(1)} avg remaining`}</div>}</div>
       </div>
 
-      {/* Tabs */}
       <div style={{display:"flex",gap:4,padding:"12px 28px",borderBottom:`1px solid ${C.border}`}}>
         {[["grades","Grades"],["details","Visual Fingerprint"],["insights","Insights"]].map(([k,l])=><button key={k} className="btn" onClick={()=>setTab(k)} style={{padding:"8px 18px",borderRadius:10,background:tab===k?(dark?"rgba(255,255,255,.1)":"rgba(0,0,0,.08)"):"transparent",color:tab===k?C.text:C.muted,fontWeight:600,fontSize:12}}>{l}</button>)}
       </div>
 
       {tab==="grades"&&(
         <div style={{display:"grid",gridTemplateColumns:"220px 1fr",minHeight:"calc(100dvh - 280px)"}}>
-          {/* شريط المراحل الجانبي */}
           <div style={{borderRight:`1px solid ${C.border}`,padding:16,display:"flex",flexDirection:"column",gap:4,overflowY:"auto"}}>
             {STAGES.map((s,idx)=>{const sp=metrics.perStage[idx],act=activeStage===idx;return(<button key={idx} className="btn" onClick={()=>setActiveStage(idx)} style={{width:"100%",textAlign:"left",padding:"11px 13px",borderRadius:11,background:act?`${s.color}15`:"transparent",borderLeft:`3px solid ${act?s.color:"transparent"}`,opacity:act?1:.5}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><div style={{fontSize:13,fontWeight:700,color:act?s.color:C.text,fontFamily:"'Bebas Neue'",letterSpacing:1.5}}>{s.full}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{s.weight}% Weight</div></div><div style={{textAlign:"right"}}>{sp.avg!=null?(<><div style={{fontSize:17,fontWeight:900,fontFamily:"'Bebas Neue'",color:gc(sp.avg)}}>{sp.avg.toFixed(1)}</div><div style={{fontSize:9,color:C.muted,fontFamily:"'JetBrains Mono'"}}>{sp.complete?`+${s.weight}/${s.weight}`:`0/${s.weight}`}</div></>):(<div style={{fontSize:17,fontFamily:"'Bebas Neue'",color:C.muted}}>—</div>)}</div></div>{sp.gradedU>0&&<div style={{height:2,background:dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.08)",borderRadius:1,marginTop:7}}><div style={{height:"100%",background:s.color,width:`${sp.pct*100}%`}}/></div>}</button>);})}
           </div>
-
-          {/* المحتوى الرئيسي */}
           <div style={{display:"grid",gridTemplateColumns:"1fr 360px"}}>
             <div className="fade-up" style={{padding:28,borderRight:`1px solid ${C.border}`,overflowY:"auto"}}>
-              {/* عنوان المرحلة في المنتصف */}
               <div style={{textAlign:"center",marginBottom:24}}>
                 <div style={{display:"inline-block",background:`${stage.color}20`,borderRadius:60,padding:"8px 24px",marginBottom:12}}>
                   <span style={{fontFamily:"'Bebas Neue'",fontSize:28,letterSpacing:3,color:stage.color}}>{stage.full}</span>
@@ -155,8 +136,6 @@ function CGPAView({dark}) {
                   </div>
                 )}
               </div>
-
-              {/* جدول المواد بأعمدة ثابتة وآمنة */}
               <div style={{display:"grid", gridTemplateColumns:"60px 1fr 100px 100px 80px", gap:"8px 12px", alignItems:"center"}}>
                 {stage.subjects.map((sub,i)=>{
                   const g=grades[`${stage.id}-${i}`];
@@ -183,8 +162,6 @@ function CGPAView({dark}) {
               </div>
               {sm.totalWD>0&&<div style={{marginTop:18,textAlign:"right",borderTop:`1px solid ${C.border}`,paddingTop:14}}><div style={{fontSize:11,color:C.muted,letterSpacing:1}}>Stage Weighted Degree</div><div style={{fontFamily:"'Bebas Neue'",fontSize:32,color:"#FBBF24"}}>{sm.totalWD.toFixed(5)}</div><div style={{fontSize:10,color:C.muted}}>Max = {stage.weight}</div></div>}
             </div>
-
-            {/* الشريط الجانبي الأيمن */}
             <div style={{padding:28,display:"flex",flexDirection:"column",gap:22,overflowY:"auto"}}>
               <div><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE RADAR</div><ResponsiveContainer width="100%" height={240}><RadarChart data={radarData} margin={{top:8,right:8,bottom:8,left:8}}><PolarGrid stroke={dark?"rgba(255,255,255,.07)":"rgba(0,0,0,.1)"}/><PolarAngleAxis dataKey="s" tick={{fontSize:9,fill:C.muted}}/><Radar dataKey="g" stroke={stage.color} fill={stage.color} fillOpacity={.18} strokeWidth={2}/><Tooltip contentStyle={{background:C.card,border:`1px solid ${C.border}`,borderRadius:10}} formatter={v=>[v||"—","Grade"]}/></RadarChart></ResponsiveContainer></div>
               <div style={{background:C.sub,borderRadius:14,padding:16}}><div style={{fontSize:10,color:C.muted,fontWeight:700,letterSpacing:2}}>STAGE BREAKDOWN</div>{(()=>{const items=stage.subjects.map((s,i)=>({...s,g:grades[`${stage.id}-${i}`]})).filter(s=>s.g!=null);if(!items.length)return<div style={{fontSize:12,color:C.muted,fontStyle:"italic"}}>Enter grades to see breakdown</div>;const b=items.reduce((a,x)=>x.g>a.g?x:a),w=items.reduce((a,x)=>x.g<a.g?x:a);return(<div style={{display:"flex",flexDirection:"column",gap:9}}>{[["↑ Best",b.en,"#10B981"],["↓ Weakest",w.en,"#FBBF24"],["Graded",`${items.length}/${stage.subjects.length}`,C.text],["Classification",classify(sm.avg)?.label??"",classify(sm.avg)?.color??C.muted]].map(([l,v,c])=><div key={l} style={{display:"flex",justifyContent:"space-between",fontSize:12,gap:8}}><span style={{color:C.muted}}>{l}</span><span style={{color:c,fontWeight:700}}>{v}</span></div>)}</div>);})()}</div>
@@ -261,9 +238,9 @@ function CGPAView({dark}) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// LIBRARY COMPONENT (Qbank)
+// LIBRARY
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function Library({ questions, bankQuestionsList, previousExamsList, onStart, dark }) {
+function Library({ questions, bankQuestionsList, previousExamsList, fourthWizariList, onStart, dark }) {
   const C = TH(dark);
   const [source, setSource] = useState("all");
   const [selectedSystem, setSelectedSystem] = useState("all");
@@ -274,8 +251,9 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
   const currentQuestions = useMemo(() => {
     if (source === "bank") return bankQuestionsList;
     if (source === "previous") return previousExamsList;
+    if (source === "wizari") return fourthWizariList;
     return questions;
-  }, [source, questions, bankQuestionsList, previousExamsList]);
+  }, [source, questions, bankQuestionsList, previousExamsList, fourthWizariList]);
 
   const systemStats = useMemo(() => {
     const stats = { all: currentQuestions.length };
@@ -317,15 +295,81 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
         <p style={{ color: C.muted, fontSize: 14 }}>Browse and start a practice session from {currentQuestions.length} questions.</p>
       </div>
 
-      {/* أزرار المصدر */}
-      <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 24 }}>
-        <button onClick={() => { setSource("all"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "all" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "all" ? "white" : C.text, border: `1px solid ${source === "all" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>📚 All Questions ({questions.length})</button>
-        <button onClick={() => { setSource("bank"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "bank" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "bank" ? "white" : C.text, border: `1px solid ${source === "bank" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>📖 Bank Questions ({bankQuestionsList.length})</button>
-        <button onClick={() => { setSource("previous"); setSelectedSystem("all"); setPage(0); }} style={{ padding: "8px 20px", borderRadius: 40, background: source === "previous" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp, color: source === "previous" ? "white" : C.text, border: `1px solid ${source === "previous" ? "transparent" : C.border}`, cursor: "pointer", fontWeight: 600 }}>📝 Previous Exams ({previousExamsList.length})</button>
+      {/* Source tabs */}
+      <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 24, flexWrap: "wrap" }}>
+        {[
+          ["all", "📚 All Questions", questions.length],
+          ["bank", "📖 Bank Questions", bankQuestionsList.length],
+          ["previous", "📝 Previous Exams", previousExamsList.length],
+          ["wizari", "📘 4th Wizari 2026", fourthWizariList.length],
+        ].map(([key, label, count]) => (
+          <button
+            key={key}
+            onClick={() => { setSource(key); setSelectedSystem("all"); setPage(0); }}
+            style={{
+              padding: "8px 20px", borderRadius: 40,
+              background: source === key ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : C.inp,
+              color: source === key ? "white" : C.text,
+              border: `1px solid ${source === key ? "transparent" : C.border}`,
+              cursor: "pointer", fontWeight: 600
+            }}
+          >
+            {label} ({count})
+          </button>
+        ))}
       </div>
 
-      {/* أزرار الأنظمة */}
-      {source !== "previous" && (
+      {/* ━━━ WIZARI DIRECT START PANEL ━━━ */}
+      {source === "wizari" && (
+        <div style={{
+          textAlign: "center",
+          marginBottom: 32,
+          padding: "28px 24px",
+          borderRadius: 20,
+          border: `1.5px solid rgba(0,212,170,0.35)`,
+          background: dark ? "rgba(0,212,170,0.05)" : "rgba(0,168,150,0.06)",
+          position: "relative",
+          overflow: "hidden"
+        }}>
+          {/* decorative strip */}
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0, height: 3,
+            background: "linear-gradient(90deg, #00D4AA, #3B82F6, #A78BFA)"
+          }} />
+          <div style={{ fontFamily: "'Bebas Neue'", fontSize: 13, letterSpacing: 3, color: C.acc, marginBottom: 6 }}>
+            وزارية المرحلة الرابعة 2026
+          </div>
+          <div style={{ fontSize: 13, color: C.muted, marginBottom: 18 }}>
+            {fourthWizariList.length > 0
+              ? `${fourthWizariList.length} سؤال وزاري — ابدأ مباشرة بدون أي إعداد`
+              : "لا توجد أسئلة وزاريات محملة بعد — تأكد من ملف 4th-wizari-2026.json"}
+          </div>
+          {fourthWizariList.length > 0 && (
+            <button
+              onClick={() => onStart(fourthWizariList, "wizari")}
+              className="btn wizari-glow"
+              style={{
+                padding: "16px 52px",
+                borderRadius: 40,
+                background: "linear-gradient(135deg, #00D4AA, #3B82F6)",
+                color: "white",
+                fontSize: 20,
+                fontWeight: 900,
+                letterSpacing: 2,
+                fontFamily: "'Bebas Neue'",
+                boxShadow: "0 6px 28px rgba(0,212,170,0.35)",
+                border: "none",
+                cursor: "pointer"
+              }}
+            >
+              🚀 ابدأ الوزاريات الآن — {fourthWizariList.length} سؤال
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* System filter — hidden for wizari since it has the direct panel */}
+      {source !== "previous" && source !== "wizari" && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 32 }}>
           <button onClick={() => setSelectedSystem("all")} style={{ padding: "6px 16px", borderRadius: 40, background: selectedSystem === "all" ? C.acc : C.inp, color: selectedSystem === "all" ? "white" : C.text, border: `1px solid ${C.border}`, cursor: "pointer" }}>All Systems ({systemStats.all})</button>
           {systemList.filter(sys => sys !== "Previous Exams").map(sys => (
@@ -334,12 +378,20 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
         </div>
       )}
 
-      {/* زر بدء الجلسة في المنتصف */}
-      <div style={{ textAlign: "center", marginBottom: 24 }}>
-        <button onClick={onStart} className="btn" style={{ padding: "12px 32px", borderRadius: 40, background: `linear-gradient(135deg, ${C.acc}, ${C.acc2})`, color: "white", fontSize: 16, fontWeight: 700, letterSpacing: 1 }}>🚀 START NEW SESSION</button>
-      </div>
+      {/* Generic start button — NOT shown for wizari (they use the panel above) */}
+      {source !== "wizari" && (
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <button
+            onClick={() => onStart(currentQuestions, source)}
+            className="btn"
+            style={{ padding: "12px 32px", borderRadius: 40, background: `linear-gradient(135deg, ${C.acc}, ${C.acc2})`, color: "white", fontSize: 16, fontWeight: 700, letterSpacing: 1 }}
+          >
+            🚀 START NEW SESSION ({source === "bank" ? "Bank" : source === "previous" ? "Previous Exams" : "All"})
+          </button>
+        </div>
+      )}
 
-      {/* شريط البحث */}
+      {/* Search */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
         <div style={{ position: "relative", width: "100%", maxWidth: 300 }}>
           <input type="text" placeholder="Search questions..." value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} style={{ width: "100%", padding: "10px 16px 10px 40px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, color: C.text, fontSize: 13, outline: "none" }} />
@@ -347,29 +399,42 @@ function Library({ questions, bankQuestionsList, previousExamsList, onStart, dar
         </div>
       </div>
 
-      {/* قائمة الأسئلة */}
+      {/* Question list */}
       <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 24, padding: "20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}><div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1, color: C.acc }}>QUESTIONS <span style={{ color: C.muted }}>({filtered.length})</span></div><div style={{ fontSize: 12, color: C.muted }}>Page {page + 1}/{pages}</div></div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1, color: C.acc }}>QUESTIONS <span style={{ color: C.muted }}>({filtered.length})</span></div>
+          <div style={{ fontSize: 12, color: C.muted }}>Page {page + 1}/{pages || 1}</div>
+        </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {paged.map((q, idx) => (
             <div key={q.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", borderRadius: 14, background: C.sub }}>
               <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 12, fontWeight: 700, color: C.acc, minWidth: 36 }}>Q{page * PER + idx + 1}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{q.text || "No text"}</div>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", fontSize: 11, color: C.muted }}><span>📚 {q.system || "General"}</span><span>📖 {q.subject || "—"}</span>{q.difficulty && <span style={{ color: diffC(q.difficulty), fontWeight: 600 }}>{q.difficulty}</span>}</div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", fontSize: 11, color: C.muted }}>
+                  <span>📚 {q.system || "General"}</span>
+                  <span>📖 {q.subject || "—"}</span>
+                  {q.difficulty && <span style={{ color: diffC(q.difficulty), fontWeight: 600 }}>{q.difficulty}</span>}
+                </div>
               </div>
               <div style={{ fontSize: 11, color: C.muted }}>{q.options?.length || 0} opts</div>
             </div>
           ))}
         </div>
-        {pages > 1 && <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 20 }}><button className="btn" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} style={{ padding: "6px 14px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: page === 0 ? 0.4 : 1 }}>← Prev</button><span style={{ padding: "6px 12px", fontSize: 13, color: C.muted }}>{page + 1} / {pages}</span><button className="btn" onClick={() => setPage(p => Math.min(pages - 1, p + 1))} disabled={page === pages - 1} style={{ padding: "6px 14px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: page === pages - 1 ? 0.4 : 1 }}>Next →</button></div>}
+        {pages > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 20 }}>
+            <button className="btn" onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} style={{ padding: "6px 14px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: page === 0 ? 0.4 : 1 }}>← Prev</button>
+            <span style={{ padding: "6px 12px", fontSize: 13, color: C.muted }}>{page + 1} / {pages}</span>
+            <button className="btn" onClick={() => setPage(p => Math.min(pages - 1, p + 1))} disabled={page === pages - 1} style={{ padding: "6px 14px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: page === pages - 1 ? 0.4 : 1 }}>Next →</button>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SESSION CONFIG (آمن)
+// SESSION CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function SessionConfig({ questions, onStart, onBack, dark }) {
   const C = TH(dark);
@@ -390,10 +455,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
   const toggleSet = (set, setFn, val) => setFn(prev => { const n = new Set(prev); n.has(val) ? n.delete(val) : n.add(val); return n; });
 
   const handleStart = () => {
-    if (!available.length) {
-      alert("No valid questions match your filters.");
-      return;
-    }
+    if (!available.length) { alert("No valid questions match your filters."); return; }
     let qs = randomize ? shuffle(available) : available.slice();
     qs = qs.slice(0, finalCount);
     onStart({ name, mode, timeLimit: timeLimit * 60, questions: qs, startTime: Date.now() });
@@ -403,7 +465,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
     return (
       <div className="fade-up" style={{ padding: "32px 24px", maxWidth: 800, margin: "0 auto", background: C.bg, color: C.text, textAlign: "center" }}>
         <button onClick={onBack} className="btn" style={{ padding: "8px 16px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }}>← Back</button>
-        <p style={{ marginTop: 24 }}>No valid questions available. Please add questions or use sample data.</p>
+        <p style={{ marginTop: 24 }}>No valid questions available.</p>
       </div>
     );
   }
@@ -429,7 +491,7 @@ function SessionConfig({ questions, onStart, onBack, dark }) {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ACTIVE SESSION (آمن تماماً)
+// ACTIVE SESSION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function ActiveSession({ config, onEnd, dark }) {
   const C = TH(dark);
@@ -467,11 +529,7 @@ function ActiveSession({ config, onEnd, dark }) {
     if (!isTimed || timeLeft <= 0) return;
     const t = setInterval(() => {
       setTimeLeft(p => {
-        if (p <= 1) {
-          clearInterval(t);
-          onEnd({ ...config, answers, marked, notes, elapsed: timeLimit });
-          return 0;
-        }
+        if (p <= 1) { clearInterval(t); onEnd({ ...config, answers, marked, notes, elapsed: timeLimit }); return 0; }
         return p - 1;
       });
     }, 1000);
@@ -500,15 +558,6 @@ function ActiveSession({ config, onEnd, dark }) {
     return { bg: C.border, pulse: false };
   };
 
-  const optStyle = (opt) => {
-    const base = { display: "flex", alignItems: "flex-start", gap: 12, padding: "13px 16px", borderRadius: 12, border: "1.5px solid", marginBottom: 8, transition: "all .15s", cursor: submitted ? "default" : "pointer" };
-    if (!submitted && selected === opt) return { ...base, borderColor: C.acc, background: "rgba(0,212,170,.08)", color: C.text };
-    if (!submitted) return { ...base, borderColor: C.border, background: C.sub, color: C.text };
-    if (opt === q.correctAnswer) return { ...base, borderColor: "#10B981", background: "rgba(16,185,129,.1)", color: C.text };
-    if (opt === selected && opt !== q.correctAnswer) return { ...base, borderColor: "#EF4444", background: "rgba(239,68,68,.1)", color: C.text };
-    return { ...base, borderColor: C.border, background: C.sub, color: C.muted };
-  };
-
   return (
     <div style={{ minHeight: "100dvh", background: C.bg, color: C.text }}>
       <div style={{ position: "sticky", top: 0, zIndex: 20, background: C.hdr, backdropFilter: "blur(16px)", borderBottom: `1px solid ${C.border}`, padding: "12px 20px", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
@@ -525,7 +574,7 @@ function ActiveSession({ config, onEnd, dark }) {
                 const dot = statusDot(qItem);
                 return (
                   <div key={qItem.id} onClick={() => setCur(idx)} style={{ padding: "8px 12px", borderRadius: 12, background: cur === idx ? `${C.acc}15` : "transparent", border: `1px solid ${cur === idx ? C.acc + "40" : "transparent"}`, cursor: "pointer", display: "flex", gap: 10, marginBottom: 6 }}>
-                    <div className={dot.pulse ? "pu" : ""} style={{ width: 24, height: 24, borderRadius: 6, background: dot.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "white" }}>{idx + 1}</div>
+                    <div style={{ width: 24, height: 24, borderRadius: 6, background: dot.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "white" }}>{idx + 1}</div>
                     <div style={{ flex: 1, fontSize: 12, overflow: "hidden", whiteSpace: "nowrap", color: cur === idx ? C.acc : C.text }}>{qItem.text ? qItem.text.substring(0, 40) : "No text"}…</div>
                     {marked[qItem.id] && <span style={{ color: "#FBBF24" }}>★</span>}
                   </div>
@@ -556,8 +605,23 @@ function ActiveSession({ config, onEnd, dark }) {
               return (<div key={opt} onClick={() => handleSelect(opt)} style={style}><div style={{ width: 28, height: 28, borderRadius: 14, background: variant === "correct" ? "#10B981" : variant === "wrong" ? "#EF4444" : variant === "selected" ? C.acc : C.border, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "white" }}>{letter}</div><div style={{ flex: 1 }}>{opt}</div>{submitted && isCorrect && <span>✓</span>}{submitted && isSelected && !isCorrect && <span>✗</span>}</div>);
             })}
           </div>
-          <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}><div><button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0} style={{ padding: "8px 18px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: cur === 0 ? 0.4 : 1 }}>← Previous</button>{!submitted ? <button onClick={handleSubmit} disabled={!selected} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: selected ? `linear-gradient(135deg,${C.acc},${C.acc2})` : "rgba(0,212,170,0.3)", color: "white" }}>Submit</button> : <button onClick={handleNext} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white" }}>{cur === safeQuestions.length - 1 ? "Finish →" : "Next →"}</button>}</div><div>{submitted && <span>{answers[q.id]?.correct ? "✓ Correct" : "✗ Incorrect"}</span>}</div></div>
-          {submitted && isStudy && q.explanation && (<div style={{ background: C.sub2, borderRadius: 20, padding: 20, marginTop: 20 }}><div style={{ fontWeight: 700, color: C.acc, marginBottom: 8 }}>🔍 EXPLANATION</div><div>{q.explanation}</div>{q.educationalObjective && <div style={{ marginTop: 8, fontSize: 12, color: C.muted }}>🎯 {q.educationalObjective}</div>}<textarea placeholder="Notes" value={notes[q.id] || ""} onChange={e => setNotes(n => ({ ...n, [q.id]: e.target.value }))} style={{ width: "100%", marginTop: 12, padding: "8px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} rows={2} /></div>)}
+          <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
+            <div>
+              <button onClick={() => setCur(c => Math.max(0, c - 1))} disabled={cur === 0} style={{ padding: "8px 18px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp, opacity: cur === 0 ? 0.4 : 1 }}>← Previous</button>
+              {!submitted
+                ? <button onClick={handleSubmit} disabled={!selected} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: selected ? `linear-gradient(135deg,${C.acc},${C.acc2})` : "rgba(0,212,170,0.3)", color: "white" }}>Submit</button>
+                : <button onClick={handleNext} style={{ marginLeft: 8, padding: "8px 24px", borderRadius: 40, background: `linear-gradient(135deg,${C.acc},${C.acc2})`, color: "white" }}>{cur === safeQuestions.length - 1 ? "Finish →" : "Next →"}</button>}
+            </div>
+            <div>{submitted && <span>{answers[q.id]?.correct ? "✓ Correct" : "✗ Incorrect"}</span>}</div>
+          </div>
+          {submitted && isStudy && q.explanation && (
+            <div style={{ background: C.sub2, borderRadius: 20, padding: 20, marginTop: 20 }}>
+              <div style={{ fontWeight: 700, color: C.acc, marginBottom: 8 }}>🔍 EXPLANATION</div>
+              <div>{q.explanation}</div>
+              {q.educationalObjective && <div style={{ marginTop: 8, fontSize: 12, color: C.muted }}>🎯 {q.educationalObjective}</div>}
+              <textarea placeholder="Notes" value={notes[q.id] || ""} onChange={e => setNotes(n => ({ ...n, [q.id]: e.target.value }))} style={{ width: "100%", marginTop: 12, padding: "8px", borderRadius: 12, border: `1px solid ${C.border}`, background: C.inp }} rows={2} />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -578,21 +642,64 @@ function SessionReview({ result, onExit, onRetry, dark }) {
 
   return (
     <div className="fade-up" style={{ padding: 28, maxWidth: 900, margin: "0 auto", background: C.bg, color: C.text, minHeight: "100dvh" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 28 }}><div><h2 style={{ fontFamily: "'Bebas Neue'", fontSize: 36, color: C.acc }}>Session Complete</h2><div>{name} · {mode} mode · {fmtTime(elapsed || 0)}</div></div><div><button onClick={onRetry} style={{ padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.acc}`, background: "transparent", color: C.acc }}>↻ Retry</button><button onClick={onExit} style={{ marginLeft: 8, padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp }}>← Library</button></div></div>
-      <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, textAlign: "center", marginBottom: 24 }}><div style={{ width: 100, height: 100, borderRadius: "50%", border: `4px solid ${scoreColor}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}><div style={{ fontSize: 40, fontFamily: "'Bebas Neue'", color: scoreColor }}>{score}%</div></div><div style={{ fontSize: 18, fontWeight: 700, color: scoreColor }}>{classify(score)?.label}</div><div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 20 }}><div><div style={{ fontSize: 28, fontWeight: 700, color: "#10B981" }}>{correct}</div><div>Correct</div></div><div><div style={{ fontSize: 28, fontWeight: 700, color: "#EF4444" }}>{safeQuestions.length - correct}</div><div>Incorrect/Skipped</div></div><div><div style={{ fontSize: 28, fontWeight: 700, color: "#FBBF24" }}>{Object.values(marked).filter(v => v).length}</div><div>Marked</div></div></div></div>
-      <div><h3 style={{ marginBottom: 16 }}>Detailed Review</h3>{safeQuestions.map((q, idx) => { const a = answers[q.id]; const isExpanded = expanded === idx; return (<div key={q.id} style={{ background: C.sub, borderRadius: 16, marginBottom: 10, overflow: "hidden", border: `1px solid ${C.border}` }}><div onClick={() => setExpanded(isExpanded ? null : idx)} style={{ padding: "14px 18px", display: "flex", gap: 12, cursor: "pointer" }}><span>{a?.correct ? "✅" : a ? "❌" : "⏺"}</span><div style={{ flex: 1 }}>Q{idx + 1}. {q.text ? q.text.substring(0, 100) : "No text"}…</div><span>{isExpanded ? "▲" : "▼"}</span></div>{isExpanded && <div style={{ padding: "12px 18px", borderTop: `1px solid ${C.border}`, background: C.card }}><div><strong>Your answer:</strong> {a?.selected || "Not answered"}</div><div><strong>Correct:</strong> {q.correctAnswer}</div>{q.explanation && <div style={{ marginTop: 8, padding: 10, background: C.sub, borderRadius: 12 }}>{q.explanation}</div>}{notes[q.id] && <div style={{ marginTop: 8, fontSize: 12, color: C.acc }}>📝 {notes[q.id]}</div>}</div>}</div>);})}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 28 }}>
+        <div>
+          <h2 style={{ fontFamily: "'Bebas Neue'", fontSize: 36, color: C.acc }}>Session Complete</h2>
+          <div>{name} · {mode} mode · {fmtTime(elapsed || 0)}</div>
+        </div>
+        <div>
+          <button onClick={onRetry} style={{ padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.acc}`, background: "transparent", color: C.acc }}>↻ Retry</button>
+          <button onClick={onExit} style={{ marginLeft: 8, padding: "8px 20px", borderRadius: 40, border: `1px solid ${C.border}`, background: C.inp }}>← Library</button>
+        </div>
+      </div>
+      <div style={{ background: C.card, borderRadius: 24, border: `1px solid ${C.border}`, padding: 24, textAlign: "center", marginBottom: 24 }}>
+        <div style={{ width: 100, height: 100, borderRadius: "50%", border: `4px solid ${scoreColor}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
+          <div style={{ fontSize: 40, fontFamily: "'Bebas Neue'", color: scoreColor }}>{score}%</div>
+        </div>
+        <div style={{ fontSize: 18, fontWeight: 700, color: scoreColor }}>{classify(score)?.label}</div>
+        <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 20 }}>
+          <div><div style={{ fontSize: 28, fontWeight: 700, color: "#10B981" }}>{correct}</div><div>Correct</div></div>
+          <div><div style={{ fontSize: 28, fontWeight: 700, color: "#EF4444" }}>{safeQuestions.length - correct}</div><div>Incorrect/Skipped</div></div>
+          <div><div style={{ fontSize: 28, fontWeight: 700, color: "#FBBF24" }}>{Object.values(marked).filter(v => v).length}</div><div>Marked</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 style={{ marginBottom: 16 }}>Detailed Review</h3>
+        {safeQuestions.map((q, idx) => {
+          const a = answers[q.id];
+          const isExpanded = expanded === idx;
+          return (
+            <div key={q.id} style={{ background: C.sub, borderRadius: 16, marginBottom: 10, overflow: "hidden", border: `1px solid ${C.border}` }}>
+              <div onClick={() => setExpanded(isExpanded ? null : idx)} style={{ padding: "14px 18px", display: "flex", gap: 12, cursor: "pointer" }}>
+                <span>{a?.correct ? "✅" : a ? "❌" : "⏺"}</span>
+                <div style={{ flex: 1 }}>Q{idx + 1}. {q.text ? q.text.substring(0, 100) : "No text"}…</div>
+                <span>{isExpanded ? "▲" : "▼"}</span>
+              </div>
+              {isExpanded && (
+                <div style={{ padding: "12px 18px", borderTop: `1px solid ${C.border}`, background: C.card }}>
+                  <div><strong>Your answer:</strong> {a?.selected || "Not answered"}</div>
+                  <div><strong>Correct:</strong> {q.correctAnswer}</div>
+                  {q.explanation && <div style={{ marginTop: 8, padding: 10, background: C.sub, borderRadius: 12 }}>{q.explanation}</div>}
+                  {notes[q.id] && <div style={{ marginTop: 8, fontSize: 12, color: C.acc }}>📝 {notes[q.id]}</div>}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// QBANK APP (آمن)
+// QBANK APP
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function QbankApp({ dark }) {
   const [view, setView] = useState("library");
   const [allQuestions, setAllQuestions] = useState([]);
   const [bankQuestions, setBankQuestions] = useState([]);
   const [prevExams, setPrevExams] = useState([]);
+  const [fourthWizariList, setFourthWizariList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sessionConfig, setSessionConfig] = useState(null);
   const [sessionResult, setSessionResult] = useState(null);
@@ -601,30 +708,38 @@ function QbankApp({ dark }) {
 
   useEffect(() => {
     const load = async () => {
-      const systemFiles = ["previous-exams","questions","cardiology", "gastroenterology", "nephrology", "hepatology", "pulmonology", "endocrinology", "rheumatology", "neurology", "infectious"];
+      const systemFiles = [
+        "previous-exams", "questions",
+        "cardiology", "gastroenterology", "nephrology", "hepatology",
+        "pulmonology", "endocrinology", "rheumatology", "neurology", "infectious",
+        "4th-wizari-2026"
+      ];
       let bankQs = [];
-      let prevQs = [];
       for (const file of systemFiles) {
         try {
           const res = await fetch(`/data/${file}.json`);
-          if (res.ok) {
-            const data = await res.json();
-            if (Array.isArray(data)) bankQs.push(...data);
-          }
-        } catch (e) { /* ignore */ }
+          if (res.ok) { const data = await res.json(); if (Array.isArray(data)) bankQs.push(...data); }
+        } catch (e) {}
       }
+      let prevQs = [];
       try {
         const prevRes = await fetch("/data/previous-exams.json");
-        if (prevRes.ok) {
-          const data = await prevRes.json();
-          if (Array.isArray(data)) prevQs = data;
-        }
-      } catch (e) { /* ignore */ }
+        if (prevRes.ok) { const data = await prevRes.json(); if (Array.isArray(data)) prevQs = data; }
+      } catch (e) {}
+
+      let wizariQs = [];
+      try {
+        const wizRes = await fetch("/data/4th-wizari-2026.json");
+        if (wizRes.ok) { const data = await wizRes.json(); if (Array.isArray(data)) wizariQs = data; }
+      } catch (e) { console.warn("Failed to load 4th Wizari questions", e); }
+
       const safeBank = sanitize(bankQs);
       const safePrev = sanitize(prevQs);
+      const safeWizari = sanitize(wizariQs);
       setBankQuestions(safeBank);
       setPrevExams(safePrev);
-      const merged = [...safeBank, ...safePrev];
+      setFourthWizariList(safeWizari);
+      const merged = [...safeBank, ...safePrev, ...safeWizari];
       setAllQuestions(merged.length ? merged : DEFAULT_QUESTIONS);
       setLoading(false);
     };
@@ -633,12 +748,60 @@ function QbankApp({ dark }) {
 
   if (loading) return <div style={{ minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", color: TH(dark).text }}>Loading questions...</div>;
 
+  // ─── handler: Library → onStart(questions, source) ───
+  const handleLibraryStart = (qs, src) => {
+    if (src === "wizari") {
+      // تخطي SessionConfig — مباشرة للسيشن بكل الأسئلة مخلوطة
+      const shuffled = [...qs].sort(() => Math.random() - 0.5);
+      setSessionConfig({
+        name: "وزاريات المرحلة الرابعة 2026",
+        mode: "study",
+        timeLimit: 0,        // بدون وقت محدد
+        questions: shuffled,
+        startTime: Date.now()
+      });
+      setView("session");
+    } else {
+      // باقي المصادر → SessionConfig
+      setView("config");
+    }
+  };
+
   return (
     <>
-      {view === "library" && <Library questions={allQuestions} bankQuestionsList={bankQuestions} previousExamsList={prevExams} onStart={() => setView("config")} dark={dark} />}
-      {view === "config" && <SessionConfig questions={allQuestions} onStart={cfg => { setSessionConfig(cfg); setView("session"); }} onBack={() => setView("library")} dark={dark} />}
-      {view === "session" && sessionConfig && <ActiveSession config={sessionConfig} onEnd={res => { setSessionResult(res); setView("review"); }} dark={dark} />}
-      {view === "review" && sessionResult && <SessionReview result={sessionResult} onExit={() => setView("library")} onRetry={() => setView("config")} dark={dark} />}
+      {view === "library" && (
+        <Library
+          questions={allQuestions}
+          bankQuestionsList={bankQuestions}
+          previousExamsList={prevExams}
+          fourthWizariList={fourthWizariList}
+          onStart={handleLibraryStart}
+          dark={dark}
+        />
+      )}
+      {view === "config" && (
+        <SessionConfig
+          questions={allQuestions}
+          onStart={cfg => { setSessionConfig(cfg); setView("session"); }}
+          onBack={() => setView("library")}
+          dark={dark}
+        />
+      )}
+      {view === "session" && sessionConfig && (
+        <ActiveSession
+          config={sessionConfig}
+          onEnd={res => { setSessionResult(res); setView("review"); }}
+          dark={dark}
+        />
+      )}
+      {view === "review" && sessionResult && (
+        <SessionReview
+          result={sessionResult}
+          onExit={() => setView("library")}
+          onRetry={() => setView("config")}
+          dark={dark}
+        />
+      )}
     </>
   );
 }
@@ -664,12 +827,13 @@ export default function App() {
         </div>
         <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
           <div style={{ display: "flex", gap: 12, background: "transparent", borderRadius: 40, padding: "4px" }}>
-            <button onClick={() => setTab("cgpa")} style={{ padding: "8px 24px", borderRadius: 40, border: "none", fontWeight: 700, fontSize: "15px", letterSpacing: "0.5px", cursor: "pointer", transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)", background: tab === "cgpa" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent", color: tab === "cgpa" ? "white" : C.text, boxShadow: tab === "cgpa" ? "0 4px 12px rgba(0,212,170,0.3)" : "none", transform: tab === "cgpa" ? "scale(1.02)" : "scale(1)", }} onMouseEnter={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }} onMouseLeave={(e) => { if (tab !== "cgpa") e.currentTarget.style.background = "transparent"; }}>📊 CGPA</button>
-            <button onClick={() => setTab("qbank")} style={{ padding: "8px 24px", borderRadius: 40, border: "none", fontWeight: 700, fontSize: "15px", letterSpacing: "0.5px", cursor: "pointer", transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)", background: tab === "qbank" ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent", color: tab === "qbank" ? "white" : C.text, boxShadow: tab === "qbank" ? "0 4px 12px rgba(0,212,170,0.3)" : "none", transform: tab === "qbank" ? "scale(1.02)" : "scale(1)", }} onMouseEnter={(e) => { if (tab !== "qbank") e.currentTarget.style.background = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"; }} onMouseLeave={(e) => { if (tab !== "qbank") e.currentTarget.style.background = "transparent"; }}>📚 Qbank</button>
+            {[["cgpa","📊 CGPA"],["qbank","📚 Qbank"]].map(([key,label])=>(
+              <button key={key} onClick={() => setTab(key)} style={{ padding: "8px 24px", borderRadius: 40, border: "none", fontWeight: 700, fontSize: "15px", letterSpacing: "0.5px", cursor: "pointer", transition: "all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1)", background: tab === key ? `linear-gradient(135deg, ${C.acc}, ${C.acc2})` : "transparent", color: tab === key ? "white" : C.text, boxShadow: tab === key ? "0 4px 12px rgba(0,212,170,0.3)" : "none", transform: tab === key ? "scale(1.02)" : "scale(1)" }} onMouseEnter={e=>{ if(tab!==key) e.currentTarget.style.background=dark?"rgba(255,255,255,0.08)":"rgba(0,0,0,0.04)";}} onMouseLeave={e=>{ if(tab!==key) e.currentTarget.style.background="transparent";}}>{label}</button>
+            ))}
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end", flex: 1 }}>
-          <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12, fontWeight: 600, color: C.text, cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.background = dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"} onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}>{dark ? "☀️ Light" : "🌙 Dark"}</button>
+          <button onClick={() => setDark(!dark)} style={{ padding: "6px 16px", borderRadius: 20, border: `1px solid ${C.border}`, background: "transparent", fontSize: 12, fontWeight: 600, color: C.text, cursor: "pointer", transition: "all 0.2s" }} onMouseEnter={e=>e.currentTarget.style.background=dark?"rgba(255,255,255,0.1)":"rgba(0,0,0,0.05)"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>{dark ? "☀️ Light" : "🌙 Dark"}</button>
         </div>
       </div>
       {tab === "cgpa" ? <CGPAView dark={dark} /> : <QbankApp dark={dark} />}

@@ -121,7 +121,7 @@
   },
   {
     "id": "q9",
-    "system": "Urology",
+    "system": "Nephrology",
     "subject": "Internal Medicine",
     "difficulty": "Easy",
     "text": "An 81 year old man attends as an emergency having passed nothing more than 50 mL of urine for 2 days. He has nocturnal enuresis, a palpable bladder and a creatinine of 378 μmol/L (4.28 mg/dL). What is the most appropriate initial management?",
@@ -211,7 +211,7 @@
   },
   {
     "id": "q15",
-    "system": "Infectious Disease",
+    "system": "Hepatology",
     "subject": "Pediatrics",
     "difficulty": "Easy",
     "text": "A full-term infant is born to a mother infected with hepatitis B. Which of the following is the BEST initial management for this infant?",
@@ -241,7 +241,7 @@
   },
   {
     "id": "q17",
-    "system": "Infectious Disease",
+    "system": "Hepatology",
     "subject": "Hepatology",
     "difficulty": "Medium",
     "text": "Which group of population is most commonly associated with fulminant hepatitis (1-2%) caused by the hepatitis E virus?",
@@ -511,7 +511,7 @@
   },
   {
     "id": "q35",
-    "system": "Neurology",
+    "system": "Cardiology",
     "subject": "Emergency Medicine",
     "difficulty": "Hard",
     "text": "A patient presents with papilledema and a blood pressure of 210/110 mmHg. What is the best initial management for this condition?",
@@ -571,7 +571,7 @@
   },
   {
     "id": "q39",
-    "system": "Infectious Disease",
+    "system": "Pulmonology",
     "subject": "Pharmacology",
     "difficulty": "Medium",
     "text": "A patient who has been on a regimen of anti-tuberculosis drugs for 6 months develops numbness and tingling sensation in his feet. What is the best treatment for this condition?",
@@ -601,7 +601,7 @@
   },
   {
     "id": "q41",
-    "system": "Infectious Disease",
+    "system": "Pulmonology",
     "subject": "Pulmonology",
     "difficulty": "Medium",
     "text": "A 30-year-old patient presents with a positive Interferon Gamma Release Assay (IGRA) test. The patient is asymptomatic and has a normal chest X-ray. Which is the best management option for this patient?",
@@ -691,7 +691,7 @@
   },
   {
     "id": "q47",
-    "system": "Infectious Disease",
+    "system": "Hepatology",
     "subject": "Hepatology",
     "difficulty": "Easy",
     "text": "What is the primary route of transmission for Hepatitis A virus (HAV)?",
@@ -901,7 +901,7 @@
   },
   {
     "id": "q61",
-    "system": "Nutrition",
+    "system": "Gastroenterology",
     "subject": "Internal Medicine",
     "difficulty": "Hard",
     "text": "Malnutrition patient should be given advice for his condition?",
@@ -916,7 +916,7 @@
   },
   {
     "id": "q62",
-    "system": "Nutrition",
+    "system": "Gastroenterology",
     "subject": "Internal Medicine",
     "difficulty": "Medium",
     "text": "Overweight patient and should be given advice if?",
