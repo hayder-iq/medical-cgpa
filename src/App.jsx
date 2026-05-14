@@ -341,7 +341,7 @@ function Library({ questions, bankQuestionsList, previousExamsList, fourthWizari
           </div>
           <div style={{ fontSize: 13, color: C.muted, marginBottom: 18 }}>
             {fourthWizariList.length > 0
-              ? `${fourthWizariList.length} سؤال وزاري — ابدأ مباشرة بدون أي إعداد`
+              ? `${fourthWizariList.length} سؤال وزاري — ابدأ مباشرة `
               : "لا توجد أسئلة وزاريات محملة بعد — تأكد من ملف 4th-wizari-2026.json"}
           </div>
           {fourthWizariList.length > 0 && (
